@@ -1,0 +1,14 @@
+Objects\Entity\Malysh.class
+Objects\Item\Plate.class
+Objects\Entity\Karlson$1.class
+Exceptions\IHaveNoPlateException.class
+Objects\Item\Buffet.class
+Exceptions\PlateIsEmpty.class
+Objects\Entity\Person.class
+Main.class
+Objects\Entity\Karlson.class
+Interfaces\PutPorridge.class
+Interfaces\CanEat.class
+Objects\Item\Pan.class
+Interfaces\Moodable.class
+Enums\Mood.class
