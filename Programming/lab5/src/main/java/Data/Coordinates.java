@@ -6,15 +6,15 @@ public class Coordinates implements Validatable {
     private float x; //Максимальное значение поля: 603
     private Long y; //Поле не может быть null
 
-    public static class Builder {
+    public static class CoordinatesBuilder {
         private float x = 0.0f;
         private Long y = 0L;
 
-        public Builder(float x){
+        public CoordinatesBuilder(float x) {
             this.x = x;
         }
 
-        public Builder param2(Long y){
+        public CoordinatesBuilder paramY(Long y){
             this.y = y;
             return this;
         }
@@ -26,7 +26,6 @@ public class Coordinates implements Validatable {
 
             return coordinates;
         }
-
     }
 
     @Override

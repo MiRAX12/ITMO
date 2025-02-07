@@ -13,58 +13,61 @@ public class Worker implements Validatable{
     private Status status; //Поле не может быть null
     private Person person; //Поле может быть null
 
-    public static class Builder {
-        private Long id;
+    public static class WorkerBuilder {
+        private Long id = 1L;
         private String name = "null";
-        private Coordinates coordinates;
-        private java.time.LocalDate creationDate;
-        private float salary;
-        private java.time.LocalDateTime startDate;
-        private java.time.ZonedDateTime endDate;
-        private Status status;
-        private Person person;
-    }
-        public Worker Id(Long id){
+        private Coordinates coordinates = new Coordinates();
+        private java.time.LocalDate creationDate = java.time.LocalDate.now();
+        private float salary = 1;
+        private java.time.LocalDateTime startDate = java.time.LocalDateTime.now();
+        private java.time.ZonedDateTime endDate = java.time.ZonedDateTime.now();
+        private Status status = Status.RECOMMENDED_FOR_PROMOTION;
+        private Person person = new Person();
+
+        public WorkerBuilder() {
+            super();
+        }
+        public WorkerBuilder id(Long id){
             this.id = id;
             return this;
         }
 
-        public Worker name(String name){
+        public WorkerBuilder name(String name){
             this.name = name;
             return this;
         }
 
-        public Worker coordinates(Coordinates coordinates){
+        public WorkerBuilder coordinates(Coordinates coordinates){
             this.coordinates = coordinates;
             return this;
         }
 
-        public Worker creationDate(java.time.LocalDate creationDate){
+        public WorkerBuilder creationDate(java.time.LocalDate creationDate){
             this.creationDate = creationDate;
             return this;
         }
 
-        public Worker salary(float salary){
+        public WorkerBuilder salary(float salary){
             this.salary = salary;
             return this;
         }
 
-        public Worker startDate(java.time.LocalDateTime startDate){
+        public WorkerBuilder startDate(java.time.LocalDateTime startDate){
             this.startDate = startDate;
             return this;
         }
 
-        public Worker endDate(java.time.ZonedDateTime endDate){
+        public WorkerBuilder endDate(java.time.ZonedDateTime endDate){
             this.endDate = endDate;
             return this;
         }
 
-        public Worker status(Status status){
+        public WorkerBuilder status(Status status){
             this.status = status;
             return this;
         }
 
-        public Worker person(Person person){
+        public WorkerBuilder person(Person person){
             this.person = person;
             return this;
         }
@@ -82,6 +85,7 @@ public class Worker implements Validatable{
             worker.person = person;
             return worker;
         }
+    }
 
     @Override
     public boolean validate(){
@@ -89,6 +93,9 @@ public class Worker implements Validatable{
         if (name != null || name.isEmpty()) return false;
         if (coordinates != null) return false;
         if (creationDate != null) return false; // auto
+        if (salary <=0) return false;
+        if (startDate != null) return false;
+        if (status != null) return false;
         return true;
     }
 
