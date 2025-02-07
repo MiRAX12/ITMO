@@ -89,7 +89,7 @@ public class Worker implements Validatable{
         if (name != null || name.isEmpty()) return false;
         if (coordinates != null) return false;
         if (creationDate != null) return false; // auto
-
+        return true;
     }
 
     @Override
