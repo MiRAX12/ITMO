@@ -4,7 +4,7 @@ import Data.Worker;
 public class Main {
     public static void main(String[] args) {
 
-        Coordinates coordinates = new Coordinates.CoordinatesBuilder(1).paramY(1L).build();
+        Coordinates coordinates = new Coordinates.CoordinatesBuilder().build();
         System.out.println(coordinates.toString());
         System.out.println(coordinates.validate());
 

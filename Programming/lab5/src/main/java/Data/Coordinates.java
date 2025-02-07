@@ -10,8 +10,13 @@ public class Coordinates implements Validatable {
         private float x = 0.0f;
         private Long y = 0L;
 
-        public CoordinatesBuilder(float x) {
+        public CoordinatesBuilder() {
+            super();
+        }
+
+        public CoordinatesBuilder paramX(float x) {
             this.x = x;
+            return this;
         }
 
         public CoordinatesBuilder paramY(Long y){

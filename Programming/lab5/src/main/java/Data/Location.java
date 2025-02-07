@@ -13,7 +13,12 @@ public class Location implements Validatable {
         private Long z = 0L;
 
         public LocationBuilder(Float X){
+            super();
+        }
+
+        public LocationBuilder parmaX(float X){
             this.x = X;
+            return this;
         }
 
         public LocationBuilder paramY(float y) {
