@@ -2,32 +2,60 @@ package Data;
 
 import Interfaces.Validatable;
 
+import java.util.Scanner;
+
 public class Location implements Validatable {
     private Float x; //Поле не может быть null
     private Float y; //Поле не может быть null
     private Long z; //Поле не может быть null
+    private static Scanner consoleRead = new Scanner(System.in);
+
 
     public static class LocationBuilder {
         private Float x = 0F;
         private Float y = 0F;
         private Long z = 0L;
 
-        public LocationBuilder(Float X){
+        public LocationBuilder(){
             super();
         }
 
-        public LocationBuilder parmaX(float X){
-            this.x = X;
+        public LocationBuilder paramX() {
+            while (true) {
+                System.out.print("Координата Х: ");
+                try {
+                    this.x = Float.valueOf(consoleRead.nextLine().trim());
+                    break;
+                }catch(NumberFormatException e) {
+                    System.out.println("Ошибка ввода ");
+                }
+            }
             return this;
         }
 
-        public LocationBuilder paramY(float y) {
-            this.y = y;
+        public LocationBuilder paramY() {
+            while (true) {
+                System.out.print("Координата Y: ");
+                try {
+                    y = Float.valueOf(consoleRead.nextLine().trim());
+                    break;
+                }catch(NumberFormatException e) {
+                    System.out.println("Ошибка ввода ");
+                }
+            }
             return this;
         }
 
-        public LocationBuilder paramZ(long z) {
-            this.z = z;
+        public LocationBuilder paramZ() {
+            while (true) {
+                System.out.print("Координата Z: ");
+                try {
+                    z = Long.valueOf(consoleRead.nextLine().trim());
+                    break;
+                }catch(NumberFormatException e) {
+                    System.out.println("Ошибка ввода ");
+                }
+            }
             return this;
         }
 
