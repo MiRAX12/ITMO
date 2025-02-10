@@ -10,8 +10,13 @@ public class Person implements Validatable {
         private String passportID = null;
         private Location location;
 
-        public PersonBuilder (String passportID) {
-            this.location = null;
+        public PersonBuilder () {
+            super();
+        }
+
+        public PersonBuilder PassportID(String passportID) {
+            this.passportID = passportID;
+            return this;
         }
 
         public PersonBuilder location(Location location) {
