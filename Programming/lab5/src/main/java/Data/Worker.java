@@ -14,7 +14,7 @@ public class Worker implements Validatable{
     private Person person; //Поле может быть null
 
     public static class WorkerBuilder {
-        private Long id = 1L;
+        private Long id = (long)(this.hashCode());
         private String name = "null";
         private Coordinates coordinates = new Coordinates();
         private java.time.LocalDate creationDate = java.time.LocalDate.now();
