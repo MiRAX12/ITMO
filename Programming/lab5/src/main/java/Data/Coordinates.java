@@ -2,9 +2,12 @@ package Data;
 
 import Interfaces.Validatable;
 
+import java.util.Scanner;
+
 public class Coordinates implements Validatable {
     private float x; //Максимальное значение поля: 603
     private Long y; //Поле не может быть null
+    private static Scanner consoleRead = new Scanner(System.in);
 
     public static class CoordinatesBuilder {
         private float x = 0.0f;
@@ -14,21 +17,34 @@ public class Coordinates implements Validatable {
             super();
         }
 
-        public CoordinatesBuilder paramX(float x) {
-            this.x = x;
-            return this;
+        public void setX() {
+            while (true) {
+                System.out.print("Координата Х: ");
+                try {
+                    this.x = Float.parseFloat(consoleRead.nextLine().trim());
+                    break;
+                }catch(NumberFormatException e) {
+                    System.out.println("Ошибка ввода ");
+                }
+            }
         }
 
-        public CoordinatesBuilder paramY(Long y){
-            this.y = y;
-            return this;
+        public void setY() {
+            while (true) {
+                System.out.print("Координата Y: ");
+                try {
+                    y = Long.valueOf(consoleRead.nextLine().trim());
+                    break;
+                }catch(NumberFormatException e) {
+                    System.out.println("Ошибка ввода ");
+                }
+            }
         }
 
         public Coordinates build(){
             Coordinates coordinates = new Coordinates();
-            coordinates.x = this.x;
-            coordinates.y = this.y;
-
+            setX();
+            setY();
             return coordinates;
         }
     }
