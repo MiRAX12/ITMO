@@ -2,9 +2,13 @@ package Data;
 
 import Interfaces.Validatable;
 
+import java.util.NoSuchElementException;
+import java.util.Scanner;
+
 public class Person implements Validatable {
     private String passportID; //Поле может быть null
     private Location location; //Поле не может быть null
+    private static Scanner consoleRead = new Scanner(System.in);
 
     public static class PersonBuilder {
         private String passportID = null;
@@ -14,20 +18,26 @@ public class Person implements Validatable {
             super();
         }
 
-        public PersonBuilder PassportID(String passportID) {
-            this.passportID = passportID;
-            return this;
+        public void passportID() {
+            while (true) {
+                System.out.print("ID паспорта: ");
+                try {
+                    this.passportID = consoleRead.nextLine().trim();
+                    break;
+                }catch(NoSuchElementException e) { //TODO: Ошибки
+                    System.out.println("Ошибка ввода ");
+                }
+            }
         }
 
-        public PersonBuilder location(Location location) {
-            this.location = location;
-            return this;
+        public void setLocation() {
+            this.location = new Location.LocationBuilder().build();
         }
 
         public Person build() {
             Person person = new Person();
-            person.passportID = passportID;
-            person.location = location;
+            passportID();
+            setLocation();
             return person;
         }
     }

@@ -1,6 +1,5 @@
 package Data;
 
-import Exceptions.AskBreak;
 import Interfaces.Validatable;
 
 import java.util.Scanner;
@@ -18,20 +17,19 @@ public class Coordinates implements Validatable {
             super();
         }
 
-        public CoordinatesBuilder paramX() {
+        public void setX() {
             while (true) {
                 System.out.print("Координата Х: ");
                 try {
-                    this.x = Float.valueOf(consoleRead.nextLine().trim());
+                    this.x = Float.parseFloat(consoleRead.nextLine().trim());
                     break;
                 }catch(NumberFormatException e) {
                     System.out.println("Ошибка ввода ");
                 }
             }
-            return this;
         }
 
-        public CoordinatesBuilder paramY() {
+        public void setY() {
             while (true) {
                 System.out.print("Координата Y: ");
                 try {
@@ -41,19 +39,15 @@ public class Coordinates implements Validatable {
                     System.out.println("Ошибка ввода ");
                 }
             }
-            return this;
         }
 
         public Coordinates build(){
             Coordinates coordinates = new Coordinates();
-            coordinates.x = this.x;
-            coordinates.y = this.y;
+            setX();
+            setY();
             return coordinates;
         }
     }
-
-
-
 
     @Override
     public boolean validate() {

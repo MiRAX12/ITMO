@@ -2,6 +2,9 @@ package Data;
 
 import Interfaces.Validatable;
 
+import java.util.NoSuchElementException;
+import java.util.Scanner;
+
 public class Worker implements Validatable{
     private Long id; //Поле не может быть null, Значение поля должно быть больше 0, Значение этого поля должно быть уникальным, Значение этого поля должно генерироваться автоматически
     private String name; //Поле не может быть null, Строка не может быть пустой
@@ -12,44 +15,49 @@ public class Worker implements Validatable{
     private java.time.ZonedDateTime endDate; //Поле может быть null
     private Status status; //Поле не может быть null
     private Person person; //Поле может быть null
+    private static Scanner consoleRead = new Scanner(System.in);
 
     public static class WorkerBuilder {
-        private Long id = (long)(this.hashCode());
+        private final Long id = (long)(this.hashCode());
         private String name = "null";
         private Coordinates coordinates = new Coordinates();
         private java.time.LocalDate creationDate = java.time.LocalDate.now();
         private float salary = 1;
         private java.time.LocalDateTime startDate = java.time.LocalDateTime.now();
         private java.time.ZonedDateTime endDate = java.time.ZonedDateTime.now();
-        private Status status = Status.RECOMMENDED_FOR_PROMOTION;
+        private Status status;
         private Person person = new Person();
 
         public WorkerBuilder() {
             super();
         }
-        public WorkerBuilder id(Long id){
-            this.id = id;
-            return this;
+
+        public void name(String name){
+            while (true) {
+                System.out.print("Введите имя: ");
+                try {
+                    this.name = consoleRead.nextLine().trim();
+                    break;
+                }catch(NoSuchElementException e) {
+                    System.out.println("Ошибка ввода ");
+                }
+            }
         }
 
-        public WorkerBuilder name(String name){
-            this.name = name;
-            return this;
+        public void coordinates(Coordinates coordinates){
+            this.coordinates = new Coordinates.CoordinatesBuilder().build();
         }
 
-        public WorkerBuilder coordinates(Coordinates coordinates){
-            this.coordinates = coordinates;
-            return this;
-        }
-
-        public WorkerBuilder creationDate(java.time.LocalDate creationDate){
-            this.creationDate = creationDate;
-            return this;
-        }
-
-        public WorkerBuilder salary(float salary){
-            this.salary = salary;
-            return this;
+        public void salary(float salary){
+            while (true) {
+                System.out.print("Введите зарплату: ");
+                try {
+                    this.salary = Float.parseFloat(consoleRead.nextLine().trim());
+                    break;
+                }catch(NoSuchElementException | NumberFormatException e) {
+                    System.out.println("Ошибка ввода ");
+                }
+            }
         }
 
         public WorkerBuilder startDate(java.time.LocalDateTime startDate){
@@ -63,13 +71,22 @@ public class Worker implements Validatable{
         }
 
         public WorkerBuilder status(Status status){
-            this.status = status;
-            return this;
+            status = new Status();
+            while (true) {
+                System.out.print("Введите Статус: (FIRED, HIRED," +
+                        " RECOMMENDED_FOR_PROMOTION, REGULAR, PROBATION)");
+                try {
+                    this.salary = Float.parseFloat(consoleRead.nextLine().trim());
+                    break;
+                }catch(NoSuchElementException | NumberFormatException e) {
+                    System.out.println("Ошибка ввода ");
+                }
+            }
+        }
         }
 
-        public WorkerBuilder person(Person person){
-            this.person = person;
-            return this;
+        public void person(Person person){
+            this.person = new Person.PersonBuilder().build();
         }
 
         public Worker build(){ //Тут остановка 21:57

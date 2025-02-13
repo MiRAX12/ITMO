@@ -15,8 +15,8 @@ public class Main {
     public static void main(String[] args) {
         Console console = new StandardConsole();
         // ТЕСТ
-        Coordinates coordinates = new Coordinates.CoordinatesBuilder().paramX().paramY().build();
-//        Location location = new Location.LocationBuilder().paramX().paramY().paramZ().build();
+//        Coordinates coordinates = new Coordinates.CoordinatesBuilder().paramX().paramY().build();
+//        Location location = new Location.LocationBuilder().setX().paramY().paramZ().build();
 
         System.out.println(coordinates);
     }

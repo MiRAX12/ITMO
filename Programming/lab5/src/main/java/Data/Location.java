@@ -20,7 +20,7 @@ public class Location implements Validatable {
             super();
         }
 
-        public LocationBuilder paramX() {
+        public void setX() {
             while (true) {
                 System.out.print("Координата Х: ");
                 try {
@@ -30,10 +30,9 @@ public class Location implements Validatable {
                     System.out.println("Ошибка ввода ");
                 }
             }
-            return this;
         }
 
-        public LocationBuilder paramY() {
+        public void setY() {
             while (true) {
                 System.out.print("Координата Y: ");
                 try {
@@ -43,10 +42,9 @@ public class Location implements Validatable {
                     System.out.println("Ошибка ввода ");
                 }
             }
-            return this;
         }
 
-        public LocationBuilder paramZ() {
+        public void setZ() {
             while (true) {
                 System.out.print("Координата Z: ");
                 try {
@@ -56,14 +54,13 @@ public class Location implements Validatable {
                     System.out.println("Ошибка ввода ");
                 }
             }
-            return this;
         }
 
         public Location build() {
             Location location = new Location();
-            location.x = x;
-            location.y = y;
-            location.z = z;
+            setX();
+            setY();
+            setZ();
             return location;
         }
     }
