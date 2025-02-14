@@ -70,19 +70,17 @@ public class Worker implements Validatable{
             return this;
         }
 
-        public WorkerBuilder status(Status status){
-            status = new Status();
+        public void status(Status status){
             while (true) {
                 System.out.print("Введите Статус: (FIRED, HIRED," +
                         " RECOMMENDED_FOR_PROMOTION, REGULAR, PROBATION)");
                 try {
-                    this.salary = Float.parseFloat(consoleRead.nextLine().trim());
+                    this.status = Status.valueOf(consoleRead.nextLine().trim());
                     break;
-                }catch(NoSuchElementException | NumberFormatException e) {
+                }catch(IllegalArgumentException e) {
                     System.out.println("Ошибка ввода ");
                 }
             }
-        }
         }
 
         public void person(Person person){
