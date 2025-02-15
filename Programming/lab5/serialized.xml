@@ -1,0 +1,21 @@
+<Worker>
+  <id>1089504328</id>
+  <name>12321</name>
+  <coordinates>
+    <x>21321.0</x>
+    <y>12321</y>
+  </coordinates>
+  <creationDate>2025-02-14</creationDate>
+  <salary>13214.0</salary>
+  <startDate>2025-02-14T16:40:33.1644496</startDate>
+  <endDate>2025-02-14T16:40:33.1644496+03:00</endDate>
+  <status>FIRED</status>
+  <person>
+    <passportID>124214</passportID>
+    <location>
+      <x>12421.0</x>
+      <y>21421.0</y>
+      <z>414</z>
+    </location>
+  </person>
+</Worker>
