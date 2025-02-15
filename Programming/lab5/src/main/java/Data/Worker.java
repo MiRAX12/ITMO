@@ -2,104 +2,53 @@ package Data;
 
 import Interfaces.Validatable;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
+import static Data.ParameterConstructor.*;
 
-public class Worker implements Validatable{
+
+public class Worker extends AbstractWorker implements Validatable{
     private Long id; //Поле не может быть null, Значение поля должно быть больше 0, Значение этого поля должно быть уникальным, Значение этого поля должно генерироваться автоматически
     private String name; //Поле не может быть null, Строка не может быть пустой
     private Coordinates coordinates; //Поле не может быть null
     private java.time.LocalDate creationDate; //Поле не может быть null, Значение этого поля должно генерироваться автоматически
     private float salary; //Значение поля должно быть больше 0
-    private java.time.LocalDateTime startDate; //Поле не может быть null
-    private java.time.ZonedDateTime endDate; //Поле может быть null
+    private java.time.LocalDateTime startDate = java.time.LocalDateTime.now(); //Поле не может быть null
+    private java.time.ZonedDateTime endDate = java.time.ZonedDateTime.now(); //Поле может быть null
     private Status status; //Поле не может быть null
     private Person person; //Поле может быть null
-    private static Scanner consoleRead = new Scanner(System.in);
+    private static final Scanner consoleRead = new Scanner(System.in);
 
-    public static class WorkerBuilder {
-        private final Long id = (long)(this.hashCode());
-        private String name = "null";
-        private Coordinates coordinates = new Coordinates();
-        private java.time.LocalDate creationDate = java.time.LocalDate.now();
-        private float salary = 1;
-        private java.time.LocalDateTime startDate = java.time.LocalDateTime.now();
-        private java.time.ZonedDateTime endDate = java.time.ZonedDateTime.now();
-        private Status status;
-        private Person person = new Person();
+    @Override
+    public Long getId() { //TODO: проверь херню
+        return id;
+    }
 
-        public WorkerBuilder() {
-            super();
-        }
+    @Override
+    public int compareTo(AbstractWorker worker) {
+        return (int)(this.id - worker.getId());
+    }
 
-        public void name(String name){
-            while (true) {
-                System.out.print("Введите имя: ");
-                try {
-                    this.name = consoleRead.nextLine().trim();
-                    break;
-                }catch(NoSuchElementException e) {
-                    System.out.println("Ошибка ввода ");
-                }
-            }
-        }
-
-        public void coordinates(Coordinates coordinates){
-            this.coordinates = new Coordinates.CoordinatesBuilder().build();
-        }
-
-        public void salary(float salary){
-            while (true) {
-                System.out.print("Введите зарплату: ");
-                try {
-                    this.salary = Float.parseFloat(consoleRead.nextLine().trim());
-                    break;
-                }catch(NoSuchElementException | NumberFormatException e) {
-                    System.out.println("Ошибка ввода ");
-                }
-            }
-        }
-
-        public WorkerBuilder startDate(java.time.LocalDateTime startDate){
-            this.startDate = startDate;
-            return this;
-        }
-
-        public WorkerBuilder endDate(java.time.ZonedDateTime endDate){
-            this.endDate = endDate;
-            return this;
-        }
-
-        public void status(Status status){
-            while (true) {
-                System.out.print("Введите Статус: (FIRED, HIRED," +
-                        " RECOMMENDED_FOR_PROMOTION, REGULAR, PROBATION)");
-                try {
-                    this.status = Status.valueOf(consoleRead.nextLine().trim());
-                    break;
-                }catch(IllegalArgumentException e) {
-                    System.out.println("Ошибка ввода ");
-                }
-            }
-        }
-
-        public void person(Person person){
-            this.person = new Person.PersonBuilder().build();
-        }
-
-        public Worker build(){ //Тут остановка 21:57
-            Worker worker = new Worker();
-            worker.id = id;
-            worker.name = name;
-            worker.coordinates = coordinates;
-            worker.creationDate = creationDate;
-            worker.salary = salary;
-            worker.startDate = startDate;
-            worker.endDate = endDate;
-            worker.status = status;
-            worker.person = person;
-            return worker;
-        }
+    public static Worker build() {
+        Worker worker = new Worker();
+        final Long id = (long) (worker.hashCode());
+        worker.name = askParameterString("Введите имя: ");
+        worker.coordinates = Coordinates.build();
+        final java.time.LocalDate creationDate = java.time.LocalDate.now();
+        worker.salary = askParameterFloat("Введите зарплату: ");
+        worker.startDate = askLocalDateTime("Введите дату и время" +
+                " в формате 'yyyy-MM-dd HH:mm:ss' (например, '2023-10-05 14:30:00'): ");
+        worker.endDate = askZonedDateTime("Введите дату и время" +
+                " в формате 'yyyy-MM-dd HH:mm:ss z' (например, '2023-10-05 14:30:00 UTC'): ");
+        Status status = askParameterEnum("Введите Статус: (FIRED, HIRED," +
+                " RECOMMENDED_FOR_PROMOTION, REGULAR, PROBATION)", Status.class);
+        worker.person = Person.build();
+        return worker;
     }
 
     @Override
@@ -127,6 +76,38 @@ public class Worker implements Validatable{
                 ", status=" + status +
                 ", person=" + person +
                 '}';
+    }
+
+    public Person getPerson() {
+        return person;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public ZonedDateTime getEndDate() {
+        return endDate;
+    }
+
+    public LocalDateTime getStartDate() {
+        return startDate;
+    }
+
+    public float getSalary() {
+        return salary;
+    }
+
+    public LocalDate getCreationDate() {
+        return creationDate;
+    }
+
+    public Coordinates getCoordinates() {
+        return coordinates;
+    }
+
+    public String getName() {
+        return name;
     }
 }
 
