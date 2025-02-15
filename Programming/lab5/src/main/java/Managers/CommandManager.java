@@ -1,31 +1,35 @@
 package Managers;
 
-import Commands.Command;
+import Commands.*;
 
+import java.io.IOException;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class CommandManager {
-    private static LinkedHashMap<String, Command> commands = new LinkedHashMap<String, Command>();
+    private LinkedHashMap<String, Executable> commands = new LinkedHashMap<String, Executable>();
+    private CollectionManager collectionManager;
 
-    public static void setUpCommand(Command command) {
-        addCommand(command.toString(), command);
-
+    public CommandManager(CollectionManager collectionManager) {
+        this.collectionManager = collectionManager;
     }
 
+    public void setUpCommand(Executable command) {
+        addCommand(command.toString(), command);
+    }
 
-    private static final void addCommand(String name, Command command) {
+    private void addCommand(String name, Executable command) {
         commands.put(name, command);
     }
 
-    public static final LinkedHashMap<String, Command> getCommands() {
+    public LinkedHashMap<String, Executable> getCommands() {
         return commands;
     }
 
-    public static void setUserRequest(String[] splitedRequest) {
+    public  void setUserRequest(String[] splitedRequest) throws IOException {
         String request = splitedRequest[0];
-        if (CommandManager.getCommands().containsKey(request)) {
-            CommandManager.getCommands().get(request).apply("1");
+        if (getCommands().containsKey(request)) {
+            getCommands().get(request).execute(splitedRequest, collectionManager);
         } else {
             System.out.println("Команда не распознана! Попробуйте ознакомиться с перечнем команд, введя '\\help'.");
         }

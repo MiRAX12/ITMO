@@ -1,54 +1,83 @@
 package Data;
 
+import Exceptions.ExitWritten;
 import Interfaces.Validatable;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 import static Data.ParameterConstructor.*;
 
-
-public class Worker extends AbstractWorker implements Validatable{
+public class Worker implements Validatable{
     private Long id; //Поле не может быть null, Значение поля должно быть больше 0, Значение этого поля должно быть уникальным, Значение этого поля должно генерироваться автоматически
     private String name; //Поле не может быть null, Строка не может быть пустой
     private Coordinates coordinates; //Поле не может быть null
-    private java.time.LocalDate creationDate; //Поле не может быть null, Значение этого поля должно генерироваться автоматически
+    private LocalDate creationDate; //Поле не может быть null, Значение этого поля должно генерироваться автоматически
     private float salary; //Значение поля должно быть больше 0
-    private java.time.LocalDateTime startDate = java.time.LocalDateTime.now(); //Поле не может быть null
-    private java.time.ZonedDateTime endDate = java.time.ZonedDateTime.now(); //Поле может быть null
+    private LocalDateTime startDate; //Поле не может быть null
+    private ZonedDateTime endDate; //Поле может быть null
     private Status status; //Поле не может быть null
     private Person person; //Поле может быть null
     private static final Scanner consoleRead = new Scanner(System.in);
 
-    @Override
-    public Long getId() { //TODO: проверь херню
-        return id;
-    }
 
-    @Override
-    public int compareTo(AbstractWorker worker) {
-        return (int)(this.id - worker.getId());
-    }
 
     public static Worker build() {
         Worker worker = new Worker();
-        final Long id = (long) (worker.hashCode());
+        worker.id = (long) (worker.hashCode());
         worker.name = askParameterString("Введите имя: ");
         worker.coordinates = Coordinates.build();
-        final java.time.LocalDate creationDate = java.time.LocalDate.now();
+        worker.creationDate = LocalDate.now();
         worker.salary = askParameterFloat("Введите зарплату: ");
         worker.startDate = askLocalDateTime("Введите дату и время" +
                 " в формате 'yyyy-MM-dd HH:mm:ss' (например, '2023-10-05 14:30:00'): ");
         worker.endDate = askZonedDateTime("Введите дату и время" +
                 " в формате 'yyyy-MM-dd HH:mm:ss z' (например, '2023-10-05 14:30:00 UTC'): ");
-        Status status = askParameterEnum("Введите Статус: (FIRED, HIRED," +
-                " RECOMMENDED_FOR_PROMOTION, REGULAR, PROBATION)", Status.class);
+        worker.askStatus();
         worker.person = Person.build();
         return worker;
+    }
+
+    public void askStatus() {
+        System.out.print("Введите Статус: (FIRED, HIRED," +
+                " RECOMMENDED_FOR_PROMOTION, REGULAR, PROBATION): ");
+        boolean next = true;
+        do {
+            try {
+                switch (consoleRead.nextLine().trim()) {
+                    case ("exit"):
+                        throw new ExitWritten("Выход из консоли...");
+                    case ("FIRED"):
+                        next = false;
+                        status = Status.FIRED;
+                        break;
+                    case ("HIRED"):
+                        next = false;
+                        status = Status.HIRED;
+                        break;
+                    case ("RECOMMENDED_FOR_PROMOTION"):
+                        next = false;
+                        status = Status.RECOMMENDED_FOR_PROMOTION;
+                        break;
+                    case ("REGULAR"):
+                        next = false;
+                        status = Status.REGULAR;
+                        break;
+                    case ("PROBATION"):
+                        next = false;
+                        status = Status.PROBATION;
+                        break;
+                    default:
+                        System.out.println("Ошибка ввода\nВыберите одно из предоставленных значений");
+                }
+            } catch (NoSuchElementException e) {
+                System.out.println("Пользовательский ввод не обнаружен");
+            } catch (IllegalStateException e) {
+                System.out.println("Непредвиденная ошибка");
+            }
+        } while (next);
     }
 
     @Override
@@ -76,6 +105,10 @@ public class Worker extends AbstractWorker implements Validatable{
                 ", status=" + status +
                 ", person=" + person +
                 '}';
+    }
+
+    public Long getId() {
+        return id;
     }
 
     public Person getPerson() {

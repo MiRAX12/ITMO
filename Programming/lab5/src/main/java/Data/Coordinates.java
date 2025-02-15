@@ -1,8 +1,7 @@
 package Data;
 
-import Interfaces.Constructable;
 import Interfaces.Validatable;
-import Data.ParameterConstructor;
+
 import java.util.Scanner;
 
 import static Data.ParameterConstructor.askParameterFloat;
