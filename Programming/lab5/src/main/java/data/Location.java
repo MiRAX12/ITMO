@@ -4,23 +4,23 @@ import interfaces.Validatable;
 
 import java.util.Scanner;
 
-import static data.ParameterConstructor.askParameterFloat;
-import static data.ParameterConstructor.askParameterLong;
-
 public class Location implements Validatable {
     private Float x; //Поле не может быть null
     private Float y; //Поле не может быть null
     private Long z; //Поле не может быть null
     private static Scanner consoleRead = new Scanner(System.in);
 
-    public static Location build(){
-        Location location = new Location();
-        location.x = askParameterFloat("Введите координату Х локации: ");
-        location.y = askParameterFloat("Введите координату Y локации: ");
-        location.z = askParameterLong("Введите координату Z локации: ");
-        return location;
+    public void setX(Float x) {
+        this.x = x;
     }
 
+    public void setY(Float y) {
+        this.y = y;
+    }
+
+    public void setZ(Long z) {
+        this.z = z;
+    }
 
     @Override
     public boolean validate() {

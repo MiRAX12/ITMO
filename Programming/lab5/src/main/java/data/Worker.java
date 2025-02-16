@@ -1,14 +1,11 @@
 package data;
 
-import exceptions.ExitWritten;
 import interfaces.Validatable;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
-import java.util.NoSuchElementException;
 import java.util.Scanner;
-import static data.ParameterConstructor.*;
 
 public class Worker implements Validatable{
     private Long id; //Поле не может быть null, Значение поля должно быть больше 0, Значение этого поля должно быть уникальным, Значение этого поля должно генерироваться автоматически
@@ -22,62 +19,40 @@ public class Worker implements Validatable{
     private Person person; //Поле может быть null
     private static final Scanner consoleRead = new Scanner(System.in);
 
-
-
-    public static Worker build() {
-        Worker worker = new Worker();
-        worker.id = (long) (worker.hashCode());
-        worker.name = askParameterString("Введите имя: ");
-        worker.coordinates = Coordinates.build();
-        worker.creationDate = LocalDate.now();
-        worker.salary = askParameterFloat("Введите зарплату: ");
-        worker.startDate = askLocalDateTime("Введите дату и время" +
-                " в формате 'yyyy-MM-dd HH:mm:ss' (например, '2023-10-05 14:30:00'): ");
-        worker.endDate = askZonedDateTime("Введите дату и время" +
-                " в формате 'yyyy-MM-dd HH:mm:ss z' (например, '2023-10-05 14:30:00 UTC'): ");
-        worker.askStatus();
-        worker.person = Person.build();
-        return worker;
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    public void askStatus() {
-        System.out.print("Введите Статус: (FIRED, HIRED," +
-                " RECOMMENDED_FOR_PROMOTION, REGULAR, PROBATION): ");
-        boolean next = true;
-        do {
-            try {
-                switch (consoleRead.nextLine().trim()) {
-                    case ("exit"):
-                        throw new ExitWritten("Выход из консоли...");
-                    case ("FIRED"):
-                        next = false;
-                        status = Status.FIRED;
-                        break;
-                    case ("HIRED"):
-                        next = false;
-                        status = Status.HIRED;
-                        break;
-                    case ("RECOMMENDED_FOR_PROMOTION"):
-                        next = false;
-                        status = Status.RECOMMENDED_FOR_PROMOTION;
-                        break;
-                    case ("REGULAR"):
-                        next = false;
-                        status = Status.REGULAR;
-                        break;
-                    case ("PROBATION"):
-                        next = false;
-                        status = Status.PROBATION;
-                        break;
-                    default:
-                        System.out.println("Ошибка ввода\nВыберите одно из предоставленных значений");
-                }
-            } catch (NoSuchElementException e) {
-                System.out.println("Пользовательский ввод не обнаружен");
-            } catch (IllegalStateException e) {
-                System.out.println("Непредвиденная ошибка");
-            }
-        } while (next);
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setCoordinates(Coordinates coordinates) {
+        this.coordinates = coordinates;
+    }
+
+    public void setCreationDate(LocalDate creationDate) {
+        this.creationDate = creationDate;
+    }
+
+    public void setSalary(float salary) {
+        this.salary = salary;
+    }
+
+    public void setStartDate(LocalDateTime startDate) {
+        this.startDate = startDate;
+    }
+
+    public void setEndDate(ZonedDateTime endDate) {
+        this.endDate = endDate;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+
+    public void setPerson(Person person) {
+        this.person = person;
     }
 
     @Override
