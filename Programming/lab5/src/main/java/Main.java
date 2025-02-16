@@ -1,23 +1,14 @@
 //import Commands.Add;
-import Commands.*;
-import Data.Coordinates;
-import Data.Worker;
-import Managers.CollectionManager;
-import Managers.CommandManager;
-import Managers.DumpManager;
-import Utility.Engine;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import commands.*;
+import data.Worker;
+import managers.CollectionManager;
+import managers.CommandManager;
+import managers.DumpManager;
+import utility.Engine;
 
 import javax.xml.stream.XMLStreamException;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
-import java.util.List;
-
-import static Managers.DumpManager.xmlDeserialize;
-import static Managers.DumpManager.xmlSerialize;
 
 //import static Managers.DumpManager.xmlDeserialize;
 //import static Managers.DumpManager.xmlSerialize;
@@ -36,12 +27,12 @@ public class Main {
 
         System.out.println(collectionManager.getCollection());
 
-        commandManager.setUpCommand(new Help());
+        commandManager.setUpCommand(new Help(collectionManager));
         commandManager.setUpCommand(new Exit());
-        commandManager.setUpCommand(new Show());
-        commandManager.setUpCommand(new Clear());
-        commandManager.setUpCommand(new Info());
-        commandManager.setUpCommand(new Save());
+        commandManager.setUpCommand(new Show(collectionManager));
+        commandManager.setUpCommand(new Clear(collectionManager));
+        commandManager.setUpCommand(new Info(collectionManager));
+        commandManager.setUpCommand(new Save(collectionManager));
 
         DumpManager dumpManager = new DumpManager();
 
