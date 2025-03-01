@@ -1,32 +1,26 @@
 package commands;
 
 import managers.CollectionManager;
+import utility.Request;
+import utility.Response;
 
-public class Info extends Command implements Executable{
-    CollectionManager collectionManager;
-    public Info (CollectionManager collectionManager){
-        this.collectionManager = collectionManager;
+public class Info extends Command {
+    public Info (){
+        super("info", "Вывести информацию о коллекции" +
+                "(кол-во элементов, тип коллекции, доступные ключи)");
     }
 
     @Override
-    public void execute() {
-
-        System.out.println("Информация о коллекции:\n"+
-                "Количество элементов : "+ collectionManager.getCollection().size()+"\n"+
-                "Тип : " + collectionManager.getCollection().getClass().getSimpleName()+"\n"+
-                "Время инициализации : "+ collectionManager.getLastInitTime()+"\n"+
-                "Набор доступных ключей : "+ collectionManager.getCollection().keySet()+"\n"
-
-
-
-
-
-
-        );
+    public Response execute(Request request) {
+        CollectionManager collection = CollectionManager.getInstance();
+        return new Response("Информация о коллекции:\n" +
+                "Количество элементов : " + collection.getCollection().size() + "\n" +
+                "Тип : " + collection.getCollection().getClass().getSimpleName() + "\n" +
+                "Набор доступных ключей : " + collection.getCollection().keySet() + "\n");
     }
 
     @Override
     public String toString() {
-        return "info";
+        return getName();
     }
 }

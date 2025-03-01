@@ -2,29 +2,30 @@ package commands;
 
 import data.Worker;
 import managers.CollectionManager;
+import utility.Request;
+import utility.Response;
 
-public class Show extends Command implements Executable{
-    CollectionManager collectionManager;
+public class Show extends Command {
 
-    public Show (CollectionManager collectionManager){
-        this.collectionManager = collectionManager;
+    public Show (){
+        super("show", "Вывести содержимое коллекции");
     }
 
     @Override
-    public void execute() {
-
-        if (collectionManager.getCollection().isEmpty()){
-            System.out.println("Коллекция пуста!");
-            return;
+    public Response execute(Request request) {
+        CollectionManager collection = CollectionManager.getInstance();
+        if (collection.getCollection().isEmpty()){
+            return new Response("Коллекция пуста!");
         }
 
-        for (Worker worker :collectionManager.getCollection().values()){
-            System.out.println(worker.toString());
+        for (Worker worker :collection.getCollection().values()){
+            return new Response(collection.getCollection().toString());
         }
+        return Response.empty();
     }
 
     @Override
     public String toString() {
-        return "show";
+        return getName();
     }
 }

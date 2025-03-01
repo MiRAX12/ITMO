@@ -1,63 +1,19 @@
 package data;
 
-import interfaces.Validatable;
-
 import java.util.Scanner;
-
-import static data.ParameterConstructor.askParameterFloat;
-import static data.ParameterConstructor.askParameterLong;
 
 public class Coordinates implements Validatable {
     private float x; //Максимальное значение поля: 603
     private Long y; //Поле не может быть null
     private static final Scanner consoleRead = new Scanner(System.in);
 
-    public static Coordinates build(){
-        Coordinates coordinates = new Coordinates();
-        coordinates.x = askParameterFloat("Введите координату Х: ");
-        coordinates.y = askParameterLong("Введите координату Y: ");
-        return coordinates;
+    public void setX(float x) {
+        this.x = x;
     }
 
-//    public static class CoordinatesBuilder {
-//        private float x = 0.0f;
-//        private Long y = 0L;
-//
-//
-//
-//        public CoordinatesBuilder setX() {
-//            while (true) {
-//                System.out.print("Координата Х: ");
-//                try {
-//                    this.x = Float.parseFloat(consoleRead.nextLine().trim());
-//                    break;
-//                }catch(NumberFormatException e) {
-//                    System.out.println("Ошибка ввода ");
-//                }
-//            }
-//            return this;
-//        }
-//
-//        public CoordinatesBuilder setY() {
-//            while (true) {
-//                System.out.print("Координата Y: ");
-//                try {
-//                    y = Long.valueOf(consoleRead.nextLine().trim());
-//                    break;
-//                }catch(NumberFormatException e) {
-//                    System.out.println("Ошибка ввода ");
-//                }
-//            }
-//            return this;
-//        }
-//
-//        public Coordinates build(){
-//            Coordinates coordinates = new Coordinates();
-//            coordinates.x = this.x;
-//            coordinates.y = this.y;
-//            return coordinates;
-//        }
-//    }
+    public void setY(Long y) {
+        this.y = y;
+    }
 
     @Override
     public boolean validate() {
