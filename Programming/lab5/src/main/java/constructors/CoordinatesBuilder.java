@@ -8,7 +8,7 @@ import java.io.IOException;
 public class CoordinatesBuilder {
 
     public static Coordinates build() throws IOException {
-        ParameterConstructor parameterConstructor = new ParameterConstructor();
+        ParameterConstructor parameterConstructor = ParameterConstructor.getInstance();
         Coordinates coordinates = new Coordinates();
 
         coordinates.setX(parameterConstructor.askParameter("FloatParser",

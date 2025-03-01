@@ -14,7 +14,7 @@ public class WorkerBuilder {
     private Enum status;
 
     public static Worker build() throws IOException {
-        ParameterConstructor parameterConstructor = new ParameterConstructor();
+        ParameterConstructor parameterConstructor = ParameterConstructor.getInstance();
         Worker worker = new Worker();
 
         worker.setId((long) (worker.hashCode()));

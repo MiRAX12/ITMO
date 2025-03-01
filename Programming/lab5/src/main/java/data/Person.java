@@ -1,7 +1,5 @@
 package data;
 
-import interfaces.Validatable;
-
 
 import java.util.Scanner;
 

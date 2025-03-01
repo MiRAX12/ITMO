@@ -12,18 +12,27 @@ import java.util.Scanner;
 
 public class ParameterConstructor {
     static final Scanner consoleRead = new Scanner(System.in);
+    private static ParameterConstructor instance;
+
+    private ParameterConstructor() {}
+
+    public static ParameterConstructor getInstance() {
+        return instance == null ? instance = new ParameterConstructor() : instance;
+    }
 
     public <T> T askParameter(String parser, Class<T> dataType, String message) throws
             NoSuchElementException, IllegalStateException, IllegalArgumentException,
             ExitWritten, DateTimeParseException{
         T x = null;
 
-        CommandManager commandManager = new CommandManager();
+        CommandManager commandManager = CommandManager.getInstance();
         commandManager.setUpParser(new FloatParser());
         commandManager.setUpParser(new LongParser());
         commandManager.setUpParser(new LocalDateTimeParser());
         commandManager.setUpParser(new ZonedDateTimeParser());
         commandManager.setUpParser(new StringParser());
+        commandManager.setUpParser(new IntegerParser());
+
         boolean next = true;
         do {
             try {
@@ -50,54 +59,7 @@ public class ParameterConstructor {
 
         } while(next);
         return x;
-//        T x;
-//        boolean next = true;
-//        do {
-//            try {
-//                System.out.print(message);
-//                String input = consoleRead.nextLine().trim();
-//                if (input.equals("exit")) {
-//                    throw new ExitWritten("Выход из консоли...");
-//                }
-//                if (dataType == Float.class) {
-//                    x = dataType.cast(Float.parseFloat(input));
-//                    return x;
-//
-//                } else if (dataType == Long.class) {
-//                    x = dataType.cast(Long.parseLong(input));
-//                    return x;
-//
-//                } else if (dataType == String.class) {
-//                    x = dataType.cast(input);
-//                    return x;
-//
-//                } else if (dataType == LocalDateTime.class) {
-//                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-//                    x = dataType.cast(LocalDateTime.parse(input, formatter));
-//                    return x;
-//
-//                } else if (dataType == ZonedDateTime.class) {
-//                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss z");
-//                    x = dataType.cast(ZonedDateTime.parse(input, formatter));
-//                    return x;
-//
-//                } else {
-//                    next = false;
-//                }
-//
-//            } catch (NumberFormatException e) {
-//                System.out.println("Неправильный формат числа, повторите ввод");
-//            } catch (NoSuchElementException e) {
-//
-//            } catch (IllegalStateException e) {
-//                System.out.println("Непредвиденная ошибка");
-//
-//            } catch (IllegalArgumentException e) {
-//                System.out.println("Неправильный формат аргумента, повторите ввод");
-//            }
-//        }while (next) ;
-//        return null;
-//    }
+
     }
 }
 

@@ -2,49 +2,46 @@ package managers;
 
 import commands.*;
 import constructors.parsers.AbstractParser;
-import constructors.parsers.Parsable;
+import utility.Request;
+import utility.Response;
 
-import java.io.IOException;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 public class CommandManager {
-    private LinkedHashMap<String, Executable> commands = new LinkedHashMap<String, Executable>();
-    private Map<String, AbstractParser<?>> parsers = new HashMap<>();
+    private final List<Command> commands = CommandList.commandList;
+    private final Map<String, AbstractParser<?>> parsers = new HashMap<>();
+    private static CommandManager instance;
+    private CommandManager(){};
 
-    public void setUpCommand(Executable command) {
-        addCommand(command.toString(), command);
+    public static CommandManager getInstance(){
+        return instance == null ? instance = new CommandManager() : instance;
     }
 
     public void setUpParser(AbstractParser<?> command) {
         addParser(command.toString(), command);
     }
 
-    private void addCommand(String name, Executable command) {
-        commands.put(name, command);
-    }
-
     public void addParser(String name, AbstractParser<?> parser) {
         parsers.put(name, parser);
     }
-
-    public LinkedHashMap<String, Executable> getCommands() {
-        return commands;
-    }
+//
+//    public List<Command> getCommands() {
+//        return CommandList.commandList;
+//    }
 
     public Map<String, AbstractParser<?>> getParsers() {
         return parsers;
     }
 
-    public  void setUserRequest(String[] splitedRequest) throws IOException {
-        String request = splitedRequest[0];
-        if (getCommands().containsKey(request)) {
-            getCommands().get(request).execute();
-        } else {
-            System.out.println("Команда не распознана! Попробуйте ознакомиться с перечнем команд, введя 'help'.");
-        }
+    public Response executeCommand(Request request) {
+        if (request == null || request.command() == null || request.command().isBlank()) return Response.empty();
+        return CommandList.commandList.stream()
+                .filter(command -> command.getName().equals(request.command()))
+                .findFirst()
+                .map(command -> command.execute(request))
+                .orElse(new Response("Команда '%s' не распознана, введите 'help', чтобы вывести список команд"));
     }
-
 
 }

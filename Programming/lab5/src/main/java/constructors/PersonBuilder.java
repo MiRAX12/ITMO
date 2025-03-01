@@ -8,7 +8,7 @@ public class PersonBuilder {
 
     public static Person build(){
         Person person = new Person();
-        ParameterConstructor parameterConstructor = new ParameterConstructor();
+        ParameterConstructor parameterConstructor = ParameterConstructor.getInstance();
         person.setLocation(LocationBuilder.build());
         person.setPassportID(parameterConstructor.askParameter("StringParser",
                 String.class, "Введите ID паспорта: "));

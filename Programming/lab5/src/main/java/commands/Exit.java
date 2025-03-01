@@ -1,18 +1,20 @@
 package commands;
 
-import utility.Engine;
+import chat.Runner;
+import utility.Request;
+import utility.Response;
 
-public class Exit extends Command implements Executable {
+public class Exit extends Command {
+    public Exit() {super("exit", "%завершить программу без сохранения");}
 
     @Override
-    public void execute() {
-        Engine.finishProgramm();
+    public Response execute(Request request) {
+            Runner.finish();
+        return new Response("Программа завершена командой exit");
     }
 
     @Override
     public String toString() {
-        return "exit";
+        return getName();
     }
-
-
 }

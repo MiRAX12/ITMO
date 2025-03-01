@@ -7,7 +7,7 @@ import data.Location;
 public class LocationBuilder {
 
     public static Location build(){
-        ParameterConstructor parameterConstructor = new ParameterConstructor();
+        ParameterConstructor parameterConstructor = ParameterConstructor.getInstance();
         Location location = new Location();
         location.setX(parameterConstructor.askParameter("FloatParser",
                 Float.class, "Введите координату локации Х: "));

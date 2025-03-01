@@ -1,4 +1,4 @@
-package interfaces;
+package data;
 
 public interface Validatable {
     boolean validate();
