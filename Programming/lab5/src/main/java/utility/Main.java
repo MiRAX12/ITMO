@@ -11,7 +11,7 @@ import java.io.IOException;
 
 public class Main {
 
-    public static void main(String[] args) throws IOException, XMLStreamException {
+    public static void main(String[] args) {
         Runner runner = new Runner();
         CommandList.setRunner(runner);
 

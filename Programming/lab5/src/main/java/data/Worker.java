@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import java.util.Scanner;
 
-public class Worker implements Validatable{
+public class Worker {
     private Long id; //Поле не может быть null, Значение поля должно быть больше 0, Значение этого поля должно быть уникальным, Значение этого поля должно генерироваться автоматически
     private String name; //Поле не может быть null, Строка не может быть пустой
     private Coordinates coordinates; //Поле не может быть null
@@ -15,29 +15,36 @@ public class Worker implements Validatable{
     private ZonedDateTime endDate; //Поле может быть null
     private Status status; //Поле не может быть null
     private Person person; //Поле может быть null
-    private static final Scanner consoleRead = new Scanner(System.in);
 
     public void setId(Long id) {
+        if (id==null) throw new IllegalArgumentException("id не может быть null");
+        if (id <= 0) throw new IllegalArgumentException("id должен быть больше 0");
         this.id = id;
     }
 
     public void setName(String name) {
+        if (name==null) throw new IllegalArgumentException("name не может быть null");
+        if (name.isEmpty()) throw new IllegalArgumentException("Строка не может быть пустой");
         this.name = name;
     }
 
     public void setCoordinates(Coordinates coordinates) {
+        if (coordinates==null) throw new IllegalArgumentException("coordinates не может быть null");
         this.coordinates = coordinates;
     }
 
     public void setCreationDate(LocalDate creationDate) {
+        if (creationDate==null) throw new IllegalArgumentException("creationDate не может быть null");
         this.creationDate = creationDate;
     }
 
     public void setSalary(float salary) {
+        if (salary <= 0) throw new IllegalArgumentException("salary должно быть больше 0");
         this.salary = salary;
     }
 
     public void setStartDate(LocalDateTime startDate) {
+        if (startDate==null) throw new IllegalArgumentException("startDate не может быть null");
         this.startDate = startDate;
     }
 
@@ -46,23 +53,13 @@ public class Worker implements Validatable{
     }
 
     public void setStatus(Status status) {
+        if (status==null) throw new IllegalArgumentException("status не может быть null");
         this.status = status;
     }
 
     public void setPerson(Person person) {
-        this.person = person;
-    }
 
-    @Override
-    public boolean validate(){
-        if (id != null || id <= 0) return false; // auto
-        if (name != null || name.isEmpty()) return false;
-        if (coordinates != null) return false;
-        if (creationDate != null) return false; // auto
-        if (salary <=0) return false;
-        if (startDate != null) return false;
-        if (status != null) return false;
-        return true;
+        this.person = person;
     }
 
     @Override

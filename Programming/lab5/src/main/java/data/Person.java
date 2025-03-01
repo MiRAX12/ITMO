@@ -3,23 +3,17 @@ package data;
 
 import java.util.Scanner;
 
-public class Person implements Validatable {
+public class Person {
     private String passportID; //Поле может быть null
     private Location location; //Поле не может быть null
-    private static Scanner consoleRead = new Scanner(System.in);
 
     public void setPassportID(String passportID) {
         this.passportID = passportID;
     }
 
     public void setLocation(Location location) {
+        if (location==null) throw new IllegalArgumentException("location не может быть null");
         this.location = location;
-    }
-
-    @Override
-    public boolean validate() {
-        if (location == null) return false;
-        return true;
     }
 
     @Override

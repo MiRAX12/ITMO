@@ -2,29 +2,26 @@ package data;
 
 import java.util.Scanner;
 
-public class Location implements Validatable {
+public class Location {
     private Float x; //Поле не может быть null
     private Float y; //Поле не может быть null
     private Long z; //Поле не может быть null
-    private static Scanner consoleRead = new Scanner(System.in);
 
     public void setX(Float x) {
+        if (x==null) throw new IllegalArgumentException("x не может быть null");
         this.x = x;
     }
 
     public void setY(Float y) {
+        if (y==null) throw new IllegalArgumentException("y не может быть null");
         this.y = y;
     }
 
     public void setZ(Long z) {
+        if (z==null) throw new IllegalArgumentException("z не может быть null");
         this.z = z;
     }
 
-    @Override
-    public boolean validate() {
-        if (x == null || y == null || z == null) return false;
-        return true;
-    }
 
     @Override
     public String toString() {

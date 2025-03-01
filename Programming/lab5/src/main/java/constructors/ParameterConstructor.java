@@ -4,10 +4,10 @@ import constructors.parsers.*;
 import data.Status;
 import exceptions.ExitWritten;
 import managers.CommandManager;
+import managers.ParserManager;
 
 import java.time.format.DateTimeParseException;
 import java.util.NoSuchElementException;
-import java.util.Objects;
 import java.util.Scanner;
 
 public class ParameterConstructor {
@@ -25,13 +25,13 @@ public class ParameterConstructor {
             ExitWritten, DateTimeParseException{
         T x = null;
 
-        CommandManager commandManager = CommandManager.getInstance();
-        commandManager.setUpParser(new FloatParser());
-        commandManager.setUpParser(new LongParser());
-        commandManager.setUpParser(new LocalDateTimeParser());
-        commandManager.setUpParser(new ZonedDateTimeParser());
-        commandManager.setUpParser(new StringParser());
-        commandManager.setUpParser(new IntegerParser());
+        ParserManager parserManager = ParserManager.getInstance();
+        parserManager.setUpParser(new FloatParser());
+        parserManager.setUpParser(new LongParser());
+        parserManager.setUpParser(new LocalDateTimeParser());
+        parserManager.setUpParser(new ZonedDateTimeParser());
+        parserManager.setUpParser(new StringParser());
+        parserManager.setUpParser(new IntegerParser());
 
         boolean next = true;
         do {
@@ -44,7 +44,7 @@ public class ParameterConstructor {
             if (parser.equals("EnumParser"))
                 x = dataType.cast(Enum.valueOf(Status.class, input));
             else
-                x = dataType.cast(commandManager.getParsers().get(parser).getResult(input));
+                x = dataType.cast(parserManager.getParsers().get(parser).getResult(input));
             next = false;
 
             } catch (DateTimeParseException e) {

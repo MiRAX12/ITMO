@@ -11,28 +11,11 @@ import java.util.Map;
 
 public class CommandManager {
     private final List<Command> commands = CommandList.commandList;
-    private final Map<String, AbstractParser<?>> parsers = new HashMap<>();
     private static CommandManager instance;
     private CommandManager(){};
 
     public static CommandManager getInstance(){
         return instance == null ? instance = new CommandManager() : instance;
-    }
-
-    public void setUpParser(AbstractParser<?> command) {
-        addParser(command.toString(), command);
-    }
-
-    public void addParser(String name, AbstractParser<?> parser) {
-        parsers.put(name, parser);
-    }
-//
-//    public List<Command> getCommands() {
-//        return CommandList.commandList;
-//    }
-
-    public Map<String, AbstractParser<?>> getParsers() {
-        return parsers;
     }
 
     public Response executeCommand(Request request) {
@@ -41,7 +24,7 @@ public class CommandManager {
                 .filter(command -> command.getName().equals(request.command()))
                 .findFirst()
                 .map(command -> command.execute(request))
-                .orElse(new Response("Команда '%s' не распознана, введите 'help', чтобы вывести список команд"));
+                .orElse(new Response("Команда не распознана, введите 'help', чтобы вывести список команд"));
     }
 
 }
