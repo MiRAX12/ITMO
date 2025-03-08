@@ -16,7 +16,7 @@ public final class CommandList {
             new Save(),
             new Show(),
             new Help(),
-//            new Insert(),
+            new Insert(),
             new Exit(),
             new ExecuteScript(),
             new RemoveGreater(),

@@ -3,37 +3,41 @@ package io;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import data.Worker;
 import exceptions.NoSuchEnviromentVariableException;
-import managers.CollectionManager;
 import io.wrappers.WorkerKeyList;
-import utility.Demapper;
+import utility.Remapper;
 
-import javax.xml.stream.XMLStreamException;
-import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Map;
 
-public class XMLWriter {
+public class XMLReader implements BaseReader {
 
-    public void writeToFile() throws IOException, XMLStreamException {
+    @Override
+    public Map<Integer, Worker> readFromFile() {
         XmlMapper xmlMapper = new XmlMapper();
         xmlMapper.registerModule(new JavaTimeModule());
         xmlMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
 
         if (System.getenv("xml_file") == null) {
-            throw new NoSuchEnviromentVariableException("Не найдена переменная окружения %s, ведущая к файлу!");
+            throw new NoSuchEnviromentVariableException("Не найдена переменная окружения %s, ведущая к файлу!".formatted("xml_file"));
         }
         Path path = Paths.get(System.getenv("xml_file"));
 
         try (FileHandler fileHandler = new FileHandler(path)) {
+            String XMLString = fileHandler.read();
 
+            WorkerKeyList workerKeyList = xmlMapper.readValue(XMLString, WorkerKeyList.class);
 
-            String serialized = xmlMapper.writerWithDefaultPrettyPrinter()
-                    .writeValueAsString(path.toFile());
-            fileHandler.write(serialized);
+            Remapper remapper = new Remapper();
+            remapper.Remap(workerKeyList.getWorkerKeys());
 
-        }catch (Exception e) {
+            return remapper.getMap();
+
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
+
     }
 }

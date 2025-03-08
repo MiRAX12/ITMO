@@ -1,5 +1,7 @@
 package data;
 
+import constructors.ParameterConstructor;
+
 import java.util.Scanner;
 
 public class Coordinates {
@@ -8,12 +10,10 @@ public class Coordinates {
     private static final Scanner consoleRead = new Scanner(System.in);
 
     public void setX(float x) {
-        if (x>603) throw new IllegalArgumentException("x не должен превышать 603");
         this.x = x;
     }
 
     public void setY(Long y) {
-        if (y==null) throw new IllegalArgumentException("y не может быть null");
         this.y = y;
     }
 

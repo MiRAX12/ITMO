@@ -10,12 +10,20 @@ repositories {
 dependencies {
     testImplementation(platform("org.junit:junit-bom:5.10.0"))
     testImplementation("org.junit.jupiter:junit-jupiter")
-    implementation("com.google.code.gson:gson:2.10")
+    implementation("com.fasterxml.jackson.core:jackson-databind:2.18.2")
+    implementation("com.fasterxml.jackson.core:jackson-annotations:2.18.2")
+    implementation("com.fasterxml.jackson.core:jackson-core:2.18.2")
+    implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.18.2")
+    implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.18.2")
+    implementation("com.fasterxml.uuid:java-uuid-generator:5.1.0")
+
+
+
 }
 
 tasks.shadowJar {
     manifest {
-        attributes["Main-Class"] = "org.example.utility.Main"
+        attributes["Main-Class"] = "org.exampleMirax.Main"
     }
     archiveClassifier.set("all")
 }
@@ -23,3 +31,4 @@ tasks.shadowJar {
 tasks.build {
     dependsOn(tasks.shadowJar)
 }
+
