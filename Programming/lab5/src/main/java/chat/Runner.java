@@ -16,7 +16,7 @@ public class Runner implements Runnable {
         CollectionManager.getInstance().load();
 
         isRunning = true;
-        while (isRunning) {
+        do {
             try {
                 var line = consoleRead.nextLine().trim();
                 System.out.println(CommandManager.getInstance().executeCommand(parse(line)).message());
@@ -24,7 +24,7 @@ public class Runner implements Runnable {
             } catch (Exception e) {
                 System.out.println(e);
             }
-        }
+        }while (isRunning);
     }
 
     public static void finish(){
