@@ -3,9 +3,11 @@ package io;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import data.Worker;
-import exceptions.NoSuchEnviromentVariableException;
-import io.wrappers.WorkerKeyList;
+import model.Worker;
+import exceptions.NoSuchEnvironmentVariableException;
+import utility.FileConfiguration;
+import utility.XmlMapperConfig;
+import utility.wrappers.WorkerKeyList;
 import utility.Remapper;
 
 import java.nio.file.Path;
@@ -15,29 +17,28 @@ import java.util.Map;
 public class XMLReader implements BaseReader {
 
     @Override
-    public Map<Integer, Worker> readFromFile() {
-        XmlMapper xmlMapper = new XmlMapper();
-        xmlMapper.registerModule(new JavaTimeModule());
-        xmlMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+    public Map<Integer, Worker> readFromFile() throws Exception {
+        XmlMapper xmlMapper = new XmlMapperConfig().ConfigureXmlMapper(new XmlMapper());
 
         if (System.getenv("xml_file") == null) {
-            throw new NoSuchEnviromentVariableException("Не найдена переменная окружения %s, ведущая к файлу!".formatted("xml_file"));
+            throw new NoSuchEnvironmentVariableException();
         }
         Path path = Paths.get(System.getenv("xml_file"));
+        FileConfiguration.checkReadFile(path);
 
-        try (FileHandler fileHandler = new FileHandler(path)) {
-            String XMLString = fileHandler.read();
-
-            WorkerKeyList workerKeyList = xmlMapper.readValue(XMLString, WorkerKeyList.class);
-
+        try (BufferedReadWorker bufferedReadWorker = new BufferedReadWorker(path)) {
             Remapper remapper = new Remapper();
-            remapper.Remap(workerKeyList.getWorkerKeys());
+            String XMLString = bufferedReadWorker.read();
 
-            return remapper.getMap();
-
+            if (!XMLString.isEmpty()) {
+                WorkerKeyList workerKeyList = xmlMapper.readValue(XMLString, WorkerKeyList.class);
+                remapper.Remap(workerKeyList.getWorkerKeys());
+                return remapper.getMap();
+            }
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            System.out.println(e.getMessage());
         }
-
+        return null;
     }
 }
+

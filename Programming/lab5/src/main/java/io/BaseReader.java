@@ -1,10 +1,9 @@
 package io;
 
-import data.Worker;
-
+import model.Worker;
 import java.util.Map;
 
 public interface BaseReader {
 
-    Map<Integer, Worker> readFromFile();
+    Map<Integer, Worker> readFromFile() throws Exception;
 }
