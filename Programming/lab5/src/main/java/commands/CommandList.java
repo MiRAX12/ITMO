@@ -1,13 +1,12 @@
 package commands;
 
-import chat.Runner;
+import handlers.Handler;
 
 import java.util.List;
-import java.util.logging.Filter;
 
 public final class CommandList {
     private CommandList(){}
-    private static Runner runner;
+    private static Handler handler;
 
     public static final List<Command> commandList = List.of(
             new Clear(),
@@ -16,8 +15,7 @@ public final class CommandList {
             new Save(),
             new Show(),
             new Help(),
-//            new Insert(),
-            new Exit(),
+            new Insert(),
             new ExecuteScript(),
             new RemoveGreater(),
             new RemoveGreaterKey(),
@@ -27,7 +25,7 @@ public final class CommandList {
             new FilterStartsWithName()
     );
 
-    public static void setRunner(Runner runner) {
-        CommandList.runner = runner;
+    public static void setRunner(Handler handler) {
+        CommandList.handler = handler;
     }
 }

@@ -16,7 +16,7 @@ public class Clear extends Command{
         }
         CollectionManager.getInstance().getCollection().clear();
             return new Response("Коллекция успешно очищена!");
-        }
+    }
 
 
     @Override

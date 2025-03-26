@@ -1,6 +1,6 @@
 package utility;
 
-import data.Worker;
+import model.Worker;
 
 import java.util.Collections;
 import java.util.Map;
@@ -20,6 +20,6 @@ public record Response(String message, Map<String, Worker> workers, String scrip
     }
 
     public static Response empty() {
-        return new Response(null);
+        return new Response("");
     }
 }

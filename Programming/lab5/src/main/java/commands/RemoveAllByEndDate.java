@@ -1,11 +1,12 @@
 package commands;
 
-import data.Worker;
+import model.Worker;
 import managers.CollectionManager;
 import utility.Request;
 import utility.Response;
 
 import java.time.ZonedDateTime;
+import java.time.format.DateTimeParseException;
 import java.util.Map;
 
 public class RemoveAllByEndDate extends Command {
@@ -17,12 +18,25 @@ public class RemoveAllByEndDate extends Command {
     }
 
     public Response execute(Request request) {
-        Map<Integer, Worker> collection = CollectionManager.getInstance().getCollection();
-        int collectionSize = collection.size();
-        collection.entrySet().removeIf(entry -> entry.getValue()
-                .getEndDate().isEqual(ZonedDateTime.parse(request.arg())));
-        int difference = collectionSize - collection.size();
-        return new Response("Удалено %d элементов".formatted(difference));
+        Response response;
+
+        if (CollectionManager.getInstance().getCollection().isEmpty()) {
+            return new Response("Коллекция пуста!");
+        }
+        try {
+            Map<Integer, Worker> collection = CollectionManager.getInstance().getCollection();
+            int collectionSize = collection.size();
+
+            collection.entrySet().removeIf(entry -> entry.getValue()
+                    .getEndDate().isEqual(ZonedDateTime.parse(request.arg())));
+            int difference = collectionSize - collection.size();
+            response = new Response("Удалено %d элементов".formatted(difference));
+        } catch (DateTimeParseException e){
+            response = new Response("Чтобы удалить Worker, укажите через пробел" +
+                    " дату и время конца в формате 'yyyy-MM-dd HH:mm:ss z'" +
+                    " (например, '2023-10-05 14:30:00 UTC')");
+        }
+        return response;
     }
 
     @Override

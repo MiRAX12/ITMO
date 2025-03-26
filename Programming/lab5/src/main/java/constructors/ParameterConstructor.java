@@ -1,10 +1,7 @@
 package constructors;
 
-import constructors.parsers.*;
-import data.Status;
 import exceptions.ExitWritten;
-import managers.CommandManager;
-import managers.ParserManager;
+import utility.BuildingRequest;
 
 import java.time.format.DateTimeParseException;
 import java.util.NoSuchElementException;
@@ -12,8 +9,8 @@ import java.util.Scanner;
 
 public class ParameterConstructor {
     static final Scanner consoleRead = new Scanner(System.in);
-    private boolean next;
-        private static ParameterConstructor instance;
+    private static ParameterConstructor instance;
+    boolean next;
 
     private ParameterConstructor() {}
 
@@ -21,42 +18,28 @@ public class ParameterConstructor {
         return instance == null ? instance = new ParameterConstructor() : instance;
     }
 
-    public boolean isNext() {
-        return next;
-    }
-
-    public void setNext(boolean next) {
-        this.next = next;
-    }
-
-    public <T> T askParameter(AbstractParser<T> parser, String message) throws
+    public <T> T askParameter(BuildingRequest<T> buildingRequest) throws
             NoSuchElementException, IllegalStateException, IllegalArgumentException,
             ExitWritten, DateTimeParseException{
         T x = null;
-//
-//        ParserManager parserManager = ParserManager.getInstance();
-//        parserManager.setUpParser(new FloatParser());
-//        parserManager.setUpParser(new LongParser());
-//        parserManager.setUpParser(new LocalDateTimeParser());
-//        parserManager.setUpParser(new ZonedDateTimeParser());
-//        parserManager.setUpParser(new StringParser());
-//        parserManager.setUpParser(new IntegerParser());
 
+        this.next = true;
         do {
             try {
-            System.out.print(message);
+            System.out.print(buildingRequest.message());
             String input = consoleRead.nextLine().trim();
             if (input.equals("exit")) {
-                throw new ExitWritten("Выход из консоли...");
+                System.out.println(new ExitWritten().getMessage());
+                System.exit(0);
             }
-            x = parser.getResult(input);
 
-//            if (parser.equals("EnumParser"))
-//                x = dataType.cast(Enum.valueOf(Status.class, input));
-//            else
-//                x = dataType.cast(parserManager.getParsers().get(parser).getResult(input));
+            if (input.isEmpty()) x = null;
+            x = buildingRequest.parser().getResult(input);
+            next = false;
 
-
+            if (buildingRequest.validation()!=null) {
+                next = !buildingRequest.validation().test(x);
+            }
 
             } catch (DateTimeParseException e) {
                 System.out.println("Ошибка ввода даты. Пожалуйста, введите дату в правильном формате.");
@@ -64,14 +47,9 @@ public class ParameterConstructor {
                 System.out.println("Неправильный формат аргумента, повторите ввод");
             } catch (NoSuchElementException e) {
                 System.out.println("Пользовательский ввод не обнаружен");
-//            } catch (ExitWritten e){
-//                System.out.println("Выход из консоли...");
             }
-
         } while(next);
         return x;
-
-
 
     }
 }

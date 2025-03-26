@@ -1,7 +1,7 @@
 package utility;
 
-import data.Worker;
-import io.wrappers.WorkerKey;
+import model.Worker;
+import utility.wrappers.WorkerKeys;
 
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -12,8 +12,8 @@ public class Remapper {
 
     public Remapper() {}
 
-    public void Remap(List<WorkerKey> workerKeys){
-        for(WorkerKey wk : workerKeys){
+    public void Remap(List<WorkerKeys> workerKeys){
+        for(WorkerKeys wk : workerKeys){
             map.put(Integer.parseInt(wk.getKey()), wk.getWorker());
         }
     }

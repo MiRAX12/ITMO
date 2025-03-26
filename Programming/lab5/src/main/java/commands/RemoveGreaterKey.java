@@ -1,35 +1,37 @@
 package commands;
 
+import model.Worker;
 import managers.CollectionManager;
 import utility.Request;
 import utility.Response;
 
+import java.util.Map;
+
 public class RemoveGreaterKey extends Command {
 
     public RemoveGreaterKey() {
-        super("remove_lower_key",
-                "удалить из коллекции все элементы, ключ которых меньше, чем заданный");
+        super("remove_greater_key",
+                "удалить из коллекции все элементы, ключ которых больше, чем заданный");
     }
 
     public Response execute(Request request) {
-        var iterator = CollectionManager.getInstance().getCollection().entrySet().iterator();
+        Response response;
 
-        int count = 0;
-
-        while (iterator.hasNext()) {
-            var entry = iterator.next();
-            System.out.print("Сравниваем элементы:" + entry.getKey() + " vs " + request.arg());
-            if (entry.getKey() > Integer.parseInt(request.arg())) {
-                System.out.println("Элемент " + entry +" больше, удаление...");
-                iterator.remove();
-                count++;
-            }
-            else
-            {
-                return new Response("Элемент меньше");
-            }
+        if (CollectionManager.getInstance().getCollection().isEmpty()) {
+            return new Response("Коллекция пуста!");
         }
-        return new Response("Удалено " + count + " элементов");
+        try {
+            Map<Integer, Worker> collection = CollectionManager.getInstance().getCollection();
+            int collectionSize = collection.size();
+
+            collection.entrySet().removeIf(entry -> entry.getKey()
+                    > Integer.parseInt(request.arg()));
+            int difference = collectionSize - collection.size();
+            response = new Response("Удалено %d элементов".formatted(difference));
+        } catch (Exception e) {
+            response = new Response("Чтобы удалить Worker, укажите через пробел ключ в виде числа");
+        }
+        return response;
     }
 
     @Override

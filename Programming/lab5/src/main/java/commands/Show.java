@@ -1,9 +1,11 @@
 package commands;
 
-import data.Worker;
+import model.Worker;
 import managers.CollectionManager;
 import utility.Request;
 import utility.Response;
+
+import java.util.Map;
 
 public class Show extends Command {
 
@@ -13,13 +15,13 @@ public class Show extends Command {
 
     @Override
     public Response execute(Request request) {
-        CollectionManager collection = CollectionManager.getInstance();
-        if (collection.getCollection().isEmpty()){
+        Map<Integer, Worker> collection = CollectionManager.getInstance().getCollection();
+
+        if (collection.isEmpty()){
             return new Response("Коллекция пуста!");
         }
-
-        for (Worker worker :collection.getCollection().values()){
-            return new Response(collection.getCollection().toString());
+        for (Map.Entry<Integer, Worker> worker : collection.entrySet()){
+            System.out.println(new Response(worker.toString()).message());
         }
         return Response.empty();
     }

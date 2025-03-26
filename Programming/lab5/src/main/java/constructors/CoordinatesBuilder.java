@@ -2,21 +2,29 @@ package constructors;
 
 import constructors.parsers.FloatParser;
 import constructors.parsers.LongParser;
-import data.Coordinates;
+import model.Coordinates;
+import utility.BuildingRequest;
 
-import java.io.IOException;
+import java.util.Objects;
 
 public class CoordinatesBuilder {
 
-    public static Coordinates build() throws IOException {
-        ParameterConstructor parameterConstructor = ParameterConstructor.getInstance();
-        Coordinates coordinates = new Coordinates();
-
-        coordinates.setX(parameterConstructor.askParameter(new FloatParser(), "Введите координату Х: "));
-        coordinates.setY(parameterConstructor.askParameter(new LongParser(),"Введите координату Y: "));
-        return coordinates;
+    private static BuildingRequest<Float> askParameterX() {
+        return new BuildingRequest<>(new FloatParser(), x -> x<=603,
+                "Введите координату Х, не превышающую 603: ");
     }
 
+    private static BuildingRequest<Long> askParameterY() {
+        return new BuildingRequest<>(new LongParser(), Objects::nonNull,
+                "Введите координату Y. Пустая строка не допускается: ");
+    }
 
+    public static Coordinates buildCoordinates(){
+        ParameterConstructor parameterConstructor = ParameterConstructor.getInstance();
+        Coordinates.Builder builder = new Coordinates.Builder();
+        builder.x(parameterConstructor.askParameter(askParameterX()));
+        builder.y(parameterConstructor.askParameter(askParameterY()));
+        return builder.build();
+    }
 
 }

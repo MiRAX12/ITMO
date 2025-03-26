@@ -1,24 +1,24 @@
 package utility;
 
-import data.Worker;
-import io.wrappers.WorkerKey;
+import model.Worker;
+import utility.wrappers.WorkerKeys;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 public class Demapper {
-    List<WorkerKey> workerKeys = new ArrayList<WorkerKey>();
+    List<WorkerKeys> workerKeys = new ArrayList<WorkerKeys>();
 
     public Demapper(){}
 
     public void Demap(Map<Integer, Worker> map){
         for(Map.Entry<Integer, Worker> entry : map.entrySet()){
-            workerKeys.add(new WorkerKey(entry.getKey().toString(), entry.getValue()));
+            workerKeys.add(new WorkerKeys(entry.getKey().toString(), entry.getValue()));
         }
     }
 
-    public List<WorkerKey> getWorkerKeys() {
+    public List<WorkerKeys> getWorkerKeys() {
         return workerKeys;
     }
 }

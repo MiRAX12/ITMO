@@ -1,39 +1,56 @@
 package io;
 
-import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import exceptions.NoSuchEnviromentVariableException;
+import exceptions.NoSuchEnvironmentVariableException;
 import managers.CollectionManager;
-import io.wrappers.WorkerKeyList;
+import model.Worker;
+import utility.FileConfiguration;
+import utility.XmlMapperConfig;
+import utility.wrappers.WorkerKeyList;
 import utility.Demapper;
 
-import javax.xml.stream.XMLStreamException;
-import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
-public class XMLWriter {
+public class XMLWriter implements BaseWriter {
 
-    public void writeToFile() throws IOException, XMLStreamException {
-        XmlMapper xmlMapper = new XmlMapper();
-        xmlMapper.registerModule(new JavaTimeModule());
-        xmlMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
-
+    public void writeToFile() throws Exception {
+        XmlMapper xmlMapper = new XmlMapperConfig().ConfigureXmlMapper(new XmlMapper());
+        Map<Integer, Worker> workerMap = CollectionManager.getInstance().getCollection();
+        Long maxId;
         if (System.getenv("xml_file") == null) {
-            throw new NoSuchEnviromentVariableException("Не найдена переменная окружения %s, ведущая к файлу!");
+            throw new NoSuchEnvironmentVariableException("xml_file");
         }
         Path path = Paths.get(System.getenv("xml_file"));
+        FileConfiguration.checkWriteFile(path);
+        try (PrintWriteWorker printWriteWorker = new PrintWriteWorker(path)){
+            if (CollectionManager.getInstance().getCollection().isEmpty()) {
+                printWriteWorker.write("");
+                return;
+            }
+            WorkerKeyList demappedCollection = demapCollection(workerMap);
+            if (IdGenerator.getInstance().getCurrentId() <
+                    ((LinkedHashMap<Integer, Worker>) workerMap).lastEntry().getValue().getId()){
+                maxId = ((LinkedHashMap<Integer, Worker>) workerMap).lastEntry().getValue().getId();
+                IdGenerator.getInstance().saveId(maxId);
+            }
 
-        try (FileHandler fileHandler = new FileHandler(path)) {
-
-
-            String serialized = xmlMapper.writerWithDefaultPrettyPrinter()
-                    .writeValueAsString(path.toFile());
-            fileHandler.write(serialized);
-
-        }catch (Exception e) {
-            throw new RuntimeException(e);
+            String xmlString = xmlMapper.writerWithDefaultPrettyPrinter()
+                    .writeValueAsString(demappedCollection);
+            printWriteWorker.write(xmlString);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
         }
+    }
+
+    private WorkerKeyList demapCollection(Map<Integer, Worker> workerMap){
+        Demapper demapper = new Demapper();
+        WorkerKeyList workerKeyList = new WorkerKeyList();
+
+        demapper.Demap(workerMap);
+        workerKeyList.setWorkerKeys(demapper.getWorkerKeys());
+        return workerKeyList;
     }
 }
