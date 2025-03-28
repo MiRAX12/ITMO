@@ -1,4 +1,0 @@
-show
-info
-help
-insert 234
