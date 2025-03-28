@@ -11,7 +11,6 @@ import utility.Demapper;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class XMLWriter implements BaseWriter {
@@ -19,7 +18,6 @@ public class XMLWriter implements BaseWriter {
     public void writeToFile() throws Exception {
         XmlMapper xmlMapper = new XmlMapperConfig().ConfigureXmlMapper(new XmlMapper());
         Map<Integer, Worker> workerMap = CollectionManager.getInstance().getCollection();
-        Long maxId;
         if (System.getenv("xml_file") == null) {
             throw new NoSuchEnvironmentVariableException("xml_file");
         }
