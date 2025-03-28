@@ -5,9 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1262d7ba-2075-4321-9cac-951946abf8ea" name="Changes" comment="Added validation for xml">
-      <change beforePath="$PROJECT_DIR$/src/main/java/exceptions/NoSuchEnvironmentVariableException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/exceptions/NoSuchEnvironmentVariableException.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/io/XMLWriter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/XMLWriter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/exampleMirax/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/exampleMirax/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -54,12 +52,12 @@
     &quot;assignee&quot;: &quot;MiRAX12&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/MiRAX12/ITMO.git",
-    "accountId": "b731982d-e8f9-4a19-aa33-379315c8b3e2"
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/MiRAX12/ITMO.git&quot;,
+    &quot;accountId&quot;: &quot;b731982d-e8f9-4a19-aa33-379315c8b3e2&quot;
   }
-}]]></component>
+}</component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 5
 }</component>
@@ -70,6 +68,7 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "ASKED_MARK_IGNORED_FILES_AS_EXCLUDED": "true",
     "Application.Main.executor": "Run",
     "Gradle.Download Sources.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
@@ -116,6 +115,7 @@
       <workItem from="1743167900537" duration="11330000" />
       <workItem from="1743199941991" duration="486000" />
       <workItem from="1743201823362" duration="2594000" />
+      <workItem from="1743204487483" duration="299000" />
     </task>
     <task id="LOCAL-00001" summary="Added validation for xml">
       <option name="closed" value="true" />
@@ -149,7 +149,31 @@
       <option name="project" value="LOCAL" />
       <updated>1743201648291</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Added validation for xml">
+      <option name="closed" value="true" />
+      <created>1743204569025</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1743204569025</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Added validation for xml">
+      <option name="closed" value="true" />
+      <created>1743204630532</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1743204630532</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Added validation for xml">
+      <option name="closed" value="true" />
+      <created>1743204765517</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1743204765517</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
