@@ -1,8 +1,12 @@
 package commands;
 
+import model.Worker;
 import managers.CollectionManager;
 import utility.Request;
 import utility.Response;
+
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class FilterStartsWithName extends Command {
 
@@ -14,11 +18,18 @@ public class FilterStartsWithName extends Command {
     }
 
     public Response execute(Request request) {
-        var result = CollectionManager.getInstance().getCollection().entrySet().stream()
+        Map<Integer, Worker> result = CollectionManager.getInstance().getCollection().entrySet().stream()
                 .filter(entry -> entry.getValue().getName().startsWith(request.arg()))
-                .findFirst();
-        if (result.isPresent()) return new Response("Найдены элементы: " + result);
-        else return new Response("Нет элемента, начинающегося на %s");
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+
+        if (result.isEmpty()) {
+            return new Response("Нет элемента, начинающегося на %s");
+        }
+        System.out.println("Найдены элементы: ");
+        for (Map.Entry<Integer, Worker> worker : result.entrySet()) {
+            System.out.println(new Response(worker.toString()).message());
+        }
+        return Response.empty();
     }
 
     @Override

@@ -1,14 +1,24 @@
 package model;
 
+import io.IdGenerator;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
+import org.hibernate.validator.constraints.UniqueElements;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 
 public class Worker {
+    @NotNull(message = "id не может быть null")
+    @Positive(message = "id должно быть больше 0")
     private Long id; //Поле не может быть null, Значение поля должно быть больше 0, Значение этого поля должно быть уникальным, Значение этого поля должно генерироваться автоматически
     private String name; //Поле не может быть null, Строка не может быть пустой
+    @Valid
     private Coordinates coordinates; //Поле не может быть null
     private LocalDate creationDate; //Поле не может быть null, Значение этого поля должно генерироваться автоматически
+    @Positive(message = "Salary должно быть больше 0")
     private float salary; //Значение поля должно быть больше 0
     private LocalDateTime startDate; //Поле не может быть null
     private ZonedDateTime endDate; //Поле может быть null
@@ -16,8 +26,6 @@ public class Worker {
     private Person person; //Поле может быть null
 
     public Worker(){
-        this.id = IdGenerator.updateID();
-        this.creationDate = LocalDate.now();
     }
 
     public void setId(Long id) {
@@ -73,8 +81,10 @@ public class Worker {
     }
 
     public static class Builder {
+        private Long id = IdGenerator.getInstance().generateId();
         private String name = null;
         private Coordinates coordinates = null;
+        private LocalDate creationDate = LocalDate.now();
         private float salary = 0;
         private LocalDateTime startDate = null;
         private ZonedDateTime endDate = null;
@@ -118,8 +128,10 @@ public class Worker {
 
         public Worker build() {
             Worker worker = new Worker();
+            worker.id = this.id;
             worker.name = this.name;
             worker.coordinates = this.coordinates;
+            worker.creationDate = this.creationDate;
             worker.salary = this.salary;
             worker.startDate = this.startDate;
             worker.endDate = this.endDate;

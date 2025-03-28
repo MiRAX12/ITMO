@@ -1,8 +1,11 @@
 package commands;
 
+import model.Worker;
 import managers.CollectionManager;
 import utility.Request;
 import utility.Response;
+
+import java.util.Map;
 
 public class RemoveLowerKey extends Command {
 
@@ -12,30 +15,28 @@ public class RemoveLowerKey extends Command {
     }
 
     public Response execute(Request request) {
-        var iterator = CollectionManager.getInstance().getCollection().entrySet().iterator();
+        Response response;
 
-        int count = 0;
-
-        while (iterator.hasNext()) {
-            var entry = iterator.next();
-            System.out.print("Сравниваем элементы:" + entry.getKey() + " vs " + request.arg());
-            if (entry.getKey() < Integer.parseInt(request.arg())){
-                System.out.println("Элемент " + entry +" меньше, удаление...");
-                iterator.remove();
-                count++;
-            }
-            else
-            {
-                return new Response("Элемент больше");
-            }
+        if (CollectionManager.getInstance().getCollection().isEmpty()) {
+            return new Response("Коллекция пуста!");
         }
+        try {
+            Map<Integer, Worker> collection = CollectionManager.getInstance().getCollection();
+            int collectionSize = collection.size();
 
-        return new Response("Удалено " + count + " элементов");
+            collection.entrySet().removeIf(entry -> entry.getKey()
+                    < Integer.parseInt(request.arg()));
+            int difference = collectionSize - collection.size();
+            response = new Response("Удалено %d элементов".formatted(difference));
+        } catch (Exception e) {
+            response = new Response("Чтобы удалить Worker, укажите через пробел ключ в виде числа");
         }
+        return response;
+    }
 
     @Override
     public String toString() {
         return getName();
     }
-    }
+}
 

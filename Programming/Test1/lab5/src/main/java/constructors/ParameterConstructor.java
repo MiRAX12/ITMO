@@ -1,9 +1,6 @@
 package constructors;
 
-import constructors.parsers.*;
-import data.Status;
 import exceptions.ExitWritten;
-import managers.ParserManager;
 import utility.BuildingRequest;
 
 import java.time.format.DateTimeParseException;
@@ -32,7 +29,8 @@ public class ParameterConstructor {
             System.out.print(buildingRequest.message());
             String input = consoleRead.nextLine().trim();
             if (input.equals("exit")) {
-                throw new ExitWritten("Выход из консоли...");
+                System.out.println(new ExitWritten().getMessage());
+                System.exit(0);
             }
 
             if (input.isEmpty()) x = null;
@@ -50,7 +48,6 @@ public class ParameterConstructor {
             } catch (NoSuchElementException e) {
                 System.out.println("Пользовательский ввод не обнаружен");
             }
-
         } while(next);
         return x;
 

@@ -1,4 +1,1 @@
-show
-info
-help
-insert 234
+execute_script .\script.txt

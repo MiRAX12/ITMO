@@ -1,6 +1,5 @@
 package handlers;
 
-import model.IdGenerator;
 import managers.CollectionManager;
 import utility.Request;
 
@@ -14,16 +13,13 @@ public class Handler implements Runnable {
     public void run() {
         System.out.println("Добро пожаловать");
         CollectionManager.getInstance().load();
-        IdGenerator.resetID(CollectionManager.getInstance().getCollection());
-
         isRunning = true;
-        while (isRunning) {
+        while (consoleRead.hasNext()&&isRunning) {
             try {
-                var line = consoleRead.nextLine().trim();
-                System.out.println(Router.getInstance().route(parse(line)).message()   );
-
+                    var line = consoleRead.nextLine().trim();
+                    System.out.println(Router.getInstance().route(parse(line)).message());
             } catch (Exception e) {
-                System.out.println(e);
+                System.out.println(e.getMessage());
             }
         }
     }

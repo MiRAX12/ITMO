@@ -1,15 +1,15 @@
 package commands;
 
-import chat.Runner;
+import handlers.Handler;
 import utility.Request;
 import utility.Response;
 
 public class Exit extends Command {
-    public Exit() {super("exit", "%завершить программу без сохранения");}
+    public Exit() {super("exit", "завершить программу без сохранения");}
 
     @Override
     public Response execute(Request request) {
-            Runner.finish();
+            Handler.finish();
         return new Response("Программа завершена командой exit");
     }
 

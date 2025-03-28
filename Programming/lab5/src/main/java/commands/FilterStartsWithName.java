@@ -23,7 +23,7 @@ public class FilterStartsWithName extends Command {
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
 
         if (result.isEmpty()) {
-            return new Response("Нет элемента, начинающегося на %s");
+            return new Response("Нет элемента, начинающегося на %s".formatted(request.arg()));
         }
         System.out.println("Найдены элементы: ");
         for (Map.Entry<Integer, Worker> worker : result.entrySet()) {

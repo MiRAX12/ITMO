@@ -1,45 +1,56 @@
 package io;
 
-import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import exceptions.NoSuchEnvironmentVariableException;
 import managers.CollectionManager;
+import model.Worker;
 import utility.FileConfiguration;
-import utility.Remapper;
 import utility.XmlMapperConfig;
 import utility.wrappers.WorkerKeyList;
 import utility.Demapper;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 public class XMLWriter implements BaseWriter {
 
     public void writeToFile() throws Exception {
         XmlMapper xmlMapper = new XmlMapperConfig().ConfigureXmlMapper(new XmlMapper());
-
+        Map<Integer, Worker> workerMap = CollectionManager.getInstance().getCollection();
+        Long maxId;
         if (System.getenv("xml_file") == null) {
-            throw new NoSuchEnvironmentVariableException();
+            throw new NoSuchEnvironmentVariableException("xml_file");
         }
         Path path = Paths.get(System.getenv("xml_file"));
         FileConfiguration.checkWriteFile(path);
-
-        try (BufferedWriteWorker bufferedWriteWorker = new BufferedWriteWorker(path)){
-            Demapper demapper = new Demapper();
-            WorkerKeyList workerKeyList = new WorkerKeyList();
-
+        try (PrintWriteWorker printWriteWorker = new PrintWriteWorker(path)){
             if (CollectionManager.getInstance().getCollection().isEmpty()) {
-                bufferedWriteWorker.write("");
+                printWriteWorker.write("");
                 return;
             }
-            demapper.Demap(CollectionManager.getInstance().getCollection());
-            workerKeyList.setWorkerKeys(demapper.getWorkerKeys());
+            WorkerKeyList demappedCollection = demapCollection(workerMap);
+            if (IdGenerator.getInstance().getCurrentId() <
+                    ((LinkedHashMap<Integer, Worker>) workerMap).lastEntry().getValue().getId()){
+                maxId = ((LinkedHashMap<Integer, Worker>) workerMap).lastEntry().getValue().getId();
+                IdGenerator.getInstance().saveId(maxId);
+            }
+
             String xmlString = xmlMapper.writerWithDefaultPrettyPrinter()
-                    .writeValueAsString(workerKeyList);
-            bufferedWriteWorker.write(xmlString);
-        }catch (Exception e) {
+                    .writeValueAsString(demappedCollection);
+            printWriteWorker.write(xmlString);
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
+    }
+
+    private WorkerKeyList demapCollection(Map<Integer, Worker> workerMap){
+        Demapper demapper = new Demapper();
+        WorkerKeyList workerKeyList = new WorkerKeyList();
+
+        demapper.Demap(workerMap);
+        workerKeyList.setWorkerKeys(demapper.getWorkerKeys());
+        return workerKeyList;
     }
 }

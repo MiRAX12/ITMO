@@ -1,7 +1,7 @@
 package utility;
 
-import data.Worker;
-import io.wrappers.WorkerKey;
+import model.Worker;
+import utility.wrappers.WorkerKey;
 
 import java.util.ArrayList;
 import java.util.List;

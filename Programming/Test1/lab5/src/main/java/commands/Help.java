@@ -1,11 +1,11 @@
 package commands;
 
-import managers.CommandManager;
+import handlers.Router;
 import utility.Request;
 import utility.Response;
 
 public class Help extends Command{
-    CommandManager commandManager = CommandManager.getInstance();
+    Router router = Router.getInstance();
 
     public Help(){
         super("help", "Вывести справку о доступных командах");
@@ -16,7 +16,7 @@ public class Help extends Command{
             System.out.print(command.toString() + ": ");
             command.getDescription();
         }
-        return new Response("Команды вмещают максимум 1 аргумент");
+        return Response.empty();
     }
     @Override
     public String toString() {

@@ -7,7 +7,7 @@ public class Main {
 
     public static void main(String[] args) {
         Handler handler = new Handler();
-        CommandList.setRunner(handler);
+        Handler.setRunner(handler);
 
         handler.run();
 

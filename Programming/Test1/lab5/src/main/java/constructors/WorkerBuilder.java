@@ -1,12 +1,10 @@
 package constructors;
 
 import constructors.parsers.*;
-import data.Status;
-import data.Worker;
+import model.Status;
+import model.Worker;
 import utility.BuildingRequest;
 
-import java.io.IOException;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import java.util.HashMap;

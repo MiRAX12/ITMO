@@ -33,8 +33,7 @@ public class ParameterConstructor {
                 System.exit(0);
             }
 
-            if (input.isEmpty()) x = null;
-            x = buildingRequest.parser().getResult(input);
+            if (!input.equals("^D")) x = buildingRequest.parser().getResult(input);
             next = false;
 
             if (buildingRequest.validation()!=null) {
@@ -46,7 +45,8 @@ public class ParameterConstructor {
             } catch (IllegalArgumentException e) {
                 System.out.println("Неправильный формат аргумента, повторите ввод");
             } catch (NoSuchElementException e) {
-                System.out.println("Пользовательский ввод не обнаружен");
+                System.exit(0);
+
             }
         } while(next);
         return x;

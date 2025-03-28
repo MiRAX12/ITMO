@@ -2,7 +2,7 @@ package constructors;
 
 import constructors.parsers.FloatParser;
 import constructors.parsers.LongParser;
-import data.Location;
+import model.Location;
 import utility.BuildingRequest;
 
 import java.util.Objects;

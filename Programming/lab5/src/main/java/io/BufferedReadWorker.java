@@ -3,7 +3,7 @@ package io;
 import java.io.*;
 import java.nio.file.Path;
 
-public class BufferedReadWorker implements AutoCloseable{
+public class BufferedReadWorker implements BaseReadWorker{
     private final BufferedReader reader;
 
     public BufferedReadWorker(Path path) throws IOException {

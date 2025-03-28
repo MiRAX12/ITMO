@@ -1,10 +1,9 @@
 package constructors;
 
 import constructors.parsers.StringParser;
-import data.Person;
+import model.Person;
 import utility.BuildingRequest;
 
-import java.util.Objects;
 import java.util.Scanner;
 
 public class PersonBuilder {

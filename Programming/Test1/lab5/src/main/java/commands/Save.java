@@ -15,20 +15,14 @@ public class Save extends Command {
 
     @Override
     public Response execute(Request request) {
-        if (CollectionManager.getInstance().getCollection().isEmpty()){
-            return new Response("Коллекция пуста!");
-        }
+        XMLWriter xmlWriter = new XMLWriter();
         try {
-            XMLWriter xmlWriter = new XMLWriter();
             xmlWriter.writeToFile();
-            return new Response("Файл сохранен");
-        } catch (XMLStreamException e) {
-            System.out.println("Ошибка сериализации");
-        } catch (IOException e){
-            System.out.println("Ошибка ввода");
+        } catch (Exception e) {
+            return new Response("Не удалось сохранить файл: " + e.getMessage());
         }
-        return Response.empty();
-        }
+        return new Response("Файл сохранен\n");
+    }
 
     @Override
     public String toString() {

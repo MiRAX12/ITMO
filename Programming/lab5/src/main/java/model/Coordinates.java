@@ -1,7 +1,16 @@
 package model;
 
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
+import jakarta.validation.constraints.DecimalMax;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.NotNull;
+
 public class Coordinates {
+
+    @DecimalMax(value = "603.0", message = "Координата х не может быть больше 603")
     private float x; //Максимальное значение поля: 603
+
+    @NotNull
     private Long y; //Поле не может быть null
 
     public void setX(float x) {

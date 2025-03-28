@@ -2,10 +2,9 @@ package constructors;
 
 import constructors.parsers.FloatParser;
 import constructors.parsers.LongParser;
-import data.Coordinates;
+import model.Coordinates;
 import utility.BuildingRequest;
 
-import java.io.IOException;
 import java.util.Objects;
 
 public class CoordinatesBuilder {
