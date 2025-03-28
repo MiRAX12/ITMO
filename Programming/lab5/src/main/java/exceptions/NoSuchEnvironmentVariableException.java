@@ -1,5 +1,7 @@
 package exceptions;
 
+import java.util.Objects;
+
 public class NoSuchEnvironmentVariableException extends RuntimeException {
     String variableName;
     public NoSuchEnvironmentVariableException(String variableName) {
@@ -9,8 +11,13 @@ public class NoSuchEnvironmentVariableException extends RuntimeException {
 
     @Override
     public String getMessage() {
-        return "Не найдена переменная окружения, ведущая к файлу! " +
-                "Чтобы прочитать файл, установите переменную окружения " + variableName +
+        if(Objects.equals(variableName, "id_collector")) {
+            return "Не найдена переменная окружения, ведущая к файлу ID! " +
+                    "Установите переменную окружения " + variableName +
+                    " содержащую путь к файлу и запустите программу снова";
+        }
+        return "Не найдена переменная окружения, ведущая к XML файлу! " +
+                "Установите переменную окружения " + variableName +
                 " содержащую путь к файлу и запустите программу снова";
     }
 }

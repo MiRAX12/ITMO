@@ -31,12 +31,6 @@ public class XMLWriter implements BaseWriter {
                 return;
             }
             WorkerKeyList demappedCollection = demapCollection(workerMap);
-            if (IdGenerator.getInstance().getCurrentId() <
-                    ((LinkedHashMap<Integer, Worker>) workerMap).lastEntry().getValue().getId()){
-                maxId = ((LinkedHashMap<Integer, Worker>) workerMap).lastEntry().getValue().getId();
-                IdGenerator.getInstance().saveId(maxId);
-            }
-
             String xmlString = xmlMapper.writerWithDefaultPrettyPrinter()
                     .writeValueAsString(demappedCollection);
             printWriteWorker.write(xmlString);

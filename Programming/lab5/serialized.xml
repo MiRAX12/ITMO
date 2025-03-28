@@ -1,53 +1,5 @@
 <ArrayList>
   <workerKeys>
-    <key>214</key>
-    <worker>
-      <id>479397964</id>
-      <name>qwrwq</name>
-      <coordinates>
-        <x>2121.0</x>
-        <y>4211</y>
-      </coordinates>
-      <creationDate>2025-03-01</creationDate>
-      <salary>421421.0</salary>
-      <startDate>2023-10-05T14:30:00</startDate>
-      <endDate>2023-10-05T14:30:00Z</endDate>
-      <status>FIRED</status>
-      <person>
-        <passportID>21421</passportID>
-        <location>
-          <x>214.0</x>
-          <y>4214.0</y>
-          <z>1421</z>
-        </location>
-      </person>
-    </worker>
-  </workerKeys>
-  <workerKeys>
-    <key>22314</key>
-    <worker>
-      <id>47939s796422</id>
-      <name>qwrwq</name>
-      <coordinates>
-        <x>211.0</x>
-        <y>4211</y>
-      </coordinates>
-      <creationDate>2025-03-01</creationDate>
-      <salary>421421.0</salary>
-      <startDate>2023-10-05T14:30:00</startDate>
-      <endDate>2023-10-05T14:30:00Z</endDate>
-      <status>FIRED</status>
-      <person>
-        <passportID>21421</passportID>
-        <location>
-          <x>214.0</x>
-          <y>4214.0</y>
-          <z>1421</z>
-        </location>
-      </person>
-    </worker>
-  </workerKeys>
-  <workerKeys>
     <key>25253</key>
     <worker>
       <id>479397964</id>
@@ -61,23 +13,26 @@
       <startDate>2023-10-05T14:30:00</startDate>
       <endDate>2023-10-05T14:30:00Z</endDate>
       <status>HIRED</status>
-      <person/>
+      <person>
+        <passportID/>
+        <location/>
+      </person>
     </worker>
   </workerKeys>
   <workerKeys>
-    <key>3534</key>
+    <key>241</key>
     <worker>
-      <id>479397964</id>
-      <name>wgre</name>
+      <id>479397965</id>
+      <name>weg</name>
       <coordinates>
-        <x>46.0</x>
-        <y>643643</y>
+        <x>124.0</x>
+        <y>12421</y>
       </coordinates>
-      <creationDate>2025-03-28</creationDate>
-      <salary>4636.0</salary>
+      <creationDate>2025-03-29</creationDate>
+      <salary>124214.0</salary>
       <startDate>2023-10-05T14:30:00</startDate>
       <endDate>2023-10-05T14:30:00Z</endDate>
-      <status>RECOMMENDED_FOR_PROMOTION</status>
+      <status>HIRED</status>
       <person/>
     </worker>
   </workerKeys>
