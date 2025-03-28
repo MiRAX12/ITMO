@@ -9,7 +9,7 @@ build/
 .idea/jarRepositories.xml
 .idea/compiler.xml
 .idea/libraries/
-.idea/
+.idea/shelf
 *.iws
 *.iml
 *.ipr
