@@ -1,38 +1,18 @@
 <ArrayList>
   <workerKeys>
-    <key>25253</key>
+    <key>14</key>
     <worker>
-      <id>479397964</id>
-      <name>rgwg</name>
-      <coordinates>
-        <x>432.0</x>
-        <y>23543</y>
-      </coordinates>
-      <creationDate>2025-03-28</creationDate>
-      <salary>23542.0</salary>
-      <startDate>2023-10-05T14:30:00</startDate>
-      <endDate>2023-10-05T14:30:00Z</endDate>
-      <status>HIRED</status>
-      <person>
-        <passportID/>
-        <location/>
-      </person>
-    </worker>
-  </workerKeys>
-  <workerKeys>
-    <key>241</key>
-    <worker>
-      <id>479397965</id>
-      <name>weg</name>
+      <id>479397968</id>
+      <name>ewqfew</name>
       <coordinates>
         <x>124.0</x>
-        <y>12421</y>
+        <y>21412</y>
       </coordinates>
       <creationDate>2025-03-29</creationDate>
-      <salary>124214.0</salary>
+      <salary>124.0</salary>
       <startDate>2023-10-05T14:30:00</startDate>
       <endDate>2023-10-05T14:30:00Z</endDate>
-      <status>HIRED</status>
+      <status>FIRED</status>
       <person/>
     </worker>
   </workerKeys>

@@ -3,6 +3,7 @@ package commands;
 import handlers.Handler;
 import exceptions.ScriptRecursionException;
 import handlers.Router;
+import utility.FileConfiguration;
 import utility.Request;
 import utility.Response;
 
@@ -11,7 +12,18 @@ import java.nio.file.Paths;
 import java.util.HashSet;
 import java.util.Scanner;
 
-
+/**
+ * Command to execute a script from a file.
+ * <p>
+ * The {@code ExecuteScript} command reads a script from a chosen file and returns
+ * its content as a se in the {@link Response}. The command performs several checks
+ * to ensure the file is valid and readable.
+ * </p>
+ *
+ * @see Response
+ * @see FileWorker
+ * @since 1.0
+ */
 public class ExecuteScript extends Command {
     private HashSet<String> executedFiles = new HashSet<>();
 
@@ -28,11 +40,9 @@ public class ExecuteScript extends Command {
         }
 
         Path path = Paths.get(request.arg());
-        if (!path.toFile().exists()) return new Response("Файл не существует");
-        if (!path.toFile().isFile()) return new Response("Путь не ведет к файлу");
-        if (!path.toFile().canRead()) return new Response("У вас нет прав на чтение файла");
 
         try {
+            FileConfiguration.checkReadFile(path);
             Scanner scanner = new Scanner(path);
 
             executedFiles.add(path.toFile().getCanonicalPath());
@@ -52,6 +62,11 @@ public class ExecuteScript extends Command {
         } return response;
     }
 
+    /**
+     * Overridden {code toString} to return name of this command
+     *
+     * @return name of the command
+     */
     @Override
     public String toString() {
         return getName();

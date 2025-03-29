@@ -7,6 +7,17 @@ import utility.Response;
 
 import java.util.Map;
 
+/**
+ * Command to remove all elements from the collection which has field greater that the specified one.
+ * <p>
+ * The {@code RemoveGreater} command compares all elements in the collection managed by
+ * {@link CollectionManager} to a given {@link Worker}. All elements which has field
+ * greater than the specified field are removed.
+ * </p>
+ *
+ * @see CollectionManager
+ * @since 1.0
+ */
 public class RemoveGreater extends Command {
 
     public RemoveGreater() {
@@ -14,17 +25,27 @@ public class RemoveGreater extends Command {
                 "Удаляет всех Worker с зарплатой выше заданной");
     }
 
+    /**
+     * Executes the command to remove all elements which has field greater than the specified element.
+     * <p>
+     * If the collection is empty, an appropriate response is returned. Otherwise,
+     * elements which has field greater than the specified element are removed
+     * from the collection.
+     * </p>
+     *
+     * @param request the request containing the {@link Worker} salary to compare
+     * @return a {@link Response} indicating whether the elements were successfully removed or if
+     * no operation was performed
+     */
     @Override
     public Response execute(Request request) {
         Response response;
-
         if (CollectionManager.getInstance().getCollection().isEmpty()) {
             return new Response("Коллекция пуста!");
         }
         try {
             Map<Integer, Worker> collection = CollectionManager.getInstance().getCollection();
             int collectionSize = collection.size();
-
             collection.entrySet().removeIf(entry -> entry.getValue()
                     .getSalary() > Float.parseFloat(request.arg()));
             int difference = collectionSize - collection.size();

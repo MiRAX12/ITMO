@@ -4,10 +4,24 @@ import handlers.Handler;
 
 import java.util.List;
 
+/**
+ * A list of commands available in the program
+ * <p>
+ * The {@code CommandList} class provides a static, immutable list
+ * of all {@link Command} instances used by the program. This class cannot be instantiated.
+ * </p>
+ *
+ * @see Command
+ * @since 1.0
+ */
 public final class CommandList {
-    private CommandList(){}
-    private static Handler handler;
 
+    /**
+     * A static, immutable list of commands
+     * <p>
+     * This list includes all commands available in the program.
+     * </p>
+     */
     public static final List<Command> commandList = List.of(
             new Clear(),
             new Exit(),
@@ -25,7 +39,8 @@ public final class CommandList {
             new FilterStartsWithName()
     );
 
-    public static void setRunner(Handler handler) {
-        CommandList.handler = handler;
-    }
+    /**
+     * Private constructor to prevent instantiation.
+     */
+    private CommandList(){}
 }

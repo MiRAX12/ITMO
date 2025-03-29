@@ -10,7 +10,7 @@ public class Coordinates {
     @DecimalMax(value = "603.0", message = "Координата х не может быть больше 603")
     private float x; //Максимальное значение поля: 603
 
-    @NotNull
+    @NotNull(message = "Координата у не может быть null")
     private Long y; //Поле не может быть null
 
     public void setX(float x) {

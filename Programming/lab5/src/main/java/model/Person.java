@@ -1,7 +1,12 @@
 package model;
 
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
+
 public class Person {
     private String passportID; //Поле может быть null
+    @NotNull(message = "location не может быть null")
+    @Valid
     private Location location; //Поле не может быть null
 
     public void setPassportID(String passportID) {

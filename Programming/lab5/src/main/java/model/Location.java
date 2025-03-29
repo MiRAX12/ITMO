@@ -1,8 +1,14 @@
 package model;
 
+import jakarta.validation.constraints.NotNull;
+
 public class Location {
+
+    @NotNull(message = "Координата x не может быть null")
     private Float x; //Поле не может быть null
+    @NotNull(message = "Координата у не может быть null")
     private Float y; //Поле не может быть null
+    @NotNull(message = "Координата z не может быть null")
     private Long z; //Поле не может быть null
 
     public void setX(Float x) {

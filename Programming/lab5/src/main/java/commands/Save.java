@@ -15,9 +15,8 @@ public class Save extends Command {
 
     @Override
     public Response execute(Request request) {
-        XMLWriter xmlWriter = new XMLWriter();
         try {
-            xmlWriter.writeToFile();
+            CollectionManager.getInstance().save();
         } catch (Exception e) {
             return new Response("Не удалось сохранить файл: " + e.getMessage());
         }

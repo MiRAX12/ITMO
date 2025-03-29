@@ -15,20 +15,25 @@ public class PersonBuilder {
 
     public static Person build(){
         System.out.print("Вы хотите внести сведения о Person?\n1: да \n2: нет\n->");
-        Person person = null;
         final Scanner consoleRead = new Scanner(System.in);
-        switch (consoleRead.nextLine().trim()) {
-            case ("1"):
-                Person.Builder builder = new Person.Builder();
-                ParameterConstructor parameterConstructor = ParameterConstructor.getInstance();
-                builder.location(LocationBuilder.build());
-                builder.passportId(parameterConstructor.askParameter(askPassportId()));
-                person = builder.build();
-                break;
-            case ("2"):
-                return null;
-        }
+        boolean next = true;
+        do {
+            String input = consoleRead.nextLine().trim();
+            switch (input) {
+                case ("1"):
+                    Person.Builder builder = new Person.Builder();
+                    ParameterConstructor parameterConstructor = ParameterConstructor.getInstance();
+                    builder.location(LocationBuilder.build());
+                    builder.passportId(parameterConstructor.askParameter(askPassportId()));
+                    return builder.build();
+                case ("2"):
+                    next = false;
+                    break;
+                default:
+                    System.out.print("Вы хотите внести сведения о Person?\n1: да \n2: нет\n->");
+            }
+        } while (next);
+        return null;
 
-        return person;
     }
 }

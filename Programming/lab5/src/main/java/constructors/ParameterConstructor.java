@@ -10,7 +10,7 @@ import java.util.Scanner;
 public class ParameterConstructor {
     static final Scanner consoleRead = new Scanner(System.in);
     private static ParameterConstructor instance;
-    boolean next;
+
 
     private ParameterConstructor() {}
 
@@ -22,8 +22,7 @@ public class ParameterConstructor {
             NoSuchElementException, IllegalStateException, IllegalArgumentException,
             ExitWritten, DateTimeParseException{
         T x = null;
-
-        this.next = true;
+        boolean next = true;
         do {
             try {
             System.out.print(buildingRequest.message());

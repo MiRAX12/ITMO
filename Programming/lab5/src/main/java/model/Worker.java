@@ -2,6 +2,7 @@ package model;
 
 import io.IdGenerator;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import org.hibernate.validator.constraints.UniqueElements;
@@ -14,15 +15,22 @@ public class Worker {
     @NotNull(message = "id не может быть null")
     @Positive(message = "id должно быть больше 0")
     private Long id; //Поле не может быть null, Значение поля должно быть больше 0, Значение этого поля должно быть уникальным, Значение этого поля должно генерироваться автоматически
+    @NotNull(message = "Имя не может быть null")
+    @NotEmpty(message = "Имя не может быть пустым")
     private String name; //Поле не может быть null, Строка не может быть пустой
     @Valid
+    @NotNull(message = "coordinates не может быть null")
     private Coordinates coordinates; //Поле не может быть null
+    @NotNull(message = "creationDate не может быть null")
     private LocalDate creationDate; //Поле не может быть null, Значение этого поля должно генерироваться автоматически
     @Positive(message = "Salary должно быть больше 0")
     private float salary; //Значение поля должно быть больше 0
+    @NotNull(message = "startDate не может быть null")
     private LocalDateTime startDate; //Поле не может быть null
     private ZonedDateTime endDate; //Поле может быть null
+    @NotNull(message = "status не может быть null")
     private Status status; //Поле не может быть null
+    @Valid
     private Person person; //Поле может быть null
 
     public Worker(){
@@ -61,7 +69,6 @@ public class Worker {
     }
 
     public void setPerson(Person person) {
-
         this.person = person;
     }
 
@@ -89,7 +96,7 @@ public class Worker {
         private LocalDateTime startDate = null;
         private ZonedDateTime endDate = null;
         private Status status = null;
-        private Person person = null;
+        private Person person;
 
         public Builder name(String name) {
             this.name = name;
