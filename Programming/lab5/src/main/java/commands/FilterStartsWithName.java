@@ -53,6 +53,11 @@ public class FilterStartsWithName extends Command {
         return Response.empty();
     }
 
+    /**
+     * Overridden {code toString} to return name of this command
+     *
+     * @return name of the command
+     */
     @Override
     public String toString() {
         return getName();

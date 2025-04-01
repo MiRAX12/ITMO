@@ -1,24 +1,37 @@
 package constructors;
 
 import exceptions.ExitWritten;
+import model.Person;
 import utility.BuildingRequest;
 
 import java.time.format.DateTimeParseException;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
+/**
+ * Class for reading parameters of fields from input.
+ * <p>
+ * This class uses generics to read different types of data
+ * </p>
+ *
+ * @author Mirax
+ * @since 1.0
+ */
 public class ParameterConstructor {
     static final Scanner consoleRead = new Scanner(System.in);
-    private static ParameterConstructor instance;
 
+    public ParameterConstructor() {}
 
-    private ParameterConstructor() {}
-
-    public static ParameterConstructor getInstance() {
-        return instance == null ? instance = new ParameterConstructor() : instance;
-    }
-
-    public <T> T askParameter(BuildingRequest<T> buildingRequest) throws
+    /**
+     * Tries to read parameter from input until it read successfully.
+     * <p>
+     * If exit is written, terminates program. Stops a loop if parameter was read, and
+     * it satisfies constraints if there are such in parameter
+     * </p>
+     *
+     * @return parameter read from input
+     */
+    public <T> T readParameter(BuildingRequest<T> buildingRequest) throws
             NoSuchElementException, IllegalStateException, IllegalArgumentException,
             ExitWritten, DateTimeParseException{
         T x = null;

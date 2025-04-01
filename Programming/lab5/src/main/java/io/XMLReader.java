@@ -1,6 +1,5 @@
 package io;
 
-import com.fasterxml.jackson.core.JacksonException;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonToken;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
@@ -127,7 +126,7 @@ public class XMLReader implements BaseReader {
         }
         if (damagedWorkers != 0) System.out.println("Пропущено " +
                 damagedWorkers + " поврежденных элементов");
-        IdGenerator.getInstance().saveId(idTree.last());
+        IdGenerator.getInstance().setId(idTree.last());
         return workerMap;
     }
 
@@ -148,7 +147,7 @@ public class XMLReader implements BaseReader {
         Worker worker = workerKeys.getWorker();
         int key = Integer.parseInt(workerKeys.getKey());
         Set<ConstraintViolation<Worker>> violations = validator.validate(worker);
-        if (worker.getPerson().getPassportID() == null && worker.getPerson().getLocation() == null) {
+        if (worker.getPerson().getPassportId() == null && worker.getPerson().getLocation() == null) {
             violations.removeIf(v ->
                     v.getPropertyPath().toString().startsWith("person"));
         }

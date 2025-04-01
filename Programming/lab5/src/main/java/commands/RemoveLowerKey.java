@@ -7,6 +7,16 @@ import utility.Response;
 
 import java.util.Map;
 
+/**
+ * Command to remove all elements from the collection which has key lower that the specified one.
+ * <p>
+ * The {@code RemoveGreater} command removes all elements in the collection managed by
+ * {@link CollectionManager} which has key lower than the specified key are removed.
+ * </p>
+ *
+ * @see CollectionManager
+ * @since 1.0
+ */
 public class RemoveLowerKey extends Command {
 
     public RemoveLowerKey() {
@@ -14,6 +24,18 @@ public class RemoveLowerKey extends Command {
                 "удалить из коллекции все элементы, ключ которых меньше, чем заданный");
     }
 
+    /**
+     * Executes the command to remove all elements which has key lower than the specified element.
+     * <p>
+     * If the collection is empty, an appropriate response is returned. Otherwise,
+     * elements which has key lower than the specified element are removed
+     * from the collection.
+     * </p>
+     *
+     * @param request the request containing the {@link Worker} key
+     * @return a {@link Response} indicating whether the elements were successfully removed or if
+     * key need to be written
+     */
     public Response execute(Request request) {
         Response response;
 
@@ -34,6 +56,11 @@ public class RemoveLowerKey extends Command {
         return response;
     }
 
+    /**
+     * Overridden {code toString} to return name of this command
+     *
+     * @return name of the command
+     */
     @Override
     public String toString() {
         return getName();

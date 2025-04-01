@@ -9,6 +9,14 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeParseException;
 import java.util.Map;
 
+
+/**
+ * The {@code RemoveGreater} command removes all elements in the collection managed by
+ * {@link CollectionManager} which has the same start date as given
+ *
+ * @see CollectionManager
+ * @since 1.0
+ */
 public class RemoveAllByStartDate extends Command {
 
     public RemoveAllByStartDate() {
@@ -17,6 +25,18 @@ public class RemoveAllByStartDate extends Command {
                         " значение поля startDate которого эквивалентно заданному");
     }
 
+    /**
+     * Executes the command to remove all elements that has the same start date as given
+     * in argument
+     * <p>
+     * If the collection is empty, an appropriate response is returned. Otherwise,
+     * elements which has the same start date as given in argument.
+     * </p>
+     *
+     * @param request the request containing the {@link Worker} end date.
+     * @return a {@link Response} indicating if the elements was successfully removed or
+     * message that date need to be written
+     */
     public Response execute(Request request) {
         Response response;
 
@@ -39,6 +59,11 @@ public class RemoveAllByStartDate extends Command {
         return response;
     }
 
+    /**
+     * Overridden {code toString} to return name of this command
+     *
+     * @return name of the command
+     */
     @Override
     public String toString() {
         return getName();

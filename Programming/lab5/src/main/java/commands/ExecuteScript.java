@@ -3,6 +3,7 @@ package commands;
 import handlers.Handler;
 import exceptions.ScriptRecursionException;
 import handlers.Router;
+import model.Worker;
 import utility.FileConfiguration;
 import utility.Request;
 import utility.Response;
@@ -21,16 +22,25 @@ import java.util.Scanner;
  * </p>
  *
  * @see Response
- * @see FileWorker
+ *
  * @since 1.0
  */
 public class ExecuteScript extends Command {
-    private HashSet<String> executedFiles = new HashSet<>();
+    private final HashSet<String> executedFiles = new HashSet<>();
 
     public ExecuteScript() {
         super("execute_script", "Выполняет скрипт");
     }
 
+    /**
+     * Executes the script from path given in argument
+     * <p>
+     * Reads lines from file containing commands and executing them.
+     * </p>
+     *
+     * @param request the request containing the path to compare
+     * @return a {@link Response} containing result of executing commands from the file
+     */
     @Override
     public Response execute(Request request) {
         Response response = new Response("Произошла непредвиденная ошибка");

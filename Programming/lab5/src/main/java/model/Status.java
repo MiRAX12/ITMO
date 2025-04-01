@@ -1,5 +1,8 @@
 package model;
 
+/**
+ * Status enumeration.
+ */
 public enum Status {
     FIRED,
     HIRED,

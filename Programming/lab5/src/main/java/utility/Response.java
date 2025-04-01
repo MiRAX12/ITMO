@@ -5,6 +5,12 @@ import model.Worker;
 import java.util.Collections;
 import java.util.Map;
 
+/**
+ * A record class to provide response of executing a command
+ *
+ * @author Mirax
+ * @since 1.0
+ */
 public record Response(String message, Map<String, Worker> workers, String script) {
 
     public Response(String message, Map<String, Worker> workers) {

@@ -35,7 +35,7 @@ public class RemoveGreater extends Command {
      *
      * @param request the request containing the {@link Worker} salary to compare
      * @return a {@link Response} indicating whether the elements were successfully removed or if
-     * no operation was performed
+     * salary need to be written
      */
     @Override
     public Response execute(Request request) {
@@ -56,6 +56,11 @@ public class RemoveGreater extends Command {
         return response;
     }
 
+    /**
+     * Overridden {code toString} to return name of this command
+     *
+     * @return name of the command
+     */
     @Override
     public String toString() {
         return getName();

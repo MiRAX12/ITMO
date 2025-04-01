@@ -12,38 +12,75 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Scanner;
 
+/**
+ * Class for building {@link Worker} instance
+ */
 public class WorkerBuilder {
 
+    /**
+     * Uses {@link ParameterConstructor} class to ask parameters from input
+     * and build an instance of Worker
+     *
+     * @return instance of {@link Worker}
+     * @see ParameterConstructor
+     */
     public static Worker build(){
-        ParameterConstructor parameterConstructor = ParameterConstructor.getInstance();
+        ParameterConstructor parameterConstructor = new ParameterConstructor();
         Worker.Builder builder = new Worker.Builder();
-
-        builder.name(parameterConstructor.askParameter(askName()));
+        builder.name(parameterConstructor.readParameter(askName()));
         builder.coordinates(CoordinatesBuilder.buildCoordinates());
-        builder.salary(parameterConstructor.askParameter(askSalary()));
-        builder.startDate(parameterConstructor.askParameter(askLocalDateTime()));
-        builder.endDate(parameterConstructor.askParameter(askZonedDateTime()));
+        builder.salary(parameterConstructor.readParameter(askSalary()));
+        builder.startDate(parameterConstructor.readParameter(askLocalDateTime()));
+        builder.endDate(parameterConstructor.readParameter(askZonedDateTime()));
         builder.status(askStatus());
         builder.person(PersonBuilder.build());
         return builder.build();
     }
 
+    /**
+     * Creates {@link BuildingRequest} which contains parameters used to
+     * ask and create appropriate field
+     *
+     * @return {@link BuildingRequest} with building parameters
+     * @see BuildingRequest
+     */
     private static BuildingRequest<String> askName() {
         return new BuildingRequest<>(new StringParser(), x -> x != null && !x.isEmpty(),
                 "Введите имя. Пустая строка не допускается: ");
     }
 
+    /**
+     * Creates {@link BuildingRequest} which contains parameters used to
+     * ask and create appropriate field
+     *
+     * @return {@link BuildingRequest} with building parameters
+     * @see BuildingRequest
+     */
     private static BuildingRequest<Float> askSalary() {
         return new BuildingRequest<>(new FloatParser(), x -> x > 0,
                 "Введите зарплату. Значение должно быть больше 0: ");
     }
 
+    /**
+     * Creates {@link BuildingRequest} which contains parameters used to
+     * ask and create appropriate field
+     *
+     * @return {@link BuildingRequest} with building parameters
+     * @see BuildingRequest
+     */
     private static BuildingRequest<LocalDateTime> askLocalDateTime() {
         return new BuildingRequest<>(new LocalDateTimeParser(),
                 Objects::nonNull, "Введите дату и время начала в формате" +
                 " 'yyyy-MM-dd HH:mm:ss' (например, '2023-10-05 14:30:00'). Пустая строка не допускается: ");
     }
 
+    /**
+     * Creates {@link BuildingRequest} which contains parameters used to
+     * ask and create appropriate field
+     *
+     * @return {@link BuildingRequest} with building parameters
+     * @see BuildingRequest
+     */
     private static BuildingRequest<ZonedDateTime> askZonedDateTime() {
         return new BuildingRequest<>(new ZonedDateTimeParser(),
                 "Введите дату и время окончания в формате" +
@@ -51,6 +88,11 @@ public class WorkerBuilder {
                 " Если параметр отсутствует, оставьте поле пустым: ");
     }
 
+    /**
+     * Method asks status from input and sets it as a worker's status
+     *
+     * @return {@link Status} status of worker
+     */
     private static Status askStatus(){
         Status status = null;
         Map<String, Status> statusMap = new HashMap<>();

@@ -8,6 +8,13 @@ import model.Worker;
 
 import java.util.List;
 
+/**
+ * A class that contains a pair key-worker of an element {@link Worker} from map
+ *
+ * @author Mirax
+ * @see Worker
+ * @since 1.0
+ */
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JacksonXmlRootElement(localName = "workerKeys")
 public class WorkerKeys {

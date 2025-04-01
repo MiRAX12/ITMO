@@ -34,6 +34,11 @@ public class Info extends Command {
                 "Набор доступных ключей : " + collection.getCollection().keySet() + "\n");
     }
 
+    /**
+     * Overridden {code toString} to return name of this command
+     *
+     * @return name of the command
+     */
     @Override
     public String toString() {
         return getName();

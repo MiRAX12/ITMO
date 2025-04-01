@@ -1,16 +1,7 @@
 package io;
 
-import exceptions.NoSuchEnvironmentVariableException;
-import utility.Request;
-
-import java.io.BufferedReader;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.Objects;
-
 /**
- * A singleton class which generates
- * unique ID and uses a text file to collect current ID.
+ * A singleton class which generates unique ID
  *
  * @author Mirax
  *
@@ -18,15 +9,13 @@ import java.util.Objects;
  */
 public class IdGenerator {
     private static IdGenerator instance;
-    private Long currentId;
-    private Path path;
+    private Long currentId = 0L;
 
     /**
-     * Private constructor for initializing the {@code IdGenerator} and current ID.
+     * Private constructor to prevent instantiation
      */
     private IdGenerator() {
-        readId();
-    }
+        }
 
     /**
      * Returns the singleton instance of the {@code IdGenerator}.
@@ -42,9 +31,9 @@ public class IdGenerator {
     }
 
     /**
-     * Generates a new unique ID and saves it to the file.
+     * Generates a new unique ID
      * <p>
-     * The method increments the current ID, saves it to the file, and then returns
+     * The method increments the current ID and then returns
      * the new value.
      * </p>
      *
@@ -52,52 +41,17 @@ public class IdGenerator {
      */
     public Long generateId(){
         currentId++;
-        saveId(currentId);
         return currentId;
     }
 
     /**
-     * Reads ID from text file
-     * <p>
-     * Path to file is taken from environment variable.
-     * </p>
-     * <p>
-     * If file contains ID, reads it and sets it as current ID, otherwise resets current ID to 0.
-     * If file does not contain a parsable number, resets current ID to 0.
-     * </p>
-     *
-     */
-    private void readId(){
-        if (System.getenv("id_collector") == null) {
-            throw new NoSuchEnvironmentVariableException("id_collector");
-        }
-        this.path = Paths.get(System.getenv("id_collector"));
-
-        try(BaseReadWorker reader = new BufferedReadWorker(path)) {
-            String lastId = reader.read();
-            currentId = lastId != null ? Long.parseLong(lastId) : 0;
-
-        } catch (NumberFormatException e){
-            saveId(currentId = 0L);
-        } catch (Exception e){
-            System.out.println(e.getMessage());
-        }
-    }
-
-    /**
-     * Takes id and writes it to the file from environment variable using {@link BufferedReadWorker}
-     * If {@code currentID} is different from the ID to be saved, sets it as new current ID.
+     * Takes id and sets it as new current ID.
      *
      * @param id An ID to be saved
-     * @see BufferedReadWorker
+     *
      */
-    protected void saveId(Long id){
-        try(BaseWriteWorker writer = new BufferedWriteWorker(path)) {
-            writer.write(Long.toString(id));
-            if (currentId != (long) id) this.currentId = id;
-        }catch (Exception e){
-            System.out.println(e.getMessage());
-        }
+    protected void setId(Long id){
+        this.currentId = id;
     }
 
     /**

@@ -11,6 +11,9 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 
+/**
+ * Worker class.
+ */
 public class Worker {
     @NotNull(message = "id не может быть null")
     @Positive(message = "id должно быть больше 0")
@@ -36,38 +39,83 @@ public class Worker {
     public Worker(){
     }
 
+    /**
+     * set id
+     *
+     * @param id worker's id
+     */
     public void setId(Long id) {
         this.id = id;
     }
 
+    /**
+     * set name
+     *
+     * @param name worker's name
+     */
     public void setName(String name) {
         this.name = name;
     }
 
+    /**
+     * set coordinates
+     *
+     * @param coordinates Coordinates instance
+     */
     public void setCoordinates(Coordinates coordinates) {
         this.coordinates = coordinates;
     }
 
+    /**
+     * set creationDate
+     *
+     * @param creationDate worker's creationDate
+     */
     public void setCreationDate(LocalDate creationDate) {
         this.creationDate = creationDate;
     }
 
+    /**
+     * set salary
+     *
+     * @param salary worker's salary
+     */
     public void setSalary(float salary) {
         this.salary = salary;
     }
 
+    /**
+     * set startDate
+     *
+     * @param startDate worker's startDate
+     */
     public void setStartDate(LocalDateTime startDate) {
         this.startDate = startDate;
     }
 
+    /**
+     * set endDate
+     *
+     * @param endDate worker's endDate
+     */
     public void setEndDate(ZonedDateTime endDate) {
         this.endDate = endDate;
     }
 
+    /**
+     * set status
+     *
+     * @param status worker's status
+     */
     public void setStatus(Status status) {
         this.status = status;
     }
 
+    /**
+     * set person
+     *
+     * @param person worker's person
+     */
     public void setPerson(Person person) {
         this.person = person;
     }
@@ -87,6 +135,9 @@ public class Worker {
                 '}';
     }
 
+    /**
+     * A Builder's pattern
+     */
     public static class Builder {
         private Long id = IdGenerator.getInstance().generateId();
         private String name = null;
@@ -98,41 +149,81 @@ public class Worker {
         private Status status = null;
         private Person person;
 
+        /**
+         * @param name - Worker's name
+         *
+         * @return - builder's object of written value
+         */
         public Builder name(String name) {
             this.name = name;
             return this;
         }
 
+        /**
+         * @param coordinates instance of coordinates
+         *
+         * @return - builder's object of written value
+         */
         public Builder coordinates(Coordinates coordinates) {
             this.coordinates = coordinates;
             return this;
         }
 
+        /**
+         * @param salary - Worker's salary
+         *
+         * @return - builder's object of written value
+         */
         public Builder salary(float salary) {
             this.salary = salary;
             return this;
         }
 
+        /**
+         * @param startDate - startDate of Worker
+         *
+         * @return - builder's object of written value
+         */
         public Builder startDate(LocalDateTime startDate) {
             this.startDate = startDate;
             return this;
         }
 
+        /**
+         * @param endDate - endDate of Worker
+         *
+         * @return - builder's object of written value
+         */
         public Builder endDate(ZonedDateTime endDate) {
             this.endDate = endDate;
             return this;
         }
 
+        /**
+         * @param status - status of worker
+         *
+         * @return - builder's object of written value
+         */
         public Builder status(Status status) {
             this.status = status;
             return this;
         }
 
+        /**
+         * @param person - person instance
+         *
+         * @return - builder's object of written value
+         */
         public Builder person(Person person) {
             this.person = person;
             return this;
         }
 
+        /**
+         * Build a Worker instance
+         *
+         * @return {@link Worker} instance
+         */
         public Worker build() {
             Worker worker = new Worker();
             worker.id = this.id;
@@ -148,38 +239,83 @@ public class Worker {
         }
     }
 
+    /**
+     * get id
+     *
+     * @return id
+     */
     public Long getId() {
         return id;
     }
 
+    /**
+     * get person
+     *
+     * @return person
+     */
     public Person getPerson() {
         return person;
     }
 
+    /**
+     * get status
+     *
+     * @return status
+     */
     public Status getStatus() {
         return status;
     }
 
+    /**
+     * get endDate
+     *
+     * @return endDate
+     */
     public ZonedDateTime getEndDate() {
         return endDate;
     }
 
+    /**
+     * get startDate
+     *
+     * @return StartDate
+     */
     public LocalDateTime getStartDate() {
         return startDate;
     }
 
+    /**
+     * get salary
+     *
+     * @return salary
+     */
     public float getSalary() {
         return salary;
     }
 
+    /**
+     * get creationDate.
+     *
+     * @return creationDate
+     */
     public LocalDate getCreationDate() {
         return creationDate;
     }
 
+    /**
+     * get coordinates.
+     *
+     * @return coordinates
+     */
     public Coordinates getCoordinates() {
         return coordinates;
     }
 
+    /**
+     * get name
+     *
+     * @return name
+     */
     public String getName() {
         return name;
     }
