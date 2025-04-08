@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"commands"},{"l":"constructors"},{"l":"constructors.parsers"},{"l":"exceptions"},{"l":"handlers"},{"l":"io"},{"l":"managers"},{"l":"model"},{"l":"org.exampleMirax"},{"l":"utility"},{"l":"utility.wrappers"}];updateSearchResults();
