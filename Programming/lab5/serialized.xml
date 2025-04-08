@@ -16,4 +16,38 @@
       <person/>
     </worker>
   </workerKeys>
+  <workerKeys>
+    <key>14в</key>
+    <worker>
+      <id>479397968</id>
+      <name>ewqfew</name>
+      <coordinates>
+        <x>124.0</x>
+        <y>21412</y>
+      </coordinates>
+      <creationDate>2025-03-29</creationDate>
+      <salary>124.0</salary>
+      <startDate>2023-10-05T14:30:00</startDate>
+      <endDate>2023-10-05T14:30:00Z</endDate>
+      <status>FIRED</status>
+      <person/>
+    </worker>
+  </workerKeys>
+  <workerKeys>
+    <key>14</key>
+    <worker>
+      <id>341</id>
+      <name>ewqfew</name>
+      <coordinates>
+        <x>1124.0</x>
+        <y>21412</y>
+      </coordinates>
+      <creationDate>2025-03-29</creationDate>
+      <salary>124.0</salary>
+      <startDate>2023-10-05T14:30:00</startDate>
+      <endDate>2023-10-05T14:30:00Z</endDate>
+      <status>FIRED</status>
+      <person/>
+    </worker>
+  </workerKeys>
 </ArrayList>
