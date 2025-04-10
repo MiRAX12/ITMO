@@ -45,11 +45,11 @@ public class ExecuteScript extends Command {
     public Response execute(Request request) {
         Response response = new Response("Произошла непредвиденная ошибка");
 
-        if (request.arg() == null || request.arg().isEmpty()) {
+        if (request.getArg() == null || request.getArg().isEmpty()) {
             return new Response("Укажите путь к файлу скрипта");
         }
 
-        Path path = Paths.get(request.arg());
+        Path path = Paths.get(request.getArg());
 
         try {
             FileConfiguration.checkReadFile(path);
@@ -58,13 +58,13 @@ public class ExecuteScript extends Command {
             executedFiles.add(path.toFile().getCanonicalPath());
             while (scanner.hasNextLine()) {
                 var line = scanner.nextLine().trim();
-                Path scriptPath = Paths.get(Handler.parse(line).arg());
+                Path scriptPath = Paths.get(Handler.parse(line).getArg());
 
                 if (executedFiles.contains(scriptPath.toFile().getCanonicalPath()))
                     throw new ScriptRecursionException();
 
                 response = new Response(Router.getInstance()
-                        .route(Handler.parse(line)).message());
+                        .route(Handler.parse(line)).getMessage());
             }
             executedFiles.clear();
         } catch (Exception e){

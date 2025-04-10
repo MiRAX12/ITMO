@@ -35,9 +35,9 @@ public class Insert extends Command {
         Response response;
 
         try {
-            Worker worker = request.worker();
+            Worker worker = request.getWorker();
             worker.setId(IdGenerator.getInstance().generateId());
-            Integer key = Integer.parseInt(request.arg());
+            Integer key = Integer.parseInt(request.getArg());
             CollectionManager.getInstance()
                              .addElement(worker, key);
             response = new Response("Новый Worker с ключом %d добавлен".formatted(key));

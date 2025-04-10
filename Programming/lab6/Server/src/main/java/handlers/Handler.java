@@ -35,7 +35,7 @@ public class Handler implements Runnable {
         while (consoleRead.hasNext()&&isRunning) {
             try {
                     var line = consoleRead.nextLine().trim();
-                    System.out.println(Router.getInstance().route(parse(line)).message());
+                    System.out.println(Router.getInstance().route(parse(line)).getMessage());
             } catch (Exception e) {
                 System.out.println(e.getMessage());
             }

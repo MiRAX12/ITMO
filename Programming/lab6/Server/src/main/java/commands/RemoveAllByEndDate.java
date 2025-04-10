@@ -47,7 +47,7 @@ public class RemoveAllByEndDate extends Command {
             int collectionSize = collection.size();
 
             collection.entrySet().removeIf(entry -> entry.getValue()
-                    .getEndDate().isEqual(ZonedDateTime.parse(request.arg())));
+                    .getEndDate().isEqual(ZonedDateTime.parse(request.getArg())));
             int difference = collectionSize - collection.size();
             response = new Response("Удалено %d элементов".formatted(difference));
         } catch (DateTimeParseException e){

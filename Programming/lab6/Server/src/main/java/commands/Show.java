@@ -32,7 +32,7 @@ public class Show extends Command {
             return new Response("Коллекция пуста!");
         }
         for (Map.Entry<Integer, Worker> worker : collection.entrySet()){
-            System.out.println(new Response(worker.toString()).message());
+            System.out.println(new Response(worker.toString()).getMessage());
         }
         return Response.empty();
     }

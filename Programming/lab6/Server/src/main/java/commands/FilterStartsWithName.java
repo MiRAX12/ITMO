@@ -40,15 +40,15 @@ public class FilterStartsWithName extends Command {
      */
     public Response execute(Request request) {
         Map<Integer, Worker> result = CollectionManager.getInstance().getCollection().entrySet().stream()
-                .filter(entry -> entry.getValue().getName().startsWith(request.arg()))
+                .filter(entry -> entry.getValue().getName().startsWith(request.getArg()))
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
 
         if (result.isEmpty()) {
-            return new Response("Нет элемента, начинающегося на %s".formatted(request.arg()));
+            return new Response("Нет элемента, начинающегося на %s".formatted(request.getArg()));
         }
         System.out.println("Найдены элементы: ");
         for (Map.Entry<Integer, Worker> worker : result.entrySet()) {
-            System.out.println(new Response(worker.toString()).message());
+            System.out.println(new Response(worker.toString()).getMessage());
         }
         return Response.empty();
     }

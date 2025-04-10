@@ -48,7 +48,7 @@ public class RemoveAllByStartDate extends Command {
             int collectionSize = collection.size();
 
             collection.entrySet().removeIf(entry -> entry.getValue().
-                    getStartDate().isEqual(LocalDateTime.parse(request.arg())));
+                    getStartDate().isEqual(LocalDateTime.parse(request.getArg())));
             int difference = collectionSize - collection.size();
             response = new Response("Удалено %d элементов".formatted(difference));
         }catch (DateTimeParseException e){

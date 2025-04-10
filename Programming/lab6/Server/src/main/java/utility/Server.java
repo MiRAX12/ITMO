@@ -109,10 +109,9 @@ public class Server {
         try {
             clientChannel.configureBlocking(false);
             logger.info("{} байт пришло от клиента", clientChannel.read(clientData));
-//            Request request = (Request) deserializator.deserialize(clientData.array());
-            System.out.println(deserializator.deserialize(clientData.array()));
-//            response = Router.getInstance().route(request);
-//            logger.info("Запрос {}{}{} успешно обработан", request.command(), request.arg(), request.worker());
+            Request request = (Request) deserializator.deserialize(clientData.array());
+            response = Router.getInstance().route(request);
+            logger.info("Запрос {}{}{} успешно обработан", request.getCommand(), request.getArg(), request.getWorker());
             clientChannel.register(selector, SelectionKey.OP_WRITE);
         } catch (StreamCorruptedException e) {
             System.out.println("StreamCorruptedException");

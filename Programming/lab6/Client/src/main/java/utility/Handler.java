@@ -72,9 +72,7 @@ public class Handler implements Runnable {
                 ExecuteScript.execute(arg);
                 break;
             default:
-                Worker worker1 = WorkerBuilder.build();
-                request = new Request(command, arg, worker1);
-//                request = new Request(command, arg);
+                request = new Request(command, arg);
                 client.sendToServer(request);
                 break;
         }

@@ -47,7 +47,7 @@ public class RemoveGreaterKey extends Command {
             int collectionSize = collection.size();
 
             collection.entrySet().removeIf(entry -> entry.getKey()
-                    > Integer.parseInt(request.arg()));
+                    > Integer.parseInt(request.getArg()));
             int difference = collectionSize - collection.size();
             response = new Response("Удалено %d элементов".formatted(difference));
         } catch (Exception e) {

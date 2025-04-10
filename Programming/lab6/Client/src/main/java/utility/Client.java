@@ -63,9 +63,9 @@ public class Client {
         channel.read(dataToReceive); // получаем ответ от сервера
         Deserializator deserializator = new Deserializator(dataToReceive.array());
         Response response = (Response) deserializator.deserialize();
-        System.out.println(response.message());
-        if(!response.workers().isEmpty()) {
-            System.out.println(response.workers());
+        System.out.println(response.getMessage());
+        if(!response.getWorkers().isEmpty()) {
+            System.out.println(response.getWorkers());
         }
     }
 }
