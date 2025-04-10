@@ -2,10 +2,12 @@ package model;
 
 import jakarta.validation.constraints.NotNull;
 
+import java.io.Serializable;
+
 /**
  * Location class.
  */
-public class Location {
+public class Location implements Serializable {
 
     @NotNull(message = "Координата x не может быть null")
     private Float x; //Поле не может быть null

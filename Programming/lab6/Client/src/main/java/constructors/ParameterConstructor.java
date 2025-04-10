@@ -1,6 +1,6 @@
-package client.constructors;
+package constructors;
 
-import client.exceptions.ExitWritten;
+import exceptions.ExitWritten;
 
 import java.time.format.DateTimeParseException;
 import java.util.NoSuchElementException;

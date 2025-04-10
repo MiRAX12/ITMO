@@ -1,8 +1,8 @@
-package client.constructors;
+package constructors;
 
-import client.constructors.parsers.*;
-import common.model.Status;
-import common.model.Worker;
+import constructors.parsers.*;
+import model.Status;
+import model.Worker;
 
 import java.time.LocalDateTime;
 import java.time.ZonedDateTime;

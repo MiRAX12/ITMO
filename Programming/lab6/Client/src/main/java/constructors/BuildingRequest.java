@@ -1,6 +1,6 @@
-package client.constructors;
+package constructors;
 
-import client.constructors.parsers.AbstractParser;
+import constructors.parsers.AbstractParser;
 
 import java.util.function.Predicate;
 

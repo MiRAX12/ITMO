@@ -1,4 +1,4 @@
-package client.exceptions;
+package exceptions;
 
 public class NoScriptPathException extends RuntimeException {
     public NoScriptPathException() {

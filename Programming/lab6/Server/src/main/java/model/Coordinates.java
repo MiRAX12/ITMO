@@ -1,14 +1,14 @@
 package model;
 
-import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import jakarta.validation.constraints.DecimalMax;
-import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.NotNull;
+
+import java.io.Serializable;
 
 /**
  * Coordinates class.
  */
-public class Coordinates {
+public class Coordinates implements Serializable {
 
     /**
      * X coordinate.

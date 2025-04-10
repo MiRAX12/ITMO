@@ -1,4 +1,4 @@
-package common.model;
+package model;
 
 import jakarta.validation.constraints.DecimalMax;
 import jakarta.validation.constraints.NotNull;

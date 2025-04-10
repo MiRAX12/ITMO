@@ -1,11 +1,11 @@
-package server;
+package utility;
 
 import handlers.Router;
 import managers.CollectionManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import utility.Request;
-import utility.Response;
+import serializators.Deserializator;
+import serializators.Serializator;
 
 import java.io.*;
 import java.net.InetSocketAddress;
@@ -14,15 +14,20 @@ import java.nio.ByteBuffer;
 import java.nio.channels.*;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
+import java.util.Set;
 
 public class Server {
     private final InetSocketAddress address;
     private Selector selector;
     private final Logger logger;
     private Response response;
+    private ServerSocketChannel serverChannel;
+    private Deserializator deserializator = new Deserializator();
+    private Serializator serializator = new Serializator();
 
-    public Server(InetSocketAddress address) {
-        this.address = address;
+
+    public Server(int address) {
+        this.address = new InetSocketAddress(address);
         logger = LoggerFactory.getLogger(Server.class);
     }
 
@@ -30,7 +35,7 @@ public class Server {
         CollectionManager.getInstance().load();
         selector = Selector.open();
         logger.info("Селектор открыт");
-        ServerSocketChannel serverChannel = ServerSocketChannel.open();
+        serverChannel = ServerSocketChannel.open();
         serverChannel.configureBlocking(false);
         serverChannel.bind(address);
         logger.info("Канал сервера готов к работе");
@@ -38,12 +43,13 @@ public class Server {
 
     }
 
-    public void run() throws IOException {
+    public void run() {
         try {
             this.init();
             while (true) {
                 selector.select();
-                Iterator<SelectionKey> keys = selector.selectedKeys().iterator();
+                Set<SelectionKey> selectedKeys = selector.selectedKeys();
+                Iterator<SelectionKey> keys = selectedKeys.iterator();
                 logger.info("Итератор по ключам селектора получен");
 
                 while (keys.hasNext()) {
@@ -66,14 +72,16 @@ public class Server {
                         logger.info("Клиент {} отключился", key.channel().toString());
                         Router.getInstance().route(new Request("save"));
                         key.cancel();
+                        serverChannel.register(selector, SelectionKey.OP_ACCEPT);
+
                     }
                     keys.remove();
                 }
             }
         } catch (ClassNotFoundException e) {
-            logger.error("Несоответствие классов: {}", e.getStackTrace());
+            logger.error("Несоответствие классов: {}", (Object) e.getStackTrace());
         } catch (IOException e) {
-            logger.error("Ошибка ввода-вывода");
+            logger.error("Ошибка ввода-вывода" + e.getMessage());
         } catch (NoSuchElementException e) {
             logger.error("Сервер остановлен");
             Router.getInstance().route(new Request("save"));
@@ -82,25 +90,29 @@ public class Server {
         }
     }
 
-    private void acceptConnection(SelectionKey key) throws IOException {
-        try (ServerSocketChannel serverChannel = (ServerSocketChannel) key.channel();) {
+
+    private void acceptConnection(SelectionKey key) {
+        ServerSocketChannel serverChannel = (ServerSocketChannel) key.channel();
+        try {
             SocketChannel clientChannel = serverChannel.accept();
             logger.info("Установлено соединение с клиентом {}", clientChannel.socket().toString());
             clientChannel.configureBlocking(false);
             clientChannel.register(selector, SelectionKey.OP_READ);
+        } catch (IOException e) {
+            logger.info("Хуйня в аксепте" + e.getMessage());
         }
     }
 
     private Response receiveRequest(SelectionKey key) throws IOException, ClassNotFoundException {
-        ByteBuffer clientData = ByteBuffer.allocate(1024);
-        try (ByteArrayInputStream bytes = new ByteArrayInputStream(clientData.array());
-             ObjectInputStream clientDataInput = new ObjectInputStream(bytes);
-             SocketChannel clientChannel = (SocketChannel) key.channel();) {
+        ByteBuffer clientData = ByteBuffer.allocate(222048);
+        SocketChannel clientChannel = (SocketChannel) key.channel();
+        try {
             clientChannel.configureBlocking(false);
             logger.info("{} байт пришло от клиента", clientChannel.read(clientData));
-            Request request = (Request) clientDataInput.readObject();
-            response = Router.getInstance().route(request);
-            logger.info("Запрос {}{}{} успешно обработан", request.command(), request.arg(), request.worker());
+//            Request request = (Request) deserializator.deserialize(clientData.array());
+            System.out.println(deserializator.deserialize(clientData.array()));
+//            response = Router.getInstance().route(request);
+//            logger.info("Запрос {}{}{} успешно обработан", request.command(), request.arg(), request.worker());
             clientChannel.register(selector, SelectionKey.OP_WRITE);
         } catch (StreamCorruptedException e) {
             System.out.println("StreamCorruptedException");
@@ -110,9 +122,9 @@ public class Server {
     }
 
     private void sendResponse(SelectionKey key) throws IOException {
+        SocketChannel clientChannel = (SocketChannel) key.channel();
         try (ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-             ObjectOutputStream clientDataOutput = new ObjectOutputStream(bytes);
-             SocketChannel clientChannel = (SocketChannel) key.channel();) {
+             ObjectOutputStream clientDataOutput = new ObjectOutputStream(bytes)) {
             clientChannel.configureBlocking(false);
             clientDataOutput.writeObject(response);
             ByteBuffer clientData = ByteBuffer.wrap(bytes.toByteArray());

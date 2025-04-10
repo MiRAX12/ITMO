@@ -1,4 +1,4 @@
-package common.model;
+package model;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;

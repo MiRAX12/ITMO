@@ -1,12 +1,12 @@
-package client;
+package utility;
 
-import client.serializators.Deserializator;
-import client.serializators.Serializator;
-import common.Request;
-import common.Response;
+import serializators.Deserializator;
+import serializators.Serializator;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.net.InetAddress;
+import java.io.ObjectOutputStream;
+import java.net.ConnectException;
 import java.net.InetSocketAddress;
 import java.net.SocketAddress;
 import java.nio.ByteBuffer;
@@ -25,20 +25,32 @@ public class Client {
         this.port = port;
     }
 
-    public void init() throws IOException {
-//        this.arr = new byte[]{2, 32, 5};
-//        this.len = arr.length;
-        this.address = new InetSocketAddress(host, port);
-        this.channel = SocketChannel.open();
-        channel.connect(address);
-        System.out.println("connected to " + host + ":" + port); //TODO подумай над выводом
+    public void init() {
+        try {
+            this.address = new InetSocketAddress(host, port);
+            this.channel = SocketChannel.open();
+            System.out.println("connecting...");
+            channel.connect(address);
+            System.out.println("connected to " + host + ":" + port); //TODO подумай над выводом
+        } catch (IOException e) {
+            System.out.println(e.getMessage() + "Ошибка ввода-вывода");
+        }
     }
 
     public void sendToServer(Request request) throws IOException {
-        Serializator serializator = new Serializator(request);
-        byte[] serializedObject = serializator.serialize();
-        ByteBuffer buffer = ByteBuffer.wrap(serializedObject);
-        channel.write(buffer);
+//        Serializator serializator = new Serializator(request);
+//        byte[] serializedObject = serializator.serialize();
+        try(ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+            ObjectOutputStream out = new ObjectOutputStream(bytes)) {
+
+            out.writeObject(request);
+            ByteBuffer buffer = ByteBuffer.wrap(bytes.toByteArray());
+            channel.write(buffer);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+//        ByteBuffer buffer = ByteBuffer.wrap(out);
+//        channel.write(buffer);
     }
 
     public void receiveFromServer() throws IOException, ClassNotFoundException {

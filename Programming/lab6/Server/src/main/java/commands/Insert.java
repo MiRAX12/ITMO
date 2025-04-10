@@ -1,7 +1,9 @@
 package commands;
 
 import constructors.WorkerBuilder;
+import io.IdGenerator;
 import managers.CollectionManager;
+import model.Worker;
 import utility.Request;
 import utility.Response;
 
@@ -33,9 +35,11 @@ public class Insert extends Command {
         Response response;
 
         try {
+            Worker worker = request.worker();
+            worker.setId(IdGenerator.getInstance().generateId());
             Integer key = Integer.parseInt(request.arg());
             CollectionManager.getInstance()
-                             .addElement(WorkerBuilder.build(), key);
+                             .addElement(worker, key);
             response = new Response("Новый Worker с ключом %d добавлен".formatted(key));
         } catch (NullPointerException e) {
             response = new Response(e.getMessage());

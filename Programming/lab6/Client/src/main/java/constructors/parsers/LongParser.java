@@ -1,4 +1,4 @@
-package client.constructors.parsers;
+package constructors.parsers;
 
 /**
  * Class to parse string from input to Long value

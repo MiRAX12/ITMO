@@ -1,7 +1,7 @@
-package client.constructors;
+package constructors;
 
-import client.constructors.parsers.StringParser;
-import common.model.Person;
+import constructors.parsers.StringParser;
+import model.Person;
 
 import java.util.Scanner;
 

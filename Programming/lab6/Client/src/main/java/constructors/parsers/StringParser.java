@@ -1,4 +1,4 @@
-package client.constructors.parsers;
+package constructors.parsers;
 
 /**
  * Class for generality way of reading input through parses.

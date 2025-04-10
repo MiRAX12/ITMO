@@ -1,12 +1,11 @@
-package common.model;
+package model;
 
-import server.utility.io.IdGenerator;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 
-import java.io.Serializable;
+import java.io.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
@@ -35,6 +34,8 @@ public class Worker implements Serializable {
     private Status status; //Поле не может быть null
     @Valid
     private Person person; //Поле может быть null
+    @Serial
+    private static final long serialVersionUID = 1L;
 
     public Worker(){
     }
@@ -139,7 +140,8 @@ public class Worker implements Serializable {
      * A Builder's pattern
      */
     public static class Builder {
-        private Long id = IdGenerator.getInstance().generateId();
+//        private Long id = IdGenerator.getInstance().generateId();
+        private Long id = 1L;
         private String name = null;
         private Coordinates coordinates = null;
         private LocalDate creationDate = LocalDate.now();
@@ -320,5 +322,6 @@ public class Worker implements Serializable {
         return name;
     }
 }
+
 
 

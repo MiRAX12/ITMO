@@ -1,4 +1,4 @@
-package client.constructors.parsers;
+package constructors.parsers;
 
 /**
  * Abstract class of parsers used to parse data from string input

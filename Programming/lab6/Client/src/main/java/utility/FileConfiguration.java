@@ -1,6 +1,9 @@
-package client;
+package utility;
 
-import exceptions.*;
+import exceptions.FileNotExistsException;
+import exceptions.NoReadPermissionException;
+import exceptions.NoWritePermissionException;
+import exceptions.NotAFileException;
 
 import java.nio.file.Path;
 

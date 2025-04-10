@@ -3,10 +3,12 @@ package model;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 
+import java.io.Serializable;
+
 /**
  * Person class.
  */
-public class Person {
+public class Person implements Serializable {
     private String passportId; //Поле может быть null
     @NotNull(message = "location не может быть null")
     @Valid

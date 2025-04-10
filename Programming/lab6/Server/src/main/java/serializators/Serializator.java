@@ -1,15 +1,18 @@
 package serializators;
 
-import java.io.*;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 
 public class Serializator {
-    Serializable obj;
 
-    public Serializator(Serializable obj) {
-        this.obj = obj;
+
+    public Serializator() {
+
     }
 
-    public byte[] serialize() {
+    public byte[] serialize(Serializable obj) {
         try(ByteArrayOutputStream bytes = new ByteArrayOutputStream();
             ObjectOutputStream out = new ObjectOutputStream(bytes)) {
 

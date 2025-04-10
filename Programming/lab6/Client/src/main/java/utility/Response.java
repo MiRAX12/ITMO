@@ -1,6 +1,6 @@
-package common;
+package utility;
 
-import common.model.Worker;
+import model.Worker;
 
 import java.io.Serializable;
 import java.util.Collections;
