@@ -1,5 +1,6 @@
 package commands;
 
+import constructors.WorkerBuilder;
 import handlers.Handler;
 import exceptions.ScriptRecursionException;
 import handlers.Router;
@@ -63,6 +64,12 @@ public class ExecuteScript extends Command {
                 if (executedFiles.contains(scriptPath.toFile().getCanonicalPath()))
                     throw new ScriptRecursionException();
 
+                if (line.equals("insert \\d+")){
+                    createWorker(Handler.parse(line));
+                    Worker worker = WorkerBuilder.build();
+                    request = new Request(command, arg, worker);
+                }
+
                 response = new Response(Router.getInstance()
                         .route(Handler.parse(line)).getMessage());
             }
@@ -70,6 +77,10 @@ public class ExecuteScript extends Command {
         } catch (Exception e){
             response = new Response("Произошла ошибка %s".formatted(e.getMessage()));
         } return response;
+    }
+
+    private Worker createWorker(Request request) {
+
     }
 
     /**

@@ -1,7 +1,7 @@
 package org.exampleMirax;//import Commands.Add;
 
 import handlers.Handler;
-import utility.Server;
+import server.Server;
 
 import java.io.IOException;
 

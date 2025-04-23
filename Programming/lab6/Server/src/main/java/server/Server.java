@@ -1,4 +1,4 @@
-package utility;
+package server;
 
 import handlers.Router;
 import managers.CollectionManager;
@@ -6,6 +6,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import serializators.Deserializator;
 import serializators.Serializator;
+import utility.Request;
+import utility.Response;
 
 import java.io.*;
 import java.net.InetSocketAddress;

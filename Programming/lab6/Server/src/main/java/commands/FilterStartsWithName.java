@@ -39,18 +39,21 @@ public class FilterStartsWithName extends Command {
      * @return a {@link Response} indicates if elements was found. If yes, enumerating them.
      */
     public Response execute(Request request) {
-        Map<Integer, Worker> result = CollectionManager.getInstance().getCollection().entrySet().stream()
+        Map<Integer, Worker> filteredWorkers = CollectionManager.getInstance().getCollection().entrySet().stream()
                 .filter(entry -> entry.getValue().getName().startsWith(request.getArg()))
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
 
-        if (result.isEmpty()) {
+        if (filteredWorkers.isEmpty()) {
             return new Response("Нет элемента, начинающегося на %s".formatted(request.getArg()));
         }
-        System.out.println("Найдены элементы: ");
-        for (Map.Entry<Integer, Worker> worker : result.entrySet()) {
-            System.out.println(new Response(worker.toString()).getMessage());
-        }
-        return Response.empty();
+
+        StringBuilder result = new StringBuilder("Найдены Workers:\n");
+        filteredWorkers.forEach((key, worker) ->
+                result.append("Key: ").append(key)
+                        .append("Worker: ").append(worker)
+                        .append("\n")
+        );
+        return new Response(result.toString());
     }
 
     /**

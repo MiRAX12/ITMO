@@ -141,7 +141,6 @@ public class Worker implements Serializable {
      * A Builder's pattern
      */
     public static class Builder {
-//        private Long id = IdGenerator.getInstance().generateId();
         private Long id = 1L;
         private String name = null;
         private Coordinates coordinates = null;

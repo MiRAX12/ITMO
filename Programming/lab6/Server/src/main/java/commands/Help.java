@@ -27,9 +27,9 @@ public class Help extends Command{
      * @return a {@link Response} of using guide.
      */
     public Response execute(Request request) {
-        return new Response("%s".formatted(CommandList.commandList.stream()
-                .map(Command::getDescription)
-                .collect(Collectors.joining())));
+        return new Response(CommandList.commandList.stream()
+                .map(command -> command.getName() + " - " + command.getDescription())
+                .collect(Collectors.joining("\n")));
     }
 
     /**
