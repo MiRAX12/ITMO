@@ -1,4 +1,4 @@
-package client.constructors.parsers;
+package constructors.parsers;
 
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;

@@ -47,7 +47,7 @@ public class RemoveGreater extends Command {
             Map<Integer, Worker> collection = CollectionManager.getInstance().getCollection();
             int collectionSize = collection.size();
             collection.entrySet().removeIf(entry -> entry.getValue()
-                    .getSalary() > Float.parseFloat(request.arg()));
+                    .getSalary() > Float.parseFloat(request.getArg()));
             int difference = collectionSize - collection.size();
             response = new Response("Удалено %d элементов".formatted(difference));
         }catch (Exception e) {

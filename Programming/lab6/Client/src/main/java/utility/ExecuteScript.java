@@ -1,8 +1,6 @@
-package client;
+package utility;
 
-import client.exceptions.NoScriptPathException;
-import common.Request;
-import common.Response;
+import exceptions.NoScriptPathException;
 import exceptions.ScriptRecursionException;
 
 import java.nio.file.Path;

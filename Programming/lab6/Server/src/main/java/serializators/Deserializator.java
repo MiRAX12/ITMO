@@ -5,13 +5,11 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 
 public class Deserializator {
-    byte[] bytes;
 
-    public Deserializator(byte[] bytes) {
-        this.bytes = bytes;
-    }
+    public Deserializator() {
+            }
 
-    public Object deserialize() throws IOException, ClassNotFoundException {
+    public Object deserialize(byte[] bytes) throws IOException, ClassNotFoundException {
         try(ByteArrayInputStream by = new ByteArrayInputStream(bytes);
             ObjectInputStream in = new ObjectInputStream(by)) {
             return in.readObject();

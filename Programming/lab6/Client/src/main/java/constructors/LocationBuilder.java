@@ -1,8 +1,8 @@
-package client.constructors;
+package constructors;
 
-import client.constructors.parsers.FloatParser;
-import client.constructors.parsers.LongParser;
-import common.model.Location;
+import constructors.parsers.FloatParser;
+import constructors.parsers.LongParser;
+import model.Location;
 
 import java.util.Objects;
 

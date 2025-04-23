@@ -5,7 +5,7 @@ import model.Worker;
 import java.io.Serializable;
 
 /**
- * A record class create a request from input
+ * A class create a request from input
  *
  * @author Mirax
  * @since 1.0

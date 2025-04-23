@@ -6,6 +6,7 @@ import utility.Request;
 import utility.Response;
 
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * Command to show all workers containing in collection
@@ -31,10 +32,11 @@ public class Show extends Command {
         if (collection.isEmpty()){
             return new Response("Коллекция пуста!");
         }
-        for (Map.Entry<Integer, Worker> worker : collection.entrySet()){
-            System.out.println(new Response(worker.toString()).message());
-        }
-        return Response.empty();
+        String workers = collection.entrySet().stream()
+                .map(worker -> "Key: " + worker.getKey() +
+                        " Worker: " + worker.getValue())
+                .collect(Collectors.joining("\n"));
+        return new Response(workers);
     }
 
     /**

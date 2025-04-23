@@ -1,4 +1,4 @@
-package client.exceptions;
+package exceptions;
 
 public class ExitWritten extends RuntimeException {
     public ExitWritten() {
