@@ -33,11 +33,10 @@ public class Insert extends Command {
     @Override
     public Response execute(Request request) {
         Response response;
-
         try {
+            Integer key = Integer.parseInt(request.getArg());
             Worker worker = request.getWorker();
             worker.setId(IdGenerator.getInstance().generateId());
-            Integer key = Integer.parseInt(request.getArg());
             CollectionManager.getInstance()
                              .addElement(worker, key);
             response = new Response("Новый Worker с ключом %d добавлен".formatted(key));

@@ -83,7 +83,7 @@ public class Server {
         } catch (ClassNotFoundException e) {
             logger.error("Несоответствие классов: {}", (Object) e.getStackTrace());
         } catch (IOException e) {
-            logger.error("Ошибка ввода-вывода" + e.getMessage());
+            logger.error("IO Ошибка: " + e.getMessage());
         } catch (NoSuchElementException e) {
             logger.error("Сервер остановлен");
             Router.getInstance().route(new Request("save"));
@@ -101,7 +101,7 @@ public class Server {
             clientChannel.configureBlocking(false);
             clientChannel.register(selector, SelectionKey.OP_READ);
         } catch (IOException e) {
-            logger.info("Хуйня в аксепте" + e.getMessage());
+            logger.info("Ошибка: " + e.getMessage());
         }
     }
 
@@ -124,51 +124,16 @@ public class Server {
 
     private void sendResponse(SelectionKey key) throws IOException {
         SocketChannel clientChannel = (SocketChannel) key.channel();
-        try (ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-             ObjectOutputStream clientDataOutput = new ObjectOutputStream(bytes)) {
-            clientChannel.configureBlocking(false);
-            clientDataOutput.writeObject(response);
-            ByteBuffer clientData = ByteBuffer.wrap(bytes.toByteArray());
-            ByteBuffer dataLength = ByteBuffer.allocate(32).putInt(clientData.limit());
-            dataLength.flip();
-            clientChannel.write(dataLength);
-            logger.info("Ответ длиной {} отправлен клиенту", dataLength);
-            clientChannel.write(clientData);
-            logger.info("Ответ отправлен клиенту");
-            clientData.clear();
-            clientChannel.register(selector, SelectionKey.OP_READ);
+        byte[] serializedData = serializator.serialize(response);
+        clientChannel.configureBlocking(false);
+        ByteBuffer clientData = ByteBuffer.wrap(serializedData);
+        ByteBuffer dataLength = ByteBuffer.allocate(32).putInt(clientData.limit());
+        dataLength.flip();
+        clientChannel.write(dataLength);
+        logger.info("Ответ длиной {} отправлен клиенту", dataLength);
+        clientChannel.write(clientData);
+        logger.info("Ответ отправлен клиенту");
+        clientData.clear();
+        clientChannel.register(selector, SelectionKey.OP_READ);
         }
     }
-}
-//
-//    public void run() throws IOException {
-//        ServerSocketChannel socketChannel = ServerSocketChannel.open();
-//        socketChannel.bind(new InetSocketAddress(port));
-//            System.out.println("accepting connection");
-//            SocketChannel clientChannel = socketChannel.accept();
-//
-//            System.out.println("Принято новое подключение:" +
-//                    " " + clientChannel.getRemoteAddress());
-//            bufferRead();
-//
-//            bufferWrite();
-//
-//    }
-//
-//    public void bufferRead () throws IOException { //TODO ошибки
-//        channel.read(buffer);
-//        System.out.println("hello world");
-//    }
-//
-//    public void bufferWrite () throws IOException {
-//        buffer.flip();
-//        byte[] dataBytes = new byte[buffer.remaining()];
-//        buffer.get(dataBytes);
-//
-//        for (int j = 0; j<dataBytes.length; j++){
-//            dataBytes[j] *=2;
-//        }
-//
-//        channel.write(ByteBuffer.wrap(dataBytes));
-//    }
-

@@ -64,6 +64,10 @@ public class Handler implements Runnable {
                 System.exit(0);
                 break;
             case "insert":
+                if (arg.isEmpty()) {
+                    client.sendToServer(new Request(command));
+                    break;
+                }
                 Worker worker = WorkerBuilder.build();
                 request = new Request(command, arg, worker);
                 client.sendToServer(request);

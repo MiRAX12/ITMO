@@ -64,14 +64,14 @@ public class ExecuteScript extends Command {
                 if (executedFiles.contains(scriptPath.toFile().getCanonicalPath()))
                     throw new ScriptRecursionException();
 
-                if (line.equals("insert \\d+")){
-                    createWorker(Handler.parse(line));
-                    Worker worker = WorkerBuilder.build();
-                    request = new Request(command, arg, worker);
-                }
-
-                response = new Response(Router.getInstance()
-                        .route(Handler.parse(line)).getMessage());
+//                if (line.equals("insert \\d+")){
+//                    createWorker(Handler.parse(line));
+//                    Worker worker = WorkerBuilder.build();
+//                    request = new Request(command, arg, worker);
+//                }
+//
+//                response = new Response(Router.getInstance()
+//                        .route(Handler.parse(line)).getMessage());
             }
             executedFiles.clear();
         } catch (Exception e){
@@ -79,9 +79,9 @@ public class ExecuteScript extends Command {
         } return response;
     }
 
-    private Worker createWorker(Request request) {
-
-    }
+//    private Worker createWorker(Request request) {
+//
+//    }
 
     /**
      * Overridden {code toString} to return name of this command

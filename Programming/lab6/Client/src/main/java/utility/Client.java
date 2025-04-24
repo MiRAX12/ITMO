@@ -9,8 +9,13 @@ import java.io.ObjectOutputStream;
 import java.net.ConnectException;
 import java.net.InetSocketAddress;
 import java.net.SocketAddress;
+import java.net.SocketTimeoutException;
 import java.nio.ByteBuffer;
+import java.nio.channels.SelectionKey;
+import java.nio.channels.Selector;
 import java.nio.channels.SocketChannel;
+import java.util.Iterator;
+import java.util.Set;
 
 public class Client {
 //    private byte[] arr;
@@ -29,43 +34,36 @@ public class Client {
         try {
             this.address = new InetSocketAddress(host, port);
             this.channel = SocketChannel.open();
-            System.out.println("connecting...");
+            System.out.println("Подключение...");
             channel.connect(address);
-            System.out.println("connected to " + host + ":" + port); //TODO подумай над выводом
+            System.out.println("Подключено к серверу " + host + ":" + port);
         } catch (IOException e) {
-            System.out.println(e.getMessage() + "Ошибка ввода-вывода");
+            System.out.println("Не удалось подключиться, " +
+                    "сервер выключен или указаны неверные данные");
         }
     }
 
     public void sendToServer(Request request) throws IOException {
-//        Serializator serializator = new Serializator(request);
-//        byte[] serializedObject = serializator.serialize();
-        try(ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-            ObjectOutputStream out = new ObjectOutputStream(bytes)) {
+        Serializator serializator = new Serializator(request);
+        byte[] serializedObject = serializator.serialize();
 
-            out.writeObject(request);
-            ByteBuffer buffer = ByteBuffer.wrap(bytes.toByteArray());
+            ByteBuffer buffer = ByteBuffer.wrap(serializedObject);
             channel.write(buffer);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-//        ByteBuffer buffer = ByteBuffer.wrap(out);
-//        channel.write(buffer);
     }
 
     public void receiveFromServer() throws IOException, ClassNotFoundException {
-        ByteBuffer dataToReceiveLength = ByteBuffer.allocate(32);
-        channel.read(dataToReceiveLength); // читаем длину ответа от сервера
-        dataToReceiveLength.flip();
-        int responseLength = dataToReceiveLength.getInt(); // достаём её из буфера
+            ByteBuffer dataToReceiveLength = ByteBuffer.allocate(32);
+            channel.read(dataToReceiveLength);
+            dataToReceiveLength.flip();
+            int responseLength = dataToReceiveLength.getInt();
 
-        ByteBuffer dataToReceive = ByteBuffer.allocate(responseLength); // создаем буфер нужной нам длины
-        channel.read(dataToReceive); // получаем ответ от сервера
-        Deserializator deserializator = new Deserializator(dataToReceive.array());
-        Response response = (Response) deserializator.deserialize();
-        System.out.println(response.getMessage());
-        if(!response.getWorkers().isEmpty()) {
-            System.out.println(response.getWorkers());
-        }
+            ByteBuffer dataToReceive = ByteBuffer.allocate(responseLength);
+            channel.read(dataToReceive);
+            Deserializator deserializator = new Deserializator(dataToReceive.array());
+            Response response = (Response) deserializator.deserialize();
+            System.out.println(response.getMessage());
+            if(!response.getWorkers().isEmpty()) {
+                System.out.println(response.getWorkers());
+            }
     }
 }
