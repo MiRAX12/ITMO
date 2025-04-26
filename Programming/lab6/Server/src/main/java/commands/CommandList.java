@@ -1,6 +1,5 @@
 package commands;
 
-import handlers.Handler;
 
 import java.util.List;
 
@@ -26,7 +25,6 @@ public final class CommandList {
             new Clear(),
             new Exit(),
             new Info(),
-            new Save(),
             new Show(),
             new Help(),
             new Insert(),

@@ -2,6 +2,8 @@ package constructors;
 
 import exceptions.ExitWritten;
 
+import java.io.FileInputStream;
+import java.io.InputStream;
 import java.time.format.DateTimeParseException;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
@@ -16,7 +18,7 @@ import java.util.Scanner;
  * @since 1.0
  */
 public class ParameterConstructor {
-    static final Scanner consoleRead = new Scanner(System.in);
+    public static Scanner consoleRead = new Scanner(System.in);
 
     public ParameterConstructor() {}
 
@@ -29,7 +31,7 @@ public class ParameterConstructor {
      *
      * @return parameter read from input
      */
-    public <T> T readParameter(BuildingRequest<T> buildingRequest) throws
+    public static <T> T readParameter(BuildingRequest<T> buildingRequest) throws
             NoSuchElementException, IllegalStateException, IllegalArgumentException,
             ExitWritten, DateTimeParseException{
         T x = null;
@@ -38,6 +40,7 @@ public class ParameterConstructor {
             try {
             System.out.print(buildingRequest.message());
             String input = consoleRead.nextLine().trim();
+
             if (input.equals("exit")) {
                 System.out.println(new ExitWritten().getMessage());
                 System.exit(0);
@@ -54,13 +57,14 @@ public class ParameterConstructor {
                 System.out.println("Ошибка ввода даты. Пожалуйста, введите дату в правильном формате.");
             } catch (IllegalArgumentException e) {
                 System.out.println("Неправильный формат аргумента, повторите ввод");
-            } catch (NoSuchElementException e) {
-                System.exit(0);
+//            } catch (NoSuchElementException e) {
+//                System.exit(0);
 
             }
         } while(next);
         return x;
 
     }
+
 }
 

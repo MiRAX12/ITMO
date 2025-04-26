@@ -1,10 +1,7 @@
 package commands;
 
-import constructors.WorkerBuilder;
-import handlers.Handler;
+import constructors.ParameterConstructor;
 import exceptions.ScriptRecursionException;
-import handlers.Router;
-import model.Worker;
 import utility.FileConfiguration;
 import utility.Request;
 import utility.Response;
@@ -42,46 +39,10 @@ public class ExecuteScript extends Command {
      * @param request the request containing the path to compare
      * @return a {@link Response} containing result of executing commands from the file
      */
-    @Override
+
     public Response execute(Request request) {
-        Response response = new Response("Произошла непредвиденная ошибка");
-
-        if (request.getArg() == null || request.getArg().isEmpty()) {
-            return new Response("Укажите путь к файлу скрипта");
-        }
-
-        Path path = Paths.get(request.getArg());
-
-        try {
-            FileConfiguration.checkReadFile(path);
-            Scanner scanner = new Scanner(path);
-
-            executedFiles.add(path.toFile().getCanonicalPath());
-            while (scanner.hasNextLine()) {
-                var line = scanner.nextLine().trim();
-                Path scriptPath = Paths.get(Handler.parse(line).getArg());
-
-                if (executedFiles.contains(scriptPath.toFile().getCanonicalPath()))
-                    throw new ScriptRecursionException();
-
-//                if (line.equals("insert \\d+")){
-//                    createWorker(Handler.parse(line));
-//                    Worker worker = WorkerBuilder.build();
-//                    request = new Request(command, arg, worker);
-//                }
-//
-//                response = new Response(Router.getInstance()
-//                        .route(Handler.parse(line)).getMessage());
-            }
-            executedFiles.clear();
-        } catch (Exception e){
-            response = new Response("Произошла ошибка %s".formatted(e.getMessage()));
-        } return response;
+        return null;
     }
-
-//    private Worker createWorker(Request request) {
-//
-//    }
 
     /**
      * Overridden {code toString} to return name of this command

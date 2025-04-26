@@ -68,17 +68,21 @@ public class CollectionManager {
             if (workerMap != null){
                 collection.putAll(workerMap);
                 logger.info("Загружено " + collection.size() + " новых элементов");
-//                System.out.printf("Загружено %d новых элементов%n", collection.size());
+                System.out.println("Загружено " + collection.size() + " новых элементов");
                 return;
             }
-            logger.info("Файл пустой, workers не были добавлены");
-//            System.out.println("Файл пустой, workers не были добавлены");
+//            logger.info("Файл пустой, workers не были добавлены");
+            System.out.println("Файл пустой, workers не были добавлены");
         } catch (Exception e) {
 
-            if (e.getMessage() == null) logger.error("Не удалось загрузить workers");
-//                System.out.println("Не удалось загрузить workers");
-            else logger.error("Не удалось загрузить workers: " + e.getMessage());
-//                System.out.println("Не удалось загрузить workers: " + e.getMessage());
+            if (e.getMessage() == null) {
+//                logger.error("Не удалось загрузить workers");
+                System.out.println("Не удалось загрузить workers");
+            }
+            else {
+//                logger.error("Не удалось загрузить workers: " + e.getMessage());
+                System.out.println("Не удалось загрузить workers: " + e.getMessage());
+            }
         }
     }
 

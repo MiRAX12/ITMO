@@ -55,11 +55,11 @@ public class LocationBuilder {
      * @see ParameterConstructor
      */
     public static Location build(){
-        ParameterConstructor parameterConstructor = new ParameterConstructor();
+
         Location.Builder builder = new Location.Builder();
-        builder.x(parameterConstructor.readParameter(askParameterX()));
-        builder.y(parameterConstructor.readParameter(askParameterY()));
-        builder.z(parameterConstructor.readParameter(askParameterZ()));
+        builder.x(ParameterConstructor.readParameter(askParameterX()));
+        builder.y(ParameterConstructor.readParameter(askParameterY()));
+        builder.z(ParameterConstructor.readParameter(askParameterZ()));
         return builder.build();
     }
 }

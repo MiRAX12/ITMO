@@ -1,6 +1,5 @@
 package org.exampleMirax;//import Commands.Add;
 
-import handlers.Handler;
 import server.Server;
 
 import java.io.IOException;
@@ -10,7 +9,7 @@ import java.io.IOException;
  * all following input
  *
  * @author Mirax
- * @see Handler
+
  */
 public class Main {
 

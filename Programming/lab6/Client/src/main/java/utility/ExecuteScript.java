@@ -1,8 +1,11 @@
 package utility;
 
-import exceptions.NoScriptPathException;
+import constructors.ParameterConstructor;
 import exceptions.ScriptRecursionException;
+import utility.Handler;
 
+import java.io.FileInputStream;
+import java.io.InputStream;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.HashSet;
@@ -21,39 +24,49 @@ import java.util.Scanner;
  * @since 1.0
  */
 public class ExecuteScript {
+    private final HashSet<String> executedFiles = new HashSet<>();
 
     /**
      * Executes the script from path given in argument
      * <p>
-     * Reads lines from file containing server.utility.commands and executing them.
+     * Reads lines from file containing commands and executing them.
      * </p>
-     * <p>
-     * //     * @param request the request containing the path to compare
+     *
+     * @param request the request containing the path to compare
+     * @return a {@link Response} containing result of executing commands from the file
      */
-    public static void execute(String pathToFile) throws NoScriptPathException {
-        final HashSet<String> executedFiles = new HashSet<>();
-        if (pathToFile == null || pathToFile.isEmpty()) {
-            throw new NoScriptPathException();
+    public Response execute(Request request) {
+        Response response = new Response("Произошла непредвиденная ошибка");
+
+        if (request.getArg() == null || request.getArg().isEmpty()) {
+            return new Response("Укажите путь к файлу скрипта");
         }
-        Path path = Paths.get(pathToFile);
+
+        Path path = Paths.get(request.getArg());
+
         try {
             FileConfiguration.checkReadFile(path);
-            Scanner scanner = new Scanner(path);
+            Scanner scanner = new Scanner(path.toFile());
+            Scanner oldConsoleRead = ParameterConstructor.consoleRead;
+            ParameterConstructor.consoleRead = scanner;
+            Path scriptPath = Paths.get(request.getArg());
+
+            if (executedFiles.contains(scriptPath.toFile().getCanonicalPath()))
+                throw new ScriptRecursionException();
             executedFiles.add(path.toFile().getCanonicalPath());
-            while (scanner.hasNextLine()) {
-                var line = scanner.nextLine().trim();
-                final String[] parts = line.split(" ", 2);
-                final String command = parts[0];
-                final String arg = parts.length > 1 ? parts[1] : "";
-                Path scriptPath = Paths.get(arg);
-                if (executedFiles.contains(scriptPath.toFile().getCanonicalPath()))
-                    throw new ScriptRecursionException();
-                Handler.processInput(command, arg);
+
+            while (scanner.hasNext()) {
+                Handler.parseConsoleInput(scanner);
             }
+
+            ParameterConstructor.consoleRead = oldConsoleRead;
+            scanner.close();
             executedFiles.clear();
+
         } catch (Exception e) {
-            System.out.println("Произошла ошибка " + e.getMessage());
+            response = new Response("Произошла ошибка %s".formatted(e.getMessage()));
         }
+        return response;
     }
 }
 

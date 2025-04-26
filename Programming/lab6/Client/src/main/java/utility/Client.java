@@ -18,8 +18,6 @@ import java.util.Iterator;
 import java.util.Set;
 
 public class Client {
-//    private byte[] arr;
-//    private int len;
     private String host;
     private int port;
     private SocketAddress address;
@@ -46,9 +44,8 @@ public class Client {
     public void sendToServer(Request request) throws IOException {
         Serializator serializator = new Serializator(request);
         byte[] serializedObject = serializator.serialize();
-
-            ByteBuffer buffer = ByteBuffer.wrap(serializedObject);
-            channel.write(buffer);
+        ByteBuffer buffer = ByteBuffer.wrap(serializedObject);
+        channel.write(buffer);
     }
 
     public void receiveFromServer() throws IOException, ClassNotFoundException {
@@ -56,13 +53,12 @@ public class Client {
             channel.read(dataToReceiveLength);
             dataToReceiveLength.flip();
             int responseLength = dataToReceiveLength.getInt();
-
             ByteBuffer dataToReceive = ByteBuffer.allocate(responseLength);
             channel.read(dataToReceive);
             Deserializator deserializator = new Deserializator(dataToReceive.array());
             Response response = (Response) deserializator.deserialize();
             System.out.println(response.getMessage());
-            if(!response.getWorkers().isEmpty()) {
+            if (!response.getWorkers().isEmpty()) {
                 System.out.println(response.getWorkers());
             }
     }
