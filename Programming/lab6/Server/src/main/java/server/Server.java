@@ -1,5 +1,6 @@
 package server;
 
+import commands.CommandList;
 import handlers.Router;
 import managers.CollectionManager;
 import org.slf4j.Logger;
@@ -54,12 +55,22 @@ public class Server {
                 Iterator<SelectionKey> keys = selectedKeys.iterator();
                 logger.info("Итератор по ключам селектора получен");
 
+                if(System.in.available() > 0) {
+                    BufferedReader consoleReader = new BufferedReader(new InputStreamReader(System.in));
+                    String currentInput = consoleReader.readLine();
+                    if(currentInput.equals("save")) {
+                        CommandList.commandList.stream().filter(command -> command.getName().equals("save"))
+                                .findFirst().map(command -> command.execute(new Request("save")));
+                    }
+                } else System.out.println("rrt");
+
                 while (keys.hasNext()) {
                     SelectionKey key = keys.next();
                     logger.info("Началась обработка ключа");
 
                     try {
                         if (key.isValid()) {
+
                             if (key.isAcceptable()) {
                                 acceptConnection(key);
                             }
