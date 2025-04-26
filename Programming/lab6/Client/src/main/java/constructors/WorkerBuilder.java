@@ -24,13 +24,13 @@ public class WorkerBuilder {
      * @see ParameterConstructor
      */
     public static Worker build(){
-        ParameterConstructor parameterConstructor = new ParameterConstructor();
+
         Worker.Builder builder = new Worker.Builder();
-        builder.name(parameterConstructor.readParameter(askName()));
+        builder.name(ParameterConstructor.readParameter(askName()));
         builder.coordinates(CoordinatesBuilder.buildCoordinates());
-        builder.salary(parameterConstructor.readParameter(askSalary()));
-        builder.startDate(parameterConstructor.readParameter(askLocalDateTime()));
-        builder.endDate(parameterConstructor.readParameter(askZonedDateTime()));
+        builder.salary(ParameterConstructor.readParameter(askSalary()));
+        builder.startDate(ParameterConstructor.readParameter(askLocalDateTime()));
+        builder.endDate(ParameterConstructor.readParameter(askZonedDateTime()));
         builder.status(askStatus());
         builder.person(PersonBuilder.build());
         return builder.build();
@@ -100,7 +100,7 @@ public class WorkerBuilder {
         statusMap.put("3", Status.RECOMMENDED_FOR_PROMOTION);
         statusMap.put("4", Status.REGULAR);
         statusMap.put("5", Status.PROBATION);
-        final Scanner consoleRead = new Scanner(System.in);
+        final Scanner consoleRead = ParameterConstructor.consoleRead;
         while (status == null) {
             System.out.print("Введите статус (1 - FIRED, 2 - HIRED," +
                     " 3 - RECOMMENDED_FOR_PROMOTION, 4 - REGULAR, 5 - PROBATION). Пустая строка не допускается: ");

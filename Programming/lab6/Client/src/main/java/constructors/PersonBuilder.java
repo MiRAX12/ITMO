@@ -24,16 +24,15 @@ public class PersonBuilder {
      */
     public static Person build(){
         System.out.print("Вы хотите внести сведения о Person?\n1: да \n2: нет\n->");
-        final Scanner consoleRead = new Scanner(System.in);
+        final Scanner consoleRead = ParameterConstructor.consoleRead;
         boolean next = true;
         do {
             String input = consoleRead.nextLine().trim();
             switch (input) {
                 case ("1"):
                     Person.Builder builder = new Person.Builder();
-                    ParameterConstructor parameterConstructor = new ParameterConstructor();
                     builder.location(LocationBuilder.build());
-                    builder.passportId(parameterConstructor.readParameter(askPassportId()));
+                    builder.passportId(ParameterConstructor.readParameter(askPassportId()));
                     return builder.build();
                 case ("2"):
                     next = false;

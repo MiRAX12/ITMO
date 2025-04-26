@@ -44,10 +44,9 @@ public class CoordinatesBuilder {
      * @see ParameterConstructor
      */
     public static Coordinates buildCoordinates(){
-        ParameterConstructor parameterConstructor = new ParameterConstructor();
         Coordinates.Builder builder = new Coordinates.Builder();
-        builder.x(parameterConstructor.readParameter(askParameterX()));
-        builder.y(parameterConstructor.readParameter(askParameterY()));
+        builder.x(ParameterConstructor.readParameter(askParameterX()));
+        builder.y(ParameterConstructor.readParameter(askParameterY()));
         return builder.build();
     }
 
