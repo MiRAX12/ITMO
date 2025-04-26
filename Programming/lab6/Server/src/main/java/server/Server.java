@@ -41,7 +41,7 @@ public class Server {
         logger.info("Селектор открыт");
         serverChannel = ServerSocketChannel.open();
         serverChannel.configureBlocking(false);
-        serverChannel.bind(address, 1);
+        serverChannel.bind(address);
         logger.info("Канал сервера готов к работе");
         System.out.println("Канал сервера готов к работе");
         serverChannel.register(selector, SelectionKey.OP_ACCEPT);
