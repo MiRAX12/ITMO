@@ -29,7 +29,7 @@ import java.util.*;
 // */
 public class Handler implements Runnable {
     private final Scanner consoleRead = new Scanner(System.in);
-    private static final Client client = new Client("", 5505);
+    private static final Client client = new Client("localhost", 5505);
     private static ExecuteScript executeScript = new ExecuteScript();
 
     public Handler() {}

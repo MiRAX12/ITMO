@@ -1,2 +1,5 @@
 rootProject.name = "lab6"
 
+include "Client"
+include "Server"
+

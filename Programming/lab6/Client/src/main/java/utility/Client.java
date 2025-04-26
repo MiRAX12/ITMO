@@ -60,6 +60,6 @@ public class Client {
             System.out.println(response.getMessage());
             if (!response.getWorkers().isEmpty()) {
                 System.out.println(response.getWorkers());
-            }
+        }
     }
 }
