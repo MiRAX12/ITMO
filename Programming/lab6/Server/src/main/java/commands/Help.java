@@ -1,6 +1,5 @@
 package commands;
 
-import handlers.Router;
 import utility.Request;
 import utility.Response;
 

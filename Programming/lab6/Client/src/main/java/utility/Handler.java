@@ -1,19 +1,12 @@
 package utility;
 
-import constructors.CoordinatesBuilder;
-import constructors.LocationBuilder;
-import constructors.PersonBuilder;
+
 import constructors.WorkerBuilder;
-import exceptions.FileNotExistsException;
 import model.*;
 import exceptions.ExitWritten;
+import сlient.Client;
 
 import java.io.*;
-import java.nio.file.Path;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 ///**
@@ -49,10 +42,7 @@ public class Handler implements Runnable {
                     parseConsoleInput(consoleRead);
 
                 } catch (Exception e) {
-                    System.out.println("Сервер отключен: " + e.getMessage());
-                    /**
-                     * 1. Сервер отключился
-                     */
+                    System.out.println("Ошибка" + e.getMessage());
                 }
             }
         }
@@ -77,6 +67,7 @@ public class Handler implements Runnable {
             case "insert":
                 if (arg.isEmpty()) {
                     client.sendToServer(new Request(command));
+                    client.receiveFromServer();
                     break;
                 }
                 Worker worker = WorkerBuilder.build();

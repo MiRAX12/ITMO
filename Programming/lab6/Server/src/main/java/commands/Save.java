@@ -30,9 +30,11 @@ public class Save extends Command {
             CollectionManager.getInstance().save();
         } catch (Exception e) {
             logger.error("Не удалось сохранить файл: " + e.getMessage());
+            System.out.println("Не удалось сохранить файл: " + e.getMessage());
             return new Response("Не удалось сохранить файл: " + e.getMessage());
         }
         logger.info("Файл сохранен");
+        System.out.println("Файл сохранен");
         return new Response("Файл сохранен\n");
     }
 

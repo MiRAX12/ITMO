@@ -23,24 +23,4 @@
       </person>
     </worker>
   </workerKeys>
-  <workerKeys>
-    <key>231</key>
-    <worker>
-      <id>4</id>
-      <name>231</name>
-      <coordinates>
-        <x>3.0</x>
-        <y>21321</y>
-      </coordinates>
-      <creationDate>2025-04-26</creationDate>
-      <salary>213.0</salary>
-      <startDate>2023-10-05T14:30:00</startDate>
-      <endDate>2023-10-05T14:30:00Z</endDate>
-      <status>FIRED</status>
-      <person>
-        <passportId/>
-        <location/>
-      </person>
-    </worker>
-  </workerKeys>
 </ArrayList>

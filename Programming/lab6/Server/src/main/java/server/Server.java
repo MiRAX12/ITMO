@@ -1,7 +1,7 @@
 package server;
 
 import commands.Save;
-import handlers.Router;
+import router.Router;
 import managers.CollectionManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,50 +11,36 @@ import utility.Request;
 import utility.Response;
 
 import java.io.*;
-import java.net.InetSocketAddress;
+import java.net.ServerSocket;
+import java.net.Socket;
 import java.net.SocketException;
-import java.nio.ByteBuffer;
-import java.nio.channels.*;
-import java.util.Iterator;
-import java.util.NoSuchElementException;
-import java.util.Set;
 
 public class Server {
-    private final InetSocketAddress address;
-    private Selector selector;
+    private final int port;
+    private ServerSocket serverSocket;
     private final Logger logger;
-    private Response response;
-    private ServerSocketChannel serverChannel;
     private Deserializator deserializator = new Deserializator();
     private Serializator serializator = new Serializator();
 
-
-
-    public Server(int address) {
-        this.address = new InetSocketAddress(address);
+    public Server(int port) {
+        this.port = port;
         logger = LoggerFactory.getLogger(Server.class);
     }
 
     private void init() throws IOException {
         CollectionManager.getInstance().load();
-        selector = Selector.open();
-        logger.info("Селектор открыт");
-        serverChannel = ServerSocketChannel.open();
-        serverChannel.configureBlocking(false);
-        serverChannel.bind(address);
-        logger.info("Канал сервера готов к работе");
-        System.out.println("Канал сервера готов к работе");
-        serverChannel.register(selector, SelectionKey.OP_ACCEPT);
+        serverSocket = new ServerSocket(port);
+        logger.info("Сервер запущен на порту " + port);
+        System.out.println("Сервер запущен на порту " + port);
     }
 
     public void run() throws IOException {
         this.init();
-        logger.info("Итератор по ключам селектора получен");
-        while (true) {
-            try {
-                if (System.in.available() > 0) {
-                    BufferedReader consoleReader = new BufferedReader(new InputStreamReader(System.in));
-                    String currentInput = consoleReader.readLine();
+
+        Thread consoleThread = new Thread(() -> {
+            try (BufferedReader consoleReader = new BufferedReader(new InputStreamReader(System.in))) {
+                String currentInput;
+                while ((currentInput = consoleReader.readLine()) != null) {
                     if (currentInput.equals("save")) {
                         Save save = new Save();
                         save.execute(new Request("save"));
@@ -64,97 +50,91 @@ public class Server {
                         System.exit(0);
                     }
                 }
-
             } catch (IOException e) {
-                System.out.println(e.getMessage());
+                logger.error("Ошибка чтения с консоли: " + e.getMessage());
             }
+        });
+        consoleThread.setDaemon(true);
+        consoleThread.start();
+
+        while (true) {
             try {
-                if (this.selector.select(500) == 0) {
-                    continue;
-                }
-                Set<SelectionKey> selectedKeys = selector.selectedKeys();
-                Iterator<SelectionKey> keys = selectedKeys.iterator();
-                while (keys.hasNext()) {
-                    SelectionKey key = keys.next();
-                    logger.info("Началась обработка ключа");
+                Socket clientSocket = serverSocket.accept();
+                logger.info("Установлено соединение с клиентом " + clientSocket.getInetAddress() + ":" + clientSocket.getPort());
+                System.out.println("Установлено соединение с клиентом " + clientSocket.getRemoteSocketAddress());
+                ClientHandler clientHandler = new ClientHandler(clientSocket);
+                Thread clientThread = new Thread(clientHandler);
+                clientThread.start();
+            } catch (IOException e) {
+                logger.error("Ошибка при подключении клиента: " + e.getMessage());
+            }
+        }
+    }
+
+    private class ClientHandler implements Runnable {
+        private final Socket clientSocket;
+        private ObjectInputStream input;
+        private ObjectOutputStream output;
+
+        public ClientHandler(Socket clientSocket) {
+            this.clientSocket = clientSocket;
+            try {
+                output = new ObjectOutputStream(clientSocket.getOutputStream());
+                output.flush();
+                input = new ObjectInputStream(clientSocket.getInputStream());
+            } catch (IOException e) {
+                logger.error("Ошибка создания потоков ввода/вывода: " + e.getMessage());
+            }
+        }
+
+        @Override
+        public void run() {
+            try {
+                while (!clientSocket.isClosed() && input != null && output != null) {
                     try {
-                        if (key.isValid()) {
-                            if (key.isAcceptable()) {
-                                acceptConnection(key);
-                            }
-                            if (key.isReadable()) {
-                                response = receiveRequest(key);
-                            }
-                            if (key.isWritable()) {
-                                sendResponse(key);
+                        Object obj = input.readObject();
+                        if (obj instanceof Request) {
+                            Request request = (Request) obj;
+                            Response response = Router.getInstance().route(request);
+                            byte[] serializedResponse = serializator.serialize(response);
+                            
+                            if (serializedResponse.length > 0) {
+                                output.writeInt(serializedResponse.length);
+                                output.write(serializedResponse);
+                                output.flush();
+                                logger.trace("Запрос {} успешно обработан", request.getCommand());
+                            } else {
+                                logger.error("Получен ответ с нулевой длиной");
                             }
                         }
-                    } catch (SocketException | CancelledKeyException e) {
-                        SocketChannel clientChannel = (SocketChannel) key.channel();
-                        var client = clientChannel.getRemoteAddress();
-                        logger.info("Клиент {} отключился от сервера", client);
-                        System.out.println("Клиент " + client + " отключился от сервера");
+                    } catch (SocketException e) {
+                        logger.info("Клиент {} отключился от сервера", clientSocket.getRemoteSocketAddress());
+                        System.out.println("Клиент " + clientSocket.getRemoteSocketAddress() + " отключился от сервера");
                         Save save = new Save();
                         save.execute(new Request("save"));
-                        key.cancel();
-                        serverChannel.register(selector, SelectionKey.OP_ACCEPT);
+                        break;
+                    } catch (ClassNotFoundException e) {
+                        logger.error("Несоответствие классов: {}", (Object) e.getStackTrace());
+                    } catch (IOException e) {
+                        logger.error("IO Ошибка: " + e.getMessage());
+                        break;
                     }
-                    keys.remove();
                 }
-            } catch (ClassNotFoundException e) {
-                logger.error("Несоответствие классов: {}", (Object) e.getStackTrace());
-            } catch (IOException e) {
-                logger.error("IO Ошибка: " + e.getMessage());
-            } catch (NoSuchElementException e) {
-                logger.error("Сервер остановлен");
-                Router.getInstance().route(new Request("save"));
-                System.exit(0);
-
+            } finally {
+                try {
+                    if (input != null) {
+                        input.close();
+                    }
+                    if (output != null) {
+                        output.close();
+                    }
+                    if (!clientSocket.isClosed()) {
+                        clientSocket.close();
+                    }
+                } catch (IOException e) {
+                    logger.error("Ошибка закрытия соединения: " + e.getMessage());
+                }
             }
         }
     }
-
-    private void acceptConnection(SelectionKey key) {
-        ServerSocketChannel serverChannel = (ServerSocketChannel) key.channel();
-        try {
-            SocketChannel clientChannel = serverChannel.accept();
-            var clientAddress = clientChannel.socket().getInetAddress();
-            var clientPort = clientChannel.socket().getPort();
-                    logger.info("Установлено соединение c клиентом {}:{}",
-                    clientAddress, clientPort);
-            System.out.println("Установлено соединение с клиентом " +
-                    clientAddress + ":" + clientPort);
-            clientChannel.configureBlocking(false);
-            clientChannel.register(selector, SelectionKey.OP_READ);
-        } catch (IOException e) {
-            logger.info("Ошибка: " + e.getMessage());
-        }
-    }
-
-    private Response receiveRequest(SelectionKey key) throws IOException, ClassNotFoundException {
-        ByteBuffer clientData = ByteBuffer.allocate(20000);
-        SocketChannel clientChannel = (SocketChannel) key.channel();
-            clientChannel.configureBlocking(false);
-            logger.trace("{} байт пришло от клиента", clientChannel.read(clientData));
-            Request request = (Request) deserializator.deserialize(clientData.array());
-            response = Router.getInstance().route(request);
-            logger.trace("Запрос {} успешно обработан", request.getCommand());
-            clientChannel.register(selector, SelectionKey.OP_WRITE);
-        return response;
-    }
-
-    private void sendResponse(SelectionKey key) throws IOException {
-        SocketChannel clientChannel = (SocketChannel) key.channel();
-        byte[] serializedData = serializator.serialize(response);
-        clientChannel.configureBlocking(false);
-        ByteBuffer clientData = ByteBuffer.wrap(serializedData);
-        ByteBuffer dataLength = ByteBuffer.allocate(32).putInt(clientData.limit());
-        dataLength.flip();
-        clientChannel.write(dataLength);
-        logger.trace("{} байт отправлено клиенту", clientData.limit());
-        clientChannel.write(clientData);
-        logger.trace("Ответ отправлен клиенту");
-        clientData.clear();
-        clientChannel.register(selector, SelectionKey.OP_READ);
-        }
-    }
+}
