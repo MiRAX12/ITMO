@@ -85,23 +85,23 @@ public class Client {
 
     public void receiveFromServer() throws IOException, ClassNotFoundException {
         try {
-            ByteBuffer lengthBuffer = ByteBuffer.allocate(INT_SIZE);
-            channel.read(lengthBuffer);
-            lengthBuffer.flip();
-            int responseLength = lengthBuffer.getInt();
-            
-            if (responseLength <= 0 || responseLength > MAX_RESPONSE_SIZE) {
-                throw new IOException("Получена некорректная длина ответа: " + responseLength);
-            }
-            
-            
-            ByteBuffer dataBuffer = ByteBuffer.allocate(responseLength);
+//            ByteBuffer lengthBuffer = ByteBuffer.allocate(INT_SIZE);
+//            channel.read(lengthBuffer);
+//            lengthBuffer.flip();
+//            int responseLength = lengthBuffer.getInt();
+//
+//            if (responseLength <= 0 || responseLength > MAX_RESPONSE_SIZE) {
+//                throw new IOException("Получена некорректная длина ответа: " + responseLength);
+//            }
+
+
+            ByteBuffer dataBuffer = ByteBuffer.allocate(1024*1024*10);
             channel.read(dataBuffer);
-            
+
             dataBuffer.flip();
-            byte[] responseData = new byte[responseLength];
+            byte[] responseData = new byte[dataBuffer.remaining()];
             dataBuffer.get(responseData);
-            
+
             Deserializator deserializator = new Deserializator();
             Response response = (Response) deserializator.deserialize(responseData);
             System.out.println(response.getMessage());

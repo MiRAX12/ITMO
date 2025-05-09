@@ -14,6 +14,7 @@ import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketException;
+import java.nio.ByteBuffer;
 
 public class Server {
     private final int port;
@@ -73,15 +74,15 @@ public class Server {
 
     private class ClientHandler implements Runnable {
         private final Socket clientSocket;
-        private ObjectInputStream input;
-        private ObjectOutputStream output;
+        private InputStream input;
+        private OutputStream output;
 
         public ClientHandler(Socket clientSocket) {
             this.clientSocket = clientSocket;
             try {
-                output = new ObjectOutputStream(clientSocket.getOutputStream());
+                output = clientSocket.getOutputStream();
                 output.flush();
-                input = new ObjectInputStream(clientSocket.getInputStream());
+                input = clientSocket.getInputStream();
             } catch (IOException e) {
                 logger.error("Ошибка создания потоков ввода/вывода: " + e.getMessage());
             }
@@ -92,21 +93,21 @@ public class Server {
             try {
                 while (!clientSocket.isClosed() && input != null && output != null) {
                     try {
-                        Object obj = input.readObject();
-                        if (obj instanceof Request) {
-                            Request request = (Request) obj;
+                        byte[] clientData = new byte[1024*1024*10];
+                        int bytes = input.read(clientData);
+
+                            Request request = (Request) deserializator.deserialize(clientData);
                             Response response = Router.getInstance().route(request);
                             byte[] serializedResponse = serializator.serialize(response);
                             
                             if (serializedResponse.length > 0) {
-                                output.writeInt(serializedResponse.length);
                                 output.write(serializedResponse);
                                 output.flush();
                                 logger.trace("Запрос {} успешно обработан", request.getCommand());
                             } else {
                                 logger.error("Получен ответ с нулевой длиной");
                             }
-                        }
+
                     } catch (SocketException e) {
                         logger.info("Клиент {} отключился от сервера", clientSocket.getRemoteSocketAddress());
                         System.out.println("Клиент " + clientSocket.getRemoteSocketAddress() + " отключился от сервера");
