@@ -1,6 +1,5 @@
 package commands;
 
-import constructors.WorkerBuilder;
 import io.IdGenerator;
 import managers.CollectionManager;
 import model.Worker;

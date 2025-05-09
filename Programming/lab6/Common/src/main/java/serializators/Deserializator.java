@@ -7,12 +7,13 @@ import java.io.ObjectInputStream;
 public class Deserializator {
 
     public Deserializator() {
-            }
+    }
 
     public Object deserialize(byte[] bytes) throws IOException, ClassNotFoundException {
         try(ByteArrayInputStream by = new ByteArrayInputStream(bytes);
             ObjectInputStream in = new ObjectInputStream(by)) {
-            return in.readObject();
+            Object object = in.readObject();
+            return object;
         }
     }
 }

@@ -2,10 +2,7 @@ package utility;
 
 import constructors.ParameterConstructor;
 import exceptions.ScriptRecursionException;
-import utility.Handler;
 
-import java.io.FileInputStream;
-import java.io.InputStream;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.HashSet;
