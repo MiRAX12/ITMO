@@ -9,21 +9,13 @@ import сlient.Client;
 import java.io.*;
 import java.util.*;
 
-///**
-// * Handles user input.
-// * <p>
-// * This class is responsible for reading input from the user, parsing server.utility.commands to request,
-// * routing requests to {@link Router}, and printing responses to the console.
-// * </p>
-// *
-// * @author Mirax
-// * @see Router
-// * @since 1.0
-// */
 public class Handler implements Runnable {
+    private static final String HOST = "localhost";
+    private static final int PORT = 5505;
     private final Scanner consoleRead = new Scanner(System.in);
-    private static final Client client = new Client("localhost", 5505);
+    private static final Client client = new Client(HOST, PORT);
     private static ExecuteScript executeScript = new ExecuteScript();
+
 
     public Handler() {}
 
@@ -36,13 +28,19 @@ public class Handler implements Runnable {
      */
     @Override
     public void run() {
-        client.init();
+        System.out.println("Подключение...");
+        try {
+            client.init();
+            System.out.println("Подключено к серверу " + HOST + ":" + PORT);
+        } catch (Exception e){
+            System.out.println("Введите любой символ, чтобы повторить попытку или exit, чтобы закрыть клиент");
+        }
             while (consoleRead.hasNext()) {
                 try {
                     parseConsoleInput(consoleRead);
 
                 } catch (Exception e) {
-                    System.out.println("Ошибка" + e.getMessage());
+                    if (e.getMessage()!=null) System.out.println("Ошибка " + e.getMessage());
                 }
             }
         }
@@ -81,8 +79,8 @@ public class Handler implements Runnable {
                 break;
             default:
                 request = new Request(command, arg);
-                client.sendToServer(request);
-                client.receiveFromServer();
+                    client.sendToServer(request);
+                    client.receiveFromServer();
                 break;
         }
         }catch (ClassNotFoundException e){

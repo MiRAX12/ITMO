@@ -1,4 +1,5 @@
 rootProject.name = "lab6"
-include("Server")
-include("Common")
-include("Client")
+
+include(":server", ":client", ":common")
+
+

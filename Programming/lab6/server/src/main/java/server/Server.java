@@ -13,8 +13,7 @@ import utility.Response;
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.net.SocketException;
-import java.nio.ByteBuffer;
+
 
 public class Server {
     private final int port;
@@ -32,7 +31,6 @@ public class Server {
         CollectionManager.getInstance().load();
         serverSocket = new ServerSocket(port);
         logger.info("Сервер запущен на порту " + port);
-        System.out.println("Сервер запущен на порту " + port);
     }
 
     public void run() throws IOException {
@@ -107,17 +105,13 @@ public class Server {
                             } else {
                                 logger.error("Получен ответ с нулевой длиной");
                             }
-
-                    } catch (SocketException e) {
+                    } catch (ClassNotFoundException e) {
+                        logger.error("Несоответствие классов: {}", (Object) e.getStackTrace());
+                    } catch (IOException e) {
                         logger.info("Клиент {} отключился от сервера", clientSocket.getRemoteSocketAddress());
                         System.out.println("Клиент " + clientSocket.getRemoteSocketAddress() + " отключился от сервера");
                         Save save = new Save();
                         save.execute(new Request("save"));
-                        break;
-                    } catch (ClassNotFoundException e) {
-                        logger.error("Несоответствие классов: {}", (Object) e.getStackTrace());
-                    } catch (IOException e) {
-                        logger.error("IO Ошибка: " + e.getMessage());
                         break;
                     }
                 }

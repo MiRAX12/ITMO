@@ -1,0 +1,127 @@
+08.05.2025 01:09:53.895 [main] DEBUG  org.jboss.logging - Logging Provider: org.jboss.logging.Slf4jLoggerProvider
+08.05.2025 01:09:53.920 [main] INFO   o.h.v.i.util.Version - HV000001: Hibernate Validator 8.0.1.Final
+08.05.2025 01:09:53.942 [main] DEBUG  o.h.v.i.x.c.ValidationXmlParser - Trying to load META-INF/validation.xml for XML based Validator configuration.
+08.05.2025 01:09:53.946 [main] DEBUG  o.h.v.i.x.c.ResourceLoaderHelper - Trying to load META-INF/validation.xml via TCCL
+08.05.2025 01:09:53.952 [main] DEBUG  o.h.v.i.x.c.ResourceLoaderHelper - Trying to load META-INF/validation.xml via Hibernate Validator's class loader
+08.05.2025 01:09:53.972 [main] DEBUG  o.h.v.i.x.c.ValidationXmlParser - No META-INF/validation.xml found. Using annotation based configuration only.
+08.05.2025 01:09:53.984 [main] DEBUG  o.h.v.i.e.r.TraversableResolvers - Cannot find jakarta.persistence.Persistence on classpath. Assuming non JPA 2 environment. All properties will per default be traversable.
+08.05.2025 01:09:54.066 [main] DEBUG  o.h.v.m.ResourceBundleMessageInterpolator - Loaded expression factory via original TCCL
+08.05.2025 01:09:54.416 [main] DEBUG  o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000252: Using org.hibernate.validator.internal.engine.DefaultPropertyNodeNameProvider as property node name provider.
+08.05.2025 01:09:54.432 [main] DEBUG  o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000234: Using org.hibernate.validator.messageinterpolation.ResourceBundleMessageInterpolator as ValidatorFactory-scoped message interpolator.
+08.05.2025 01:09:54.433 [main] DEBUG  o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000234: Using org.hibernate.validator.internal.engine.resolver.TraverseAllTraversableResolver as ValidatorFactory-scoped traversable resolver.
+08.05.2025 01:09:54.434 [main] DEBUG  o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000234: Using org.hibernate.validator.internal.util.ExecutableParameterNameProvider as ValidatorFactory-scoped parameter name provider.
+08.05.2025 01:09:54.434 [main] DEBUG  o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000234: Using org.hibernate.validator.internal.engine.DefaultClockProvider as ValidatorFactory-scoped clock provider.
+08.05.2025 01:09:54.434 [main] DEBUG  o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000234: Using org.hibernate.validator.internal.engine.scripting.DefaultScriptEvaluatorFactory as ValidatorFactory-scoped script evaluator factory.
+08.05.2025 01:09:55.406 [main] INFO   m.CollectionManager - Загружено 1 новых элементов
+08.05.2025 01:09:55.409 [main] INFO   server.Server - Сервер запущен на порту 5505
+08.05.2025 01:10:09.670 [main] INFO   server.Server - Установлено соединение с клиентом /127.0.0.1:57524
+08.05.2025 01:10:14.315 [main] INFO   server.Server - Установлено соединение с клиентом /127.0.0.1:57526
+08.05.2025 01:10:14.317 [main] ERROR  server.Server - Ошибка создания потоков ввода/вывода: null
+08.05.2025 01:10:14.318 [main] INFO   server.Server - Установлено соединение с клиентом /127.0.0.1:57527
+08.05.2025 01:10:14.319 [main] ERROR  server.Server - Ошибка создания потоков ввода/вывода: null
+08.05.2025 01:10:14.320 [main] INFO   server.Server - Установлено соединение с клиентом /127.0.0.1:57528
+08.05.2025 01:10:14.322 [main] ERROR  server.Server - Ошибка создания потоков ввода/вывода: null
+08.05.2025 01:10:14.323 [main] INFO   server.Server - Установлено соединение с клиентом /127.0.0.1:57529
+08.05.2025 01:10:14.752 [Thread-1] INFO   server.Server - Клиент /127.0.0.1:57524 отключился от сервера
+08.05.2025 01:10:15.055 [Thread-1] INFO   server.Server - Файл сохранен
+08.05.2025 01:10:15.056 [Thread-1] ERROR  server.Server - Ошибка закрытия соединения: Socket closed
+08.05.2025 02:31:14.239 [main] DEBUG  org.jboss.logging - Logging Provider: org.jboss.logging.Slf4jLoggerProvider
+08.05.2025 02:31:14.244 [main] INFO   o.h.v.i.util.Version - HV000001: Hibernate Validator 8.0.1.Final
+08.05.2025 02:31:14.263 [main] DEBUG  o.h.v.i.x.c.ValidationXmlParser - Trying to load META-INF/validation.xml for XML based Validator configuration.
+08.05.2025 02:31:14.266 [main] DEBUG  o.h.v.i.x.c.ResourceLoaderHelper - Trying to load META-INF/validation.xml via TCCL
+08.05.2025 02:31:14.267 [main] DEBUG  o.h.v.i.x.c.ResourceLoaderHelper - Trying to load META-INF/validation.xml via Hibernate Validator's class loader
+08.05.2025 02:31:14.268 [main] DEBUG  o.h.v.i.x.c.ValidationXmlParser - No META-INF/validation.xml found. Using annotation based configuration only.
+08.05.2025 02:31:14.278 [main] DEBUG  o.h.v.i.e.r.TraversableResolvers - Cannot find jakarta.persistence.Persistence on classpath. Assuming non JPA 2 environment. All properties will per default be traversable.
+08.05.2025 02:31:14.352 [main] DEBUG  o.h.v.m.ResourceBundleMessageInterpolator - Loaded expression factory via original TCCL
+08.05.2025 02:31:14.675 [main] DEBUG  o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000252: Using org.hibernate.validator.internal.engine.DefaultPropertyNodeNameProvider as property node name provider.
+08.05.2025 02:31:14.689 [main] DEBUG  o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000234: Using org.hibernate.validator.messageinterpolation.ResourceBundleMessageInterpolator as ValidatorFactory-scoped message interpolator.
+08.05.2025 02:31:14.690 [main] DEBUG  o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000234: Using org.hibernate.validator.internal.engine.resolver.TraverseAllTraversableResolver as ValidatorFactory-scoped traversable resolver.
+08.05.2025 02:31:14.690 [main] DEBUG  o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000234: Using org.hibernate.validator.internal.util.ExecutableParameterNameProvider as ValidatorFactory-scoped parameter name provider.
+08.05.2025 02:31:14.690 [main] DEBUG  o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000234: Using org.hibernate.validator.internal.engine.DefaultClockProvider as ValidatorFactory-scoped clock provider.
+08.05.2025 02:31:14.690 [main] DEBUG  o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000234: Using org.hibernate.validator.internal.engine.scripting.DefaultScriptEvaluatorFactory as ValidatorFactory-scoped script evaluator factory.
+08.05.2025 02:31:15.377 [main] INFO   m.CollectionManager - Загружено 1 новых элементов
+08.05.2025 02:31:15.380 [main] INFO   server.Server - Сервер запущен на порту 5505
+08.05.2025 02:31:17.411 [main] INFO   server.Server - Установлено соединение с клиентом /127.0.0.1:61291
+08.05.2025 02:31:20.814 [main] INFO   server.Server - Установлено соединение с клиентом /127.0.0.1:61292
+08.05.2025 02:31:20.816 [main] ERROR  server.Server - Ошибка создания потоков ввода/вывода: null
+08.05.2025 02:31:20.818 [main] INFO   server.Server - Установлено соединение с клиентом /127.0.0.1:61293
+08.05.2025 02:31:20.825 [main] ERROR  server.Server - Ошибка создания потоков ввода/вывода: null
+08.05.2025 02:31:20.827 [main] INFO   server.Server - Установлено соединение с клиентом /127.0.0.1:61294
+08.05.2025 02:31:20.831 [main] ERROR  server.Server - Ошибка создания потоков ввода/вывода: null
+08.05.2025 02:31:20.832 [main] INFO   server.Server - Установлено соединение с клиентом /127.0.0.1:61295
+08.05.2025 02:31:21.127 [Thread-1] INFO   server.Server - Клиент /127.0.0.1:61291 отключился от сервера
+08.05.2025 02:31:21.288 [Thread-1] INFO   server.Server - Файл сохранен
+08.05.2025 02:31:21.289 [Thread-1] ERROR  server.Server - Ошибка закрытия соединения: Socket closed
+08.05.2025 22:51:42.791 [main] DEBUG  org.jboss.logging - Logging Provider: org.jboss.logging.Slf4jLoggerProvider
+08.05.2025 22:51:42.800 [main] INFO   o.h.v.i.util.Version - HV000001: Hibernate Validator 8.0.1.Final
+08.05.2025 22:51:42.823 [main] DEBUG  o.h.v.i.x.c.ValidationXmlParser - Trying to load META-INF/validation.xml for XML based Validator configuration.
+08.05.2025 22:51:42.826 [main] DEBUG  o.h.v.i.x.c.ResourceLoaderHelper - Trying to load META-INF/validation.xml via TCCL
+08.05.2025 22:51:42.829 [main] DEBUG  o.h.v.i.x.c.ResourceLoaderHelper - Trying to load META-INF/validation.xml via Hibernate Validator's class loader
+08.05.2025 22:51:42.830 [main] DEBUG  o.h.v.i.x.c.ValidationXmlParser - No META-INF/validation.xml found. Using annotation based configuration only.
+08.05.2025 22:51:42.841 [main] DEBUG  o.h.v.i.e.r.TraversableResolvers - Cannot find jakarta.persistence.Persistence on classpath. Assuming non JPA 2 environment. All properties will per default be traversable.
+08.05.2025 22:51:42.951 [main] DEBUG  o.h.v.m.ResourceBundleMessageInterpolator - Loaded expression factory via original TCCL
+08.05.2025 22:51:43.538 [main] DEBUG  o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000252: Using org.hibernate.validator.internal.engine.DefaultPropertyNodeNameProvider as property node name provider.
+08.05.2025 22:51:43.557 [main] DEBUG  o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000234: Using org.hibernate.validator.messageinterpolation.ResourceBundleMessageInterpolator as ValidatorFactory-scoped message interpolator.
+08.05.2025 22:51:43.558 [main] DEBUG  o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000234: Using org.hibernate.validator.internal.engine.resolver.TraverseAllTraversableResolver as ValidatorFactory-scoped traversable resolver.
+08.05.2025 22:51:43.558 [main] DEBUG  o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000234: Using org.hibernate.validator.internal.util.ExecutableParameterNameProvider as ValidatorFactory-scoped parameter name provider.
+08.05.2025 22:51:43.559 [main] DEBUG  o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000234: Using org.hibernate.validator.internal.engine.DefaultClockProvider as ValidatorFactory-scoped clock provider.
+08.05.2025 22:51:43.559 [main] DEBUG  o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000234: Using org.hibernate.validator.internal.engine.scripting.DefaultScriptEvaluatorFactory as ValidatorFactory-scoped script evaluator factory.
+08.05.2025 22:51:44.969 [main] INFO   m.CollectionManager - Загружено 1 новых элементов
+08.05.2025 22:51:44.971 [main] INFO   server.Server - Сервер запущен на порту 5505
+08.05.2025 22:52:16.825 [main] INFO   server.Server - Установлено соединение с клиентом /127.0.0.1:56618
+08.05.2025 22:52:19.722 [main] INFO   server.Server - Установлено соединение с клиентом /127.0.0.1:56620
+08.05.2025 22:52:19.724 [main] ERROR  server.Server - Ошибка создания потоков ввода/вывода: null
+08.05.2025 22:52:19.727 [main] INFO   server.Server - Установлено соединение с клиентом /127.0.0.1:56621
+08.05.2025 22:52:19.730 [main] ERROR  server.Server - Ошибка создания потоков ввода/вывода: null
+08.05.2025 22:52:19.731 [main] INFO   server.Server - Установлено соединение с клиентом /127.0.0.1:56622
+08.05.2025 22:52:19.733 [main] ERROR  server.Server - Ошибка создания потоков ввода/вывода: null
+08.05.2025 22:52:19.735 [main] INFO   server.Server - Установлено соединение с клиентом /127.0.0.1:56623
+08.05.2025 22:52:20.195 [Thread-1] INFO   server.Server - Клиент /127.0.0.1:56618 отключился от сервера
+08.05.2025 22:52:20.518 [Thread-1] INFO   server.Server - Файл сохранен
+08.05.2025 22:52:20.519 [Thread-1] ERROR  server.Server - Ошибка закрытия соединения: Socket closed
+08.05.2025 22:54:48.941 [main] DEBUG  org.jboss.logging - Logging Provider: org.jboss.logging.Slf4jLoggerProvider
+08.05.2025 22:54:48.948 [main] INFO   o.h.v.i.util.Version - HV000001: Hibernate Validator 8.0.1.Final
+08.05.2025 22:54:48.969 [main] DEBUG  o.h.v.i.x.c.ValidationXmlParser - Trying to load META-INF/validation.xml for XML based Validator configuration.
+08.05.2025 22:54:48.972 [main] DEBUG  o.h.v.i.x.c.ResourceLoaderHelper - Trying to load META-INF/validation.xml via TCCL
+08.05.2025 22:54:48.974 [main] DEBUG  o.h.v.i.x.c.ResourceLoaderHelper - Trying to load META-INF/validation.xml via Hibernate Validator's class loader
+08.05.2025 22:54:48.976 [main] DEBUG  o.h.v.i.x.c.ValidationXmlParser - No META-INF/validation.xml found. Using annotation based configuration only.
+08.05.2025 22:54:48.988 [main] DEBUG  o.h.v.i.e.r.TraversableResolvers - Cannot find jakarta.persistence.Persistence on classpath. Assuming non JPA 2 environment. All properties will per default be traversable.
+08.05.2025 22:54:49.066 [main] DEBUG  o.h.v.m.ResourceBundleMessageInterpolator - Loaded expression factory via original TCCL
+08.05.2025 22:54:49.406 [main] DEBUG  o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000252: Using org.hibernate.validator.internal.engine.DefaultPropertyNodeNameProvider as property node name provider.
+08.05.2025 22:54:49.423 [main] DEBUG  o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000234: Using org.hibernate.validator.messageinterpolation.ResourceBundleMessageInterpolator as ValidatorFactory-scoped message interpolator.
+08.05.2025 22:54:49.423 [main] DEBUG  o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000234: Using org.hibernate.validator.internal.engine.resolver.TraverseAllTraversableResolver as ValidatorFactory-scoped traversable resolver.
+08.05.2025 22:54:49.424 [main] DEBUG  o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000234: Using org.hibernate.validator.internal.util.ExecutableParameterNameProvider as ValidatorFactory-scoped parameter name provider.
+08.05.2025 22:54:49.424 [main] DEBUG  o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000234: Using org.hibernate.validator.internal.engine.DefaultClockProvider as ValidatorFactory-scoped clock provider.
+08.05.2025 22:54:49.424 [main] DEBUG  o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000234: Using org.hibernate.validator.internal.engine.scripting.DefaultScriptEvaluatorFactory as ValidatorFactory-scoped script evaluator factory.
+08.05.2025 22:54:50.374 [main] INFO   m.CollectionManager - Загружено 1 новых элементов
+08.05.2025 22:54:50.378 [main] INFO   server.Server - Сервер запущен на порту 5505
+08.05.2025 22:55:04.795 [main] INFO   server.Server - Установлено соединение с клиентом /127.0.0.1:56703
+08.05.2025 22:55:16.727 [main] INFO   server.Server - Установлено соединение с клиентом /127.0.0.1:63764
+08.05.2025 22:55:16.728 [main] ERROR  server.Server - Ошибка создания потоков ввода/вывода: null
+08.05.2025 22:55:16.729 [main] INFO   server.Server - Установлено соединение с клиентом /127.0.0.1:63765
+08.05.2025 22:55:16.731 [main] ERROR  server.Server - Ошибка создания потоков ввода/вывода: null
+08.05.2025 22:55:16.732 [main] INFO   server.Server - Установлено соединение с клиентом /127.0.0.1:63766
+08.05.2025 22:55:16.733 [main] ERROR  server.Server - Ошибка создания потоков ввода/вывода: null
+08.05.2025 22:55:16.734 [main] INFO   server.Server - Установлено соединение с клиентом /127.0.0.1:63767
+08.05.2025 22:55:16.810 [Thread-1] INFO   server.Server - Клиент /127.0.0.1:56703 отключился от сервера
+08.05.2025 22:55:16.930 [Thread-1] INFO   server.Server - Файл сохранен
+08.05.2025 22:55:16.931 [Thread-1] ERROR  server.Server - Ошибка закрытия соединения: Socket closed
+08.05.2025 22:56:11.417 [main] DEBUG  org.jboss.logging - Logging Provider: org.jboss.logging.Slf4jLoggerProvider
+08.05.2025 22:56:11.423 [main] INFO   o.h.v.i.util.Version - HV000001: Hibernate Validator 8.0.1.Final
+08.05.2025 22:56:11.444 [main] DEBUG  o.h.v.i.x.c.ValidationXmlParser - Trying to load META-INF/validation.xml for XML based Validator configuration.
+08.05.2025 22:56:11.447 [main] DEBUG  o.h.v.i.x.c.ResourceLoaderHelper - Trying to load META-INF/validation.xml via TCCL
+08.05.2025 22:56:11.451 [main] DEBUG  o.h.v.i.x.c.ResourceLoaderHelper - Trying to load META-INF/validation.xml via Hibernate Validator's class loader
+08.05.2025 22:56:11.452 [main] DEBUG  o.h.v.i.x.c.ValidationXmlParser - No META-INF/validation.xml found. Using annotation based configuration only.
+08.05.2025 22:56:11.463 [main] DEBUG  o.h.v.i.e.r.TraversableResolvers - Cannot find jakarta.persistence.Persistence on classpath. Assuming non JPA 2 environment. All properties will per default be traversable.
+08.05.2025 22:56:11.557 [main] DEBUG  o.h.v.m.ResourceBundleMessageInterpolator - Loaded expression factory via original TCCL
+08.05.2025 22:56:11.911 [main] DEBUG  o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000252: Using org.hibernate.validator.internal.engine.DefaultPropertyNodeNameProvider as property node name provider.
+08.05.2025 22:56:11.929 [main] DEBUG  o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000234: Using org.hibernate.validator.messageinterpolation.ResourceBundleMessageInterpolator as ValidatorFactory-scoped message interpolator.
+08.05.2025 22:56:11.930 [main] DEBUG  o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000234: Using org.hibernate.validator.internal.engine.resolver.TraverseAllTraversableResolver as ValidatorFactory-scoped traversable resolver.
+08.05.2025 22:56:11.930 [main] DEBUG  o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000234: Using org.hibernate.validator.internal.util.ExecutableParameterNameProvider as ValidatorFactory-scoped parameter name provider.
+08.05.2025 22:56:11.931 [main] DEBUG  o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000234: Using org.hibernate.validator.internal.engine.DefaultClockProvider as ValidatorFactory-scoped clock provider.
+08.05.2025 22:56:11.931 [main] DEBUG  o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000234: Using org.hibernate.validator.internal.engine.scripting.DefaultScriptEvaluatorFactory as ValidatorFactory-scoped script evaluator factory.
+08.05.2025 22:56:13.234 [main] INFO   m.CollectionManager - Загружено 1 новых элементов
+08.05.2025 22:56:13.265 [main] INFO   server.Server - Сервер запущен на порту 5505
+08.05.2025 22:56:18.489 [main] INFO   server.Server - Установлено соединение с клиентом /127.0.0.1:63782
+08.05.2025 22:59:32.980 [main] INFO   server.Server - Установлено соединение с клиентом /127.0.0.1:51024
+08.05.2025 22:59:33.616 [Thread-1] ERROR  server.Server - IO Ошибка: null

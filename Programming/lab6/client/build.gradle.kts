@@ -12,8 +12,7 @@ tasks.withType<JavaCompile> {
 }
 
 dependencies {
-    implementation("ch.qos.logback:logback-classic:1.5.16")
-    implementation("ch.qos.logback:logback-core:1.5.16")
+
     implementation("com.fasterxml.jackson.core:jackson-databind:2.18.2")
     implementation("com.fasterxml.jackson.core:jackson-annotations:2.18.2")
     implementation("com.fasterxml.jackson.core:jackson-core:2.18.2")
@@ -22,7 +21,7 @@ dependencies {
     implementation("jakarta.validation:jakarta.validation-api:3.0.2")
     implementation("org.hibernate.validator:hibernate-validator:8.0.1.Final")
     implementation("org.glassfish:jakarta.el:4.0.2")
-    implementation(project(":Common"))
+    implementation(project(":common"))
 }
 
 tasks.shadowJar {
