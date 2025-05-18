@@ -1,6 +1,9 @@
 package server;
 
+import Network.RequestBuilder;
+import Network.User;
 import commands.Save;
+import database.Database;
 import router.Router;
 import managers.CollectionManager;
 import org.slf4j.Logger;
@@ -42,10 +45,10 @@ public class Server {
                 while ((currentInput = consoleReader.readLine()) != null) {
                     if (currentInput.equals("save")) {
                         Save save = new Save();
-                        save.execute(new Request("save"));
+                        save.execute(new RequestBuilder().setCommand("save").build());
                     } else if (currentInput.equals("exit")) {
                         Save save = new Save();
-                        save.execute(new Request("save"));
+                        save.execute(new RequestBuilder().setCommand("save").build());
                         System.exit(0);
                     }
                 }
@@ -88,6 +91,7 @@ public class Server {
 
         @Override
         public void run() {
+            Response response;
             try {
                 while (!clientSocket.isClosed() && input != null && output != null) {
                     try {
@@ -95,7 +99,10 @@ public class Server {
                         int bytes = input.read(clientData);
 
                         Request request = (Request) deserializator.deserialize(clientData);
-                        Response response = Router.getInstance().route(request);
+                        if (request.getCommand() == null) {
+                            response = handleUser(request);
+                        } else response = Router.getInstance().route(request);
+
                         byte[] serializedResponse = serializator.serialize(response);
 
                         if (serializedResponse.length > 0) {
@@ -111,7 +118,7 @@ public class Server {
                         logger.info("Клиент {} отключился от сервера", clientSocket.getRemoteSocketAddress());
                         System.out.println("Клиент " + clientSocket.getRemoteSocketAddress() + " отключился от сервера");
                         Save save = new Save();
-                        save.execute(new Request("save"));
+                        save.execute(new RequestBuilder().setCommand("save").build());
                         break;
                     }
                 }
@@ -130,6 +137,48 @@ public class Server {
                     logger.error("Ошибка закрытия соединения: " + e.getMessage());
                 }
             }
+        }
+
+        private Response handleUser(Request request) {
+            Response response;
+            var user = request.getUser();
+            var password = request.getUser().getPassword();
+            if (!request.userRegisterRequired()) {
+                if (Database.checkUserExistence(user.getName())) {
+                    if (password != null) return authenticate(user);
+                    response = new Response("Введите пароль");
+
+                } else {
+                    response = new Response("Wrong", false);
+                    logger.info("Пользователя " + user.getName() + " не существует");
+                }
+                return response;
+
+            } else {
+                if (Database.checkUserExistence(user.getName())) {
+                    response = new Response("Такой логин уже занят", false);
+
+                } else {
+                    Database.addUser(user);
+                    response = new Response("Пользователь " + user.getName() +
+                            " успешно зарегистрирован", true);
+                    logger.info("Пользователь " + user.getName() + " успешно зарегистрирован");
+                }
+                return response;
+            }
+        }
+
+        private Response authenticate(User user) {
+            Response response;
+            if (Database.checkUserPassword(user)) {
+                response = new Response("Приветствую, " + user.getName() + "\n", true);
+                logger.info("Пользователь " + user.getName() + " аутентифицирован");
+
+            } else {
+                response = new Response("Пароль введён неверно", false);
+                logger.info("Пользователь " + user.getName() + " неверно ввёл пароль");
+            }
+            return response;
         }
     }
 }

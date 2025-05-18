@@ -17,33 +17,34 @@ public class Request implements Serializable {
     private User user;
     private boolean registerRequired;
 
-    public Request(User user, String command, String arg, Worker worker) {
+
+    public Request(User user, String command, String arg, Worker worker, boolean registerRequired) {
         this.command = command;
         this.arg = arg;
         this.worker = worker;
         this.user = user;
-    }
-
-    public Request(User user, String command, Worker worker){
-        this(user, command, null, worker);
-    }
-
-    public Request(User user, String command, String arg) {
-        this(user, command, arg, null);
-    }
-
-    public Request(User user, String command) {
-        this(user, command, null, null);
-    }
-
-    public Request(User user, boolean registerRequired) {
-        this.user = user;
         this.registerRequired = registerRequired;
     }
-
-    public Request(String command) {
-        this(null, command, null, null);
-    }
+//
+//    public Request(User user, String command, Worker worker) {
+//        this(user, command, null, worker);
+//    }
+//
+//    public Request(User user, String command, String arg) {
+//        this(user, command, arg, null);
+//    }
+//
+//    public Request(User user, String command) {
+//        this(user, command, null, null);
+//    }
+//
+//    public Request(User user, boolean registerRequired) {
+//        this(user, null, null, null, );
+//    }
+//
+//    public Request(String command) {
+//        this(null, command, null, null);
+//    }
 
     public String getCommand() {
         return command;

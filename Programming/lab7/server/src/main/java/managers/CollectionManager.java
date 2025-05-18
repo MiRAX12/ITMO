@@ -1,5 +1,6 @@
 package managers;
 
+import Network.User;
 import database.Database;
 import io.IdGenerator;
 import io.XMLWriter;
@@ -31,7 +32,8 @@ public class CollectionManager {
     /**
      * Private constructor to prevent instantiation.
      */
-    private CollectionManager() {}
+    private CollectionManager() {
+    }
 
     /**
      * Returns the singleton instance of {@code CollectionManager}.
@@ -66,7 +68,7 @@ public class CollectionManager {
         try {
             collection.clear();
             Map<Integer, Worker> workerMap = xmlReader.readFromFile();
-            if (workerMap != null){
+            if (workerMap != null) {
                 collection.putAll(workerMap);
                 logger.info("Загружено " + collection.size() + " новых элементов");
                 System.out.println("Загружено " + collection.size() + " новых элементов");
@@ -79,8 +81,7 @@ public class CollectionManager {
             if (e.getMessage() == null) {
 //                logger.error("Не удалось загрузить workers");
                 System.out.println("Не удалось загрузить workers");
-            }
-            else {
+            } else {
 //                logger.error("Не удалось загрузить workers: " + e.getMessage());
                 System.out.println("Не удалось загрузить workers: " + e.getMessage());
             }
@@ -102,8 +103,8 @@ public class CollectionManager {
     /**
      * Adds elements to the <code>Integer</code>/<code>Worker</code> map
      */
-    public void addElement(Worker worker) {
-        Database.addWorker(worker);
+    public void addElement(Worker worker, User user) {
+        Database.addWorker(worker, user);
     }
 }
 

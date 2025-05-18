@@ -1,5 +1,6 @@
 package org.exampleMirax;//import Commands.Add;
 
+import Network.User;
 import utility.Handler;
 
 import java.io.IOException;
@@ -17,7 +18,8 @@ import java.sql.Date;
 public class Main {
 
     public static void main(String[] args) throws IOException {
-        System.out.println(LocalDate.now().toString());
+        User user = new User(null, null);
+
         Handler handler = new Handler();
         handler.run();
     }

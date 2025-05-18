@@ -1,8 +1,7 @@
 package utility;
 
 
-import Network.Request;
-import Network.User;
+import Network.*;
 import constructors.WorkerBuilder;
 import model.*;
 import exceptions.ExitWritten;
@@ -14,9 +13,9 @@ import java.util.*;
 public class Handler implements Runnable {
     private static final String HOST = "localhost";
     private static final int PORT = 5505;
-    private final Scanner consoleRead = new Scanner(System.in);
+    private final Scanner scanner = new Scanner(System.in);
     private static final Client client = new Client(HOST, PORT);
-    private static User user;
+    Authorization authorization = new Authorization(scanner, new User(null, null));
     private static ExecuteScript executeScript = new ExecuteScript();
 
 
@@ -40,15 +39,17 @@ public class Handler implements Runnable {
         } catch (Exception e) {
             System.out.println("Введите любой символ, чтобы повторить попытку или exit, чтобы закрыть клиент");
         }
-        try {
-            client.authenticateUser(consoleRead);
-            user = client.getUser();
-        } catch (ClassNotFoundException e) {
-            System.out.println(e.getMessage());
-        }
-        while (consoleRead.hasNext()) {
+        while (user == null) {
             try {
-                parseConsoleInput(consoleRead);
+                authorization.authorize(scanner);
+                LogIn.authenticateUser(scanner);
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+        }
+        while (scanner.hasNext()) {
+            try {
+                parseConsoleInput(scanner);
 
             } catch (Exception e) {
                 if (e.getMessage() != null) System.out.println("Ошибка " + e.getMessage());
@@ -80,16 +81,16 @@ public class Handler implements Runnable {
 //                        break;
 //                    }
                     Worker worker = WorkerBuilder.build();
-                    request = new Request(user, command, worker);
+                    request = new RequestBuilder().setUser(user).setCommand(command).setWorker(worker).build();
 
                     client.sendToServer(request);
                     client.receiveFromServer();
                     break;
                 case "execute_script":
-                    executeScript.execute(new Request(user, command, arg));
+                    executeScript.execute(new RequestBuilder().setUser(user).setCommand(command).setArg(arg).build());
                     break;
                 default:
-                    request = new Request(user, command, arg);
+                    request = new RequestBuilder().setUser(user).setCommand(command).setArg(arg).build();
                     client.sendToServer(request);
                     client.receiveFromServer();
                     break;
@@ -98,5 +99,18 @@ public class Handler implements Runnable {
             System.out.println(e.getMessage());
         }
     }
+
+    private void printResponse(Response response) {
+        System.out.println(response.getMessage());
+        if (response.getWorkers() != null) {
+            System.out.println(response.getWorkers());
+        }
+    }
+
+    public Scanner getScanner() {
+        return scanner;
+    }
+
+
 }
 

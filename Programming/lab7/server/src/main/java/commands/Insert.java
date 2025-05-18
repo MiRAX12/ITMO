@@ -1,5 +1,6 @@
 package commands;
 
+import Network.User;
 import io.IdGenerator;
 import managers.CollectionManager;
 import model.Worker;
@@ -11,7 +12,6 @@ import Network.Response;
  * and insert it to a collection.
  *
  * @see model.Worker
- *
  * @since 1.0
  */
 public class Insert extends Command {
@@ -32,8 +32,9 @@ public class Insert extends Command {
         Response response;
         try {
             Worker worker = request.getWorker();
+            User user = request.getUser();
             CollectionManager.getInstance()
-                             .addElement(worker);
+                    .addElement(worker, user);
             response = new Response("Новый Worker с ключом добавлен");
         } catch (NullPointerException e) {
             response = new Response(e.getMessage());

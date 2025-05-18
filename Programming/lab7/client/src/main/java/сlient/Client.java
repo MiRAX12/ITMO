@@ -1,11 +1,8 @@
 package сlient;
 
-import Network.User;
+import Network.*;
 import serializators.Deserializator;
 import serializators.Serializator;
-import Network.Request;
-import Network.Response;
-import Network.PasswordHasher;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
@@ -137,6 +134,7 @@ public class Client {
                     dataBuffer.get(responseData);
 
                     response = (Response) new Deserializator().deserialize(responseData);
+                    return response;
                 } else if (bytes == 0) {
                     if (System.currentTimeMillis() - startTime > TIMEOUT_MS) {
                         throw new SocketTimeoutException("Таймаут ожидания данных");
@@ -160,64 +158,6 @@ public class Client {
         return response;
     }
 
-    private void printResponse(Response response) {
-        System.out.println(response.getMessage());
-        if (!response.getWorkers().isEmpty()) {
-            System.out.println(response.getWorkers());
-        }
-    }
-
-    public void authenticateUser(Scanner scanner) throws ClassNotFoundException {
-        var username = "";
-        var password = "";
-        while (true) {
-            System.out.println("Введите логин. Чтобы зарегистрироваться, введите z");
-            var ans = scanner.nextLine();
-            if (ans.trim().equalsIgnoreCase("z")) {
-                while (!registerUser(scanner)) {
-                    registerUser(scanner);
-                }
-                break;
-            } else username = scanner.nextLine();
-
-            System.out.println("Введите пароль");
-            password = scanner.nextLine();
-
-            String salt = PasswordHasher.generateSalt();
-            user = new User(username, PasswordHasher.toSHA1(password, salt), salt);
-            sendToServer(new Request(user, false));
-            Response response = receiveFromServer();
-
-            if (response.isUserAuthenticated()) {
-                printResponse(response);
-                break;
-            } else {
-                printResponse(response);
-            }
-        }
-    }
-
-
-    private boolean registerUser(Scanner scanner) throws ClassNotFoundException {
-        var username = "";
-        var password = "";
-
-        System.out.println("Введите логин: ");
-        username = scanner.nextLine();
-
-        System.out.println("Введите пароль: ");
-        password = scanner.nextLine();
-
-//        user = new User(username, PasswordHasher.toSHA1(password));
-//        Database.addUser(user);
-
-        var userAuthenticationRequest = new Request(user, true);
-        sendToServer(userAuthenticationRequest);
-        Response response = receiveFromServer();
-
-        printResponse(response);
-        return response.isUserAuthenticated();
-    }
 
     public User getUser() {
         return user;
