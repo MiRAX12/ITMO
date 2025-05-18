@@ -1,5 +1,6 @@
 package managers;
 
+import database.Database;
 import io.IdGenerator;
 import io.XMLWriter;
 import model.Worker;
@@ -101,8 +102,8 @@ public class CollectionManager {
     /**
      * Adds elements to the <code>Integer</code>/<code>Worker</code> map
      */
-    public void addElement(Worker worker, Integer key) {
-        collection.put(key, worker);
+    public void addElement(Worker worker) {
+        Database.addWorker(worker);
     }
 }
 

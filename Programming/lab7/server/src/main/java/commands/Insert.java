@@ -31,12 +31,10 @@ public class Insert extends Command {
     public Response execute(Request request) {
         Response response;
         try {
-            Integer key = Integer.parseInt(request.getArg());
             Worker worker = request.getWorker();
-            worker.setId(IdGenerator.getInstance().generateId());
             CollectionManager.getInstance()
-                             .addElement(worker, key);
-            response = new Response("Новый Worker с ключом %d добавлен".formatted(key));
+                             .addElement(worker);
+            response = new Response("Новый Worker с ключом добавлен");
         } catch (NullPointerException e) {
             response = new Response(e.getMessage());
         } catch (NumberFormatException e) {

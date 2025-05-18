@@ -28,3 +28,38 @@
 15.05.2025 00:08:39.762 [main] DEBUG  o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000234: Using org.hibernate.validator.internal.engine.DefaultClockProvider as ValidatorFactory-scoped clock provider.
 15.05.2025 00:08:39.763 [main] DEBUG  o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000234: Using org.hibernate.validator.internal.engine.scripting.DefaultScriptEvaluatorFactory as ValidatorFactory-scoped script evaluator factory.
 15.05.2025 00:08:39.797 [main] INFO   server.Server - Сервер запущен на порту 5505
+18.05.2025 14:49:35.515 [main] DEBUG  org.jboss.logging - Logging Provider: org.jboss.logging.Slf4jLoggerProvider
+18.05.2025 14:49:35.529 [main] INFO   o.h.v.i.util.Version - HV000001: Hibernate Validator 8.0.1.Final
+18.05.2025 14:49:35.557 [main] DEBUG  o.h.v.i.x.c.ValidationXmlParser - Trying to load META-INF/validation.xml for XML based Validator configuration.
+18.05.2025 14:49:35.562 [main] DEBUG  o.h.v.i.x.c.ResourceLoaderHelper - Trying to load META-INF/validation.xml via TCCL
+18.05.2025 14:49:35.564 [main] DEBUG  o.h.v.i.x.c.ResourceLoaderHelper - Trying to load META-INF/validation.xml via Hibernate Validator's class loader
+18.05.2025 14:49:35.566 [main] DEBUG  o.h.v.i.x.c.ValidationXmlParser - No META-INF/validation.xml found. Using annotation based configuration only.
+18.05.2025 14:49:35.578 [main] DEBUG  o.h.v.i.e.r.TraversableResolvers - Cannot find jakarta.persistence.Persistence on classpath. Assuming non JPA 2 environment. All properties will per default be traversable.
+18.05.2025 14:49:35.643 [main] DEBUG  o.h.v.m.ResourceBundleMessageInterpolator - Loaded expression factory via original TCCL
+18.05.2025 14:49:35.936 [main] DEBUG  o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000252: Using org.hibernate.validator.internal.engine.DefaultPropertyNodeNameProvider as property node name provider.
+18.05.2025 14:49:35.945 [main] DEBUG  o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000234: Using org.hibernate.validator.messageinterpolation.ResourceBundleMessageInterpolator as ValidatorFactory-scoped message interpolator.
+18.05.2025 14:49:35.946 [main] DEBUG  o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000234: Using org.hibernate.validator.internal.engine.resolver.TraverseAllTraversableResolver as ValidatorFactory-scoped traversable resolver.
+18.05.2025 14:49:35.946 [main] DEBUG  o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000234: Using org.hibernate.validator.internal.util.ExecutableParameterNameProvider as ValidatorFactory-scoped parameter name provider.
+18.05.2025 14:49:35.947 [main] DEBUG  o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000234: Using org.hibernate.validator.internal.engine.DefaultClockProvider as ValidatorFactory-scoped clock provider.
+18.05.2025 14:49:35.947 [main] DEBUG  o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000234: Using org.hibernate.validator.internal.engine.scripting.DefaultScriptEvaluatorFactory as ValidatorFactory-scoped script evaluator factory.
+18.05.2025 14:49:36.083 [main] INFO   server.Server - Сервер запущен на порту 5505
+18.05.2025 14:54:03.187 [main] DEBUG  org.jboss.logging - Logging Provider: org.jboss.logging.Slf4jLoggerProvider
+18.05.2025 14:54:03.192 [main] INFO   o.h.v.i.util.Version - HV000001: Hibernate Validator 8.0.1.Final
+18.05.2025 14:54:03.204 [main] DEBUG  o.h.v.i.x.c.ValidationXmlParser - Trying to load META-INF/validation.xml for XML based Validator configuration.
+18.05.2025 14:54:03.206 [main] DEBUG  o.h.v.i.x.c.ResourceLoaderHelper - Trying to load META-INF/validation.xml via TCCL
+18.05.2025 14:54:03.207 [main] DEBUG  o.h.v.i.x.c.ResourceLoaderHelper - Trying to load META-INF/validation.xml via Hibernate Validator's class loader
+18.05.2025 14:54:03.208 [main] DEBUG  o.h.v.i.x.c.ValidationXmlParser - No META-INF/validation.xml found. Using annotation based configuration only.
+18.05.2025 14:54:03.216 [main] DEBUG  o.h.v.i.e.r.TraversableResolvers - Cannot find jakarta.persistence.Persistence on classpath. Assuming non JPA 2 environment. All properties will per default be traversable.
+18.05.2025 14:54:03.267 [main] DEBUG  o.h.v.m.ResourceBundleMessageInterpolator - Loaded expression factory via original TCCL
+18.05.2025 14:54:03.603 [main] DEBUG  o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000252: Using org.hibernate.validator.internal.engine.DefaultPropertyNodeNameProvider as property node name provider.
+18.05.2025 14:54:03.618 [main] DEBUG  o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000234: Using org.hibernate.validator.messageinterpolation.ResourceBundleMessageInterpolator as ValidatorFactory-scoped message interpolator.
+18.05.2025 14:54:03.620 [main] DEBUG  o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000234: Using org.hibernate.validator.internal.engine.resolver.TraverseAllTraversableResolver as ValidatorFactory-scoped traversable resolver.
+18.05.2025 14:54:03.621 [main] DEBUG  o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000234: Using org.hibernate.validator.internal.util.ExecutableParameterNameProvider as ValidatorFactory-scoped parameter name provider.
+18.05.2025 14:54:03.621 [main] DEBUG  o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000234: Using org.hibernate.validator.internal.engine.DefaultClockProvider as ValidatorFactory-scoped clock provider.
+18.05.2025 14:54:03.621 [main] DEBUG  o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000234: Using org.hibernate.validator.internal.engine.scripting.DefaultScriptEvaluatorFactory as ValidatorFactory-scoped script evaluator factory.
+18.05.2025 14:54:03.712 [main] INFO   server.Server - Сервер запущен на порту 5505
+18.05.2025 14:54:13.048 [main] INFO   server.Server - Установлено соединение с клиентом /127.0.0.1:65070
+18.05.2025 14:55:23.960 [main] INFO   server.Server - Установлено соединение с клиентом /127.0.0.1:65086
+18.05.2025 14:55:23.961 [main] INFO   server.Server - Установлено соединение с клиентом /127.0.0.1:65087
+18.05.2025 14:55:23.967 [Thread-2] INFO   server.Server - Клиент /127.0.0.1:65086 отключился от сервера
+18.05.2025 14:55:29.322 [Thread-3] INFO   server.Server - Клиент /127.0.0.1:65087 отключился от сервера

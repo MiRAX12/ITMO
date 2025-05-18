@@ -24,6 +24,10 @@ public class Request implements Serializable {
         this.user = user;
     }
 
+    public Request(User user, String command, Worker worker){
+        this(user, command, null, worker);
+    }
+
     public Request(User user, String command, String arg) {
         this(user, command, arg, null);
     }
