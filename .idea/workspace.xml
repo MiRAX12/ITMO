@@ -1,7 +1,71 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="92c7cacc-81f7-4b6c-8a61-513777c3d07e" name="Changes" comment="" />
+    <list default="true" id="92c7cacc-81f7-4b6c-8a61-513777c3d07e" name="Changes" comment="DB is connected">
+      <change beforePath="$PROJECT_DIR$/Programming/java/commands/Clear.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Programming/java/commands/Command.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Programming/java/commands/CommandList.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Programming/java/commands/ExecuteScript.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Programming/java/commands/Exit.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Programming/java/commands/FilterStartsWithName.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Programming/java/commands/Help.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Programming/java/commands/Info.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Programming/java/commands/Insert.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Programming/java/commands/RemoveAllByEndDate.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Programming/java/commands/RemoveAllByStartDate.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Programming/java/commands/RemoveGreater.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Programming/java/commands/RemoveGreaterKey.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Programming/java/commands/RemoveLowerKey.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Programming/java/commands/Save.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Programming/java/commands/Show.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Programming/java/constructors/CoordinatesBuilder.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Programming/java/constructors/LocationBuilder.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Programming/java/constructors/ParameterConstructor.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Programming/java/constructors/PersonBuilder.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Programming/java/constructors/WorkerBuilder.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Programming/java/constructors/parsers/AbstractParser.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Programming/java/constructors/parsers/FloatParser.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Programming/java/constructors/parsers/LocalDateTimeParser.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Programming/java/constructors/parsers/LongParser.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Programming/java/constructors/parsers/StringParser.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Programming/java/constructors/parsers/ZonedDateTimeParser.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Programming/java/exceptions/ExitWritten.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Programming/java/exceptions/FileNotExistsException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Programming/java/exceptions/IdAlreadyExists.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Programming/java/exceptions/NoReadPermissionException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Programming/java/exceptions/NoSuchEnvironmentVariableException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Programming/java/exceptions/NoWritePermissionException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Programming/java/exceptions/NotAFileException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Programming/java/exceptions/ScriptRecursionException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Programming/java/handlers/Handler.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Programming/java/handlers/Router.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Programming/java/io/BaseReadWorker.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Programming/java/io/BaseReader.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Programming/java/io/BaseWriteWorker.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Programming/java/io/BaseWriter.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Programming/java/io/BufferedReadWorker.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Programming/java/io/BufferedWriteWorker.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Programming/java/io/IdGenerator.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Programming/java/io/PrintWriteWorker.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Programming/java/io/XMLReader.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Programming/java/io/XMLWriter.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Programming/java/managers/CollectionManager.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Programming/java/model/Coordinates.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Programming/java/model/Location.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Programming/java/model/Person.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Programming/java/model/Status.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Programming/java/model/Worker.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Programming/java/org/exampleMirax/Main.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Programming/java/server/Server.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Programming/java/utility/BuildingRequest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Programming/java/utility/Demapper.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Programming/java/utility/FileConfiguration.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Programming/java/utility/Request.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Programming/java/utility/Response.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Programming/java/utility/XmlMapperConfig.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Programming/java/utility/wrappers/WorkerKeyList.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Programming/java/utility/wrappers/WorkerKeys.java" beforeDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -10,17 +74,24 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "lastFilter": {
-    "state": "OPEN",
-    "assignee": "MiRAX12"
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;MiRAX12&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/MiRAX12/ITMO.git",
+    "accountId": "b731982d-e8f9-4a19-aa33-379315c8b3e2"
   }
 }]]></component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "customColor": "",
-  "associatedIndex": 1
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 1
+}</component>
   <component name="ProjectId" id="2vAb1fOgBX4M9bCyW924heRUkgD" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -28,6 +99,7 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
     "git-widget-placeholder": "main",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Users/Денис/IdeaProjects/ITMO/Programming/lab5",
@@ -38,8 +110,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-9823dce3aa75-28b599e66164-intellij.indexing.shared.core-IU-242.22855.74" />
-        <option value="bundled-js-predefined-d6986cc7102b-5c90d61e3bab-JavaScript-IU-242.22855.74" />
+        <option value="bundled-jdk-9823dce3aa75-fdfe4dae3a2d-intellij.indexing.shared.core-IU-243.21565.193" />
+        <option value="bundled-js-predefined-d6986cc7102b-e768b9ed790e-JavaScript-IU-243.21565.193" />
       </set>
     </attachedChunks>
   </component>
@@ -52,10 +124,15 @@
       <option name="presentableId" value="Default" />
       <updated>1743590615807</updated>
       <workItem from="1743590619572" duration="36000" />
+      <workItem from="1747559038634" duration="121000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="DB is connected" />
+    <option name="LAST_COMMIT_MESSAGE" value="DB is connected" />
   </component>
 </project>
