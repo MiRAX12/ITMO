@@ -1,7 +1,6 @@
 package server;
 
-import Network.RequestBuilder;
-import Network.User;
+import Network.*;
 import commands.Save;
 import database.Database;
 import router.Router;
@@ -10,8 +9,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import serializators.Deserializator;
 import serializators.Serializator;
-import Network.Request;
-import Network.Response;
 
 import java.io.*;
 import java.net.ServerSocket;
@@ -140,45 +137,81 @@ public class Server {
         }
 
         private Response handleUser(Request request) {
-            Response response;
-            var user = request.getUser();
-            var password = request.getUser().getPassword();
-            if (!request.userRegisterRequired()) {
-                if (Database.checkUserExistence(user.getUserName())) {
-                    if (password != null) return authenticate(user);
-                    response = new Response("Введите пароль");
-
-                } else {
-                    response = new Response("Wrong", false);
-                    logger.info("Пользователя " + user.getUserName() + " не существует");
+            User user = request.getUser();
+            String username = user.getUsername();
+            String password = user.getPassword();
+            if (user.getStatus().equals("login")) {
+                System.out.println(username + password);
+                if (username != null && !username.isEmpty()) {
+                    boolean isUserExists = Database.checkUserExistence(username);
+                    if (password != null && !password.isEmpty()) {
+                        System.out.println(password);
+                        if (Database.checkUserPassword(user)) {
+                            return new Response("ACCEPT");
+                        } else {
+                            return new Response("WRONG");
+                        }
+                    }
+                    if (isUserExists) {
+                        return new Response("OK");
+                    } else {
+                        return new Response("WRONG");
+                    }
                 }
-                return response;
-
-            } else {
-                if (Database.checkUserExistence(user.getUserName())) {
-                    response = new Response("Такой логин уже занят", false);
-
-                } else {
-                    Database.addUser(user);
-                    response = new Response("Пользователь " + user.getUserName() +
-                            " успешно зарегистрирован", true);
-                    logger.info("Пользователь " + user.getUserName() + " успешно зарегистрирован");
-                }
-                return response;
+            } else if (user.getStatus().equals("signup")) {
+                User user1 = request.getUser();
+                String salt = PasswordHasher.generateSalt();
+                String password1 = PasswordHasher.toSHA1(user1.getPassword(), salt);
+                user1.setPassword(password1);
+                user1.setSalt(salt);
+                Database.addUser(user1);
+                System.out.println("Пользователь добавлен в базу данных");
+                return new Response("ACCEPT");
             }
+            return new Response("WRONG");
         }
+//            Response response;
+//            var user = request.getUser();
+//            var password = request.getUser().getPassword();
+//            if (!request.userRegisterRequired()) {
+//                if (Database.checkUserExistence(user.getUsername())) {
+//                    if (password != null) return authenticate(user);
+//                    response = new Response("Введите пароль");
+//
+//                } else {
+//                    response = new Response("Wrong", false);
+//                    logger.info("Пользователя " + user.getUsername() + " не существует");
+//                }
+//                return response;
+//
+//            } else {
+//                if (Database.checkUserExistence(user.getUsername())) {
+//                    response = new Response("Такой логин уже занят", false);
+//
+//                } else {
+//                    Database.addUser(user);
+//                    response = new Response("Пользователь " + user.getUsername() +
+//                            " успешно зарегистрирован", true);
+//                    logger.info("Пользователь " + user.getUsername() + " успешно зарегистрирован");
+//                }
+//                return response;
+//            }
+//        }
 
-        private Response authenticate(User user) {
-            Response response;
-            if (Database.checkUserPassword(user)) {
-                response = new Response("Приветствую, " + user.getUserName() + "\n", true);
-                logger.info("Пользователь " + user.getUserName() + " аутентифицирован");
+//        private Response authenticate(User user) {
+//            Response response;
+//            if (Database.checkUserPassword(user)) {
+//                response = new Response("Приветствую, " + user.getUserName() + "\n", true);
+//                logger.info("Пользователь " + user.getUserName() + " аутентифицирован");
+//
+//            } else {
+//                response = new Response("Пароль введён неверно", false);
+//                logger.info("Пользователь " + user.getUserName() + " неверно ввёл пароль");
+//            }
+//            return response;
+//        }
+//    }
 
-            } else {
-                response = new Response("Пароль введён неверно", false);
-                logger.info("Пользователь " + user.getUserName() + " неверно ввёл пароль");
-            }
-            return response;
-        }
     }
 }
+

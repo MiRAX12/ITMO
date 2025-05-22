@@ -16,8 +16,9 @@ public class Handler implements Runnable {
     private static final String HOST = "localhost";
     private static final int PORT = 5505;
     private final Scanner scanner = new Scanner(System.in);
+    private static User user;
     private static final Client client = new Client(HOST, PORT);
-    Authorization authorization = new Authorization(scanner, new User(null, null));
+    private Authorization authorization = new Authorization(scanner, user, client);
     private static ExecuteScript executeScript = new ExecuteScript();
 
 
@@ -43,8 +44,7 @@ public class Handler implements Runnable {
         }
         while (user == null) {
             try {
-                authorization.authorize(scanner);
-                LogIn.authenticateUser(scanner);
+                authorization.authorize();
             } catch (Exception e) {
                 System.out.println(e.getMessage());
             }
@@ -102,12 +102,12 @@ public class Handler implements Runnable {
         }
     }
 
-    private void printResponse(Response response) {
-        System.out.println(response.getMessage());
-        if (response.getWorkers() != null) {
-            System.out.println(response.getWorkers());
-        }
-    }
+//    private void printResponse(Response response) {
+//        System.out.println(response.getMessage());
+//        if (response.getWorkers() != null) {
+//            System.out.println(response.getWorkers());
+//        }
+//    }
 
     public Scanner getScanner() {
         return scanner;

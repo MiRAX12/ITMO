@@ -1,12 +1,10 @@
 package org.exampleMirax;//import Commands.Add;
 
 import Network.User;
+import Network.UserBuilder;
 import utility.Handler;
 
 import java.io.IOException;
-import java.time.LocalDate;
-import java.time.temporal.ChronoField;
-import java.sql.Date;
 
 /**
  * Main class which creates a handler and runs it to handle
@@ -18,7 +16,7 @@ import java.sql.Date;
 public class Main {
 
     public static void main(String[] args) throws IOException {
-        User user = new User(null, null);
+        User user = new UserBuilder().setUserName(null).setPassword(null).createUser();
 
         Handler handler = new Handler();
         handler.run();

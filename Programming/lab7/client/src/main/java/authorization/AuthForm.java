@@ -1,7 +1,7 @@
 package authorization;
 
 public class AuthForm {
-    private String username;
-    private String password;
-    
+    protected String username;
+    protected String password;
+
 }

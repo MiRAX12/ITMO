@@ -3,12 +3,18 @@ package Network;
 import java.io.Serializable;
 
 public class User implements Serializable {
-    private String userName;
+    private String username;
     private String password;
-    private final String salt;
+
+    public void setSalt(String salt) {
+        this.salt = salt;
+    }
+
+    private String salt;
+    private String status;
 
     public User(String userName, String password, String salt) {
-        this.userName = userName;
+        this.username = userName;
         this.password = password;
         this.salt = salt;
     }
@@ -17,19 +23,34 @@ public class User implements Serializable {
         this(userName, password, null);
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public User() {
+    }
+
+    public void setUsername(String userName) {
+        this.username = userName;
     }
 
     public void setPassword(String password) {
         this.password = password;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getUsername() {
+        return username;
     }
 
     public String getPassword() {
         return password;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getSalt() {
+        return salt;
     }
 }

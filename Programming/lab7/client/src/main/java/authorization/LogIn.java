@@ -1,19 +1,22 @@
 package authorization;
 
 import Network.Request;
+import Network.RequestBuilder;
 import Network.Response;
 import Network.User;
 import exceptions.EmptyValueException;
 import exceptions.IncorrectStringValueException;
+import сlient.Client;
 
-import java.io.IOException;
 import java.util.Scanner;
 
-public class LogIn {
-    Scanner scanner;
+public class LogIn extends AuthForm {
+    private Scanner scanner;
+    private Client client;
 
-    public LogIn(Scanner scanner) {
-        scanner = scanner;
+    public LogIn(Scanner scanner, Client client) {
+        this.scanner = scanner;
+        this.client = client;
     }
 
     public LogIn() {
@@ -39,7 +42,7 @@ public class LogIn {
             } catch (EmptyValueException e) {
                 System.out.println(e.getMessage());
             }
-        } while(false == isPass);
+        } while (false == isPass);
         return currentInput;
     }
 
@@ -57,7 +60,7 @@ public class LogIn {
             } catch (EmptyValueException e) {
                 System.out.println(e.getMessage());
             }
-        } while(false == isPass);
+        } while (false == isPass);
         return currentInput;
     }
 
@@ -71,19 +74,20 @@ public class LogIn {
         do {
             try {
                 this.username = this.askUsername();
-                Request request = new Request();
-                user.setUserName(this.username);
-                user.("login");
-                request.setUser(user);
-                this.client.sendRequest(request);
-                Response response = (Response) this.client.receiveResponse(5000);
+                user.setUsername(this.username);
+                user.setStatus("login");
+                Request request = new RequestBuilder().setUser(user).build();
+                this.client.sendToServer(request);
+                Response response = (Response) this.client.receiveFromServer();
                 if (response != null && response.getMessage().equals("OK")) {
+                    System.out.println("111");
                     this.password = this.askPassword();
                     user.setPassword(this.password);
                     request.setUser(user);
-                    this.client.sendRequest(request);
-                    response = (Response) this.client.receiveResponse(5000);
-                    if(response != null && response.getMessage().equals("ACCEPT")) {
+                    this.client.sendToServer(request);
+                    response = (Response) this.client.receiveFromServer();
+                    if (response != null && response.getMessage().equals("ACCEPT")) {
+
                         System.out.println("Вход успешно выполнен");
                         pass = true;
                         break;
@@ -91,13 +95,11 @@ public class LogIn {
                 } else {
                     System.out.println("Пользователя с таким именем не существует");
                 }
-            } catch (IOException e) {
-                System.out.println(e.getMessage());
             } catch (ClassNotFoundException e) {
                 System.out.println(e.getMessage());
             }
         }
-        while(pass == false);
+        while (pass == false);
     }
 //        var username = "";
 //        var password = "";
@@ -128,6 +130,5 @@ public class LogIn {
 //                printResponse(response);
 //            }
 //        }
-    }
-
 }
+

@@ -3,16 +3,18 @@ package authorization;
 import Network.*;
 import exceptions.EmptyValueException;
 import exceptions.IncorrectStringValueException;
+import сlient.Client;
 
-import java.io.IOException;
 import java.util.Scanner;
 
 public class Registration extends AuthForm {
-    Scanner scanner;
+    private Scanner scanner;
     private boolean isLogin = false;
+    private Client client;
 
-    public Registration(Scanner scanner) {
-        scanner = scanner;
+    public Registration(Scanner scanner, Client client) {
+        this.scanner = scanner;
+        this.client = client;
     }
 
     public Registration() {
@@ -71,20 +73,17 @@ public class Registration extends AuthForm {
             try {
                 this.username = this.askUsername();
                 this.password = this.askPassword();
-                Request request = new Request();
-                user.setUserName(this.username);
+                user.setUsername(this.username);
                 user.setPassword(this.password);
                 user.setStatus("signup");
-                request.se(user);
-                this.client.sendRequest(request);
-                Response response = (Response) this.client.receiveResponse(5000);
+                Request request = new RequestBuilder().setUser(user).build();
+                this.client.sendToServer(request);
+                Response response = (Response) this.client.receiveFromServer();
                 if (response != null && response.getMessage().equals("ACCEPT")) {
                     System.out.println("Аккаунт успешно создан");
                     pass = true;
                     break;
                 }
-            } catch (IOException e) {
-                throw new RuntimeException(e);
             } catch (ClassNotFoundException e) {
                 throw new RuntimeException(e);
             }
