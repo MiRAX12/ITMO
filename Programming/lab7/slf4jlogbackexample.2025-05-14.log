@@ -6,10 +6,10 @@
 14.05.2025 17:19:46.459 [main] DEBUG  o.h.v.i.x.c.ValidationXmlParser - No META-INF/validation.xml found. Using annotation based configuration only.
 14.05.2025 17:19:46.468 [main] DEBUG  o.h.v.i.e.r.TraversableResolvers - Cannot find jakarta.persistence.Persistence on classpath. Assuming non JPA 2 environment. All properties will per default be traversable.
 14.05.2025 17:19:46.533 [main] DEBUG  o.h.v.m.ResourceBundleMessageInterpolator - Loaded expression factory via original TCCL
-14.05.2025 17:19:46.733 [main] DEBUG  o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000252: Using org.hibernate.validator.internal.engine.DefaultPropertyNodeNameProvider as property node name provider.
+14.05.2025 17:19:46.733 [main] DEBUG  o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000252: Using org.hibernate.validator.internal.engine.DefaultPropertyNodeNameProvider as property node userName provider.
 14.05.2025 17:19:46.742 [main] DEBUG  o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000234: Using org.hibernate.validator.messageinterpolation.ResourceBundleMessageInterpolator as ValidatorFactory-scoped message interpolator.
 14.05.2025 17:19:46.742 [main] DEBUG  o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000234: Using org.hibernate.validator.internal.engine.resolver.TraverseAllTraversableResolver as ValidatorFactory-scoped traversable resolver.
-14.05.2025 17:19:46.742 [main] DEBUG  o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000234: Using org.hibernate.validator.internal.util.ExecutableParameterNameProvider as ValidatorFactory-scoped parameter name provider.
+14.05.2025 17:19:46.742 [main] DEBUG  o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000234: Using org.hibernate.validator.internal.util.ExecutableParameterNameProvider as ValidatorFactory-scoped parameter userName provider.
 14.05.2025 17:19:46.742 [main] DEBUG  o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000234: Using org.hibernate.validator.internal.engine.DefaultClockProvider as ValidatorFactory-scoped clock provider.
 14.05.2025 17:19:46.743 [main] DEBUG  o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000234: Using org.hibernate.validator.internal.engine.scripting.DefaultScriptEvaluatorFactory as ValidatorFactory-scoped script evaluator factory.
 14.05.2025 17:19:46.791 [main] INFO   server.Server - Сервер запущен на порту 5505
@@ -24,10 +24,10 @@
 14.05.2025 17:37:05.258 [main] DEBUG  o.h.v.i.x.c.ValidationXmlParser - No META-INF/validation.xml found. Using annotation based configuration only.
 14.05.2025 17:37:05.263 [main] DEBUG  o.h.v.i.e.r.TraversableResolvers - Cannot find jakarta.persistence.Persistence on classpath. Assuming non JPA 2 environment. All properties will per default be traversable.
 14.05.2025 17:37:05.299 [main] DEBUG  o.h.v.m.ResourceBundleMessageInterpolator - Loaded expression factory via original TCCL
-14.05.2025 17:37:05.451 [main] DEBUG  o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000252: Using org.hibernate.validator.internal.engine.DefaultPropertyNodeNameProvider as property node name provider.
+14.05.2025 17:37:05.451 [main] DEBUG  o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000252: Using org.hibernate.validator.internal.engine.DefaultPropertyNodeNameProvider as property node userName provider.
 14.05.2025 17:37:05.468 [main] DEBUG  o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000234: Using org.hibernate.validator.messageinterpolation.ResourceBundleMessageInterpolator as ValidatorFactory-scoped message interpolator.
 14.05.2025 17:37:05.468 [main] DEBUG  o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000234: Using org.hibernate.validator.internal.engine.resolver.TraverseAllTraversableResolver as ValidatorFactory-scoped traversable resolver.
-14.05.2025 17:37:05.468 [main] DEBUG  o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000234: Using org.hibernate.validator.internal.util.ExecutableParameterNameProvider as ValidatorFactory-scoped parameter name provider.
+14.05.2025 17:37:05.468 [main] DEBUG  o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000234: Using org.hibernate.validator.internal.util.ExecutableParameterNameProvider as ValidatorFactory-scoped parameter userName provider.
 14.05.2025 17:37:05.468 [main] DEBUG  o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000234: Using org.hibernate.validator.internal.engine.DefaultClockProvider as ValidatorFactory-scoped clock provider.
 14.05.2025 17:37:05.468 [main] DEBUG  o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000234: Using org.hibernate.validator.internal.engine.scripting.DefaultScriptEvaluatorFactory as ValidatorFactory-scoped script evaluator factory.
 14.05.2025 17:37:05.507 [main] INFO   server.Server - Сервер запущен на порту 5505
@@ -39,10 +39,10 @@
 14.05.2025 20:15:56.410 [main] DEBUG  o.h.v.i.x.c.ValidationXmlParser - No META-INF/validation.xml found. Using annotation based configuration only.
 14.05.2025 20:15:56.417 [main] DEBUG  o.h.v.i.e.r.TraversableResolvers - Cannot find jakarta.persistence.Persistence on classpath. Assuming non JPA 2 environment. All properties will per default be traversable.
 14.05.2025 20:15:56.461 [main] DEBUG  o.h.v.m.ResourceBundleMessageInterpolator - Loaded expression factory via original TCCL
-14.05.2025 20:15:56.634 [main] DEBUG  o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000252: Using org.hibernate.validator.internal.engine.DefaultPropertyNodeNameProvider as property node name provider.
+14.05.2025 20:15:56.634 [main] DEBUG  o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000252: Using org.hibernate.validator.internal.engine.DefaultPropertyNodeNameProvider as property node userName provider.
 14.05.2025 20:15:56.643 [main] DEBUG  o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000234: Using org.hibernate.validator.messageinterpolation.ResourceBundleMessageInterpolator as ValidatorFactory-scoped message interpolator.
 14.05.2025 20:15:56.643 [main] DEBUG  o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000234: Using org.hibernate.validator.internal.engine.resolver.TraverseAllTraversableResolver as ValidatorFactory-scoped traversable resolver.
-14.05.2025 20:15:56.644 [main] DEBUG  o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000234: Using org.hibernate.validator.internal.util.ExecutableParameterNameProvider as ValidatorFactory-scoped parameter name provider.
+14.05.2025 20:15:56.644 [main] DEBUG  o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000234: Using org.hibernate.validator.internal.util.ExecutableParameterNameProvider as ValidatorFactory-scoped parameter userName provider.
 14.05.2025 20:15:56.644 [main] DEBUG  o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000234: Using org.hibernate.validator.internal.engine.DefaultClockProvider as ValidatorFactory-scoped clock provider.
 14.05.2025 20:15:56.644 [main] DEBUG  o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000234: Using org.hibernate.validator.internal.engine.scripting.DefaultScriptEvaluatorFactory as ValidatorFactory-scoped script evaluator factory.
 14.05.2025 20:15:56.696 [main] INFO   server.Server - Сервер запущен на порту 5505
@@ -56,10 +56,10 @@
 14.05.2025 21:41:46.219 [main] DEBUG  o.h.v.i.x.c.ValidationXmlParser - No META-INF/validation.xml found. Using annotation based configuration only.
 14.05.2025 21:41:46.228 [main] DEBUG  o.h.v.i.e.r.TraversableResolvers - Cannot find jakarta.persistence.Persistence on classpath. Assuming non JPA 2 environment. All properties will per default be traversable.
 14.05.2025 21:41:46.278 [main] DEBUG  o.h.v.m.ResourceBundleMessageInterpolator - Loaded expression factory via original TCCL
-14.05.2025 21:41:46.456 [main] DEBUG  o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000252: Using org.hibernate.validator.internal.engine.DefaultPropertyNodeNameProvider as property node name provider.
+14.05.2025 21:41:46.456 [main] DEBUG  o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000252: Using org.hibernate.validator.internal.engine.DefaultPropertyNodeNameProvider as property node userName provider.
 14.05.2025 21:41:46.463 [main] DEBUG  o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000234: Using org.hibernate.validator.messageinterpolation.ResourceBundleMessageInterpolator as ValidatorFactory-scoped message interpolator.
 14.05.2025 21:41:46.463 [main] DEBUG  o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000234: Using org.hibernate.validator.internal.engine.resolver.TraverseAllTraversableResolver as ValidatorFactory-scoped traversable resolver.
-14.05.2025 21:41:46.463 [main] DEBUG  o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000234: Using org.hibernate.validator.internal.util.ExecutableParameterNameProvider as ValidatorFactory-scoped parameter name provider.
+14.05.2025 21:41:46.463 [main] DEBUG  o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000234: Using org.hibernate.validator.internal.util.ExecutableParameterNameProvider as ValidatorFactory-scoped parameter userName provider.
 14.05.2025 21:41:46.464 [main] DEBUG  o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000234: Using org.hibernate.validator.internal.engine.DefaultClockProvider as ValidatorFactory-scoped clock provider.
 14.05.2025 21:41:46.464 [main] DEBUG  o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000234: Using org.hibernate.validator.internal.engine.scripting.DefaultScriptEvaluatorFactory as ValidatorFactory-scoped script evaluator factory.
 14.05.2025 21:41:46.501 [main] INFO   server.Server - Сервер запущен на порту 5505
@@ -101,10 +101,10 @@
 14.05.2025 23:16:05.084 [main] DEBUG  o.h.v.i.x.c.ValidationXmlParser - No META-INF/validation.xml found. Using annotation based configuration only.
 14.05.2025 23:16:05.089 [main] DEBUG  o.h.v.i.e.r.TraversableResolvers - Cannot find jakarta.persistence.Persistence on classpath. Assuming non JPA 2 environment. All properties will per default be traversable.
 14.05.2025 23:16:05.125 [main] DEBUG  o.h.v.m.ResourceBundleMessageInterpolator - Loaded expression factory via original TCCL
-14.05.2025 23:16:05.342 [main] DEBUG  o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000252: Using org.hibernate.validator.internal.engine.DefaultPropertyNodeNameProvider as property node name provider.
+14.05.2025 23:16:05.342 [main] DEBUG  o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000252: Using org.hibernate.validator.internal.engine.DefaultPropertyNodeNameProvider as property node userName provider.
 14.05.2025 23:16:05.356 [main] DEBUG  o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000234: Using org.hibernate.validator.messageinterpolation.ResourceBundleMessageInterpolator as ValidatorFactory-scoped message interpolator.
 14.05.2025 23:16:05.357 [main] DEBUG  o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000234: Using org.hibernate.validator.internal.engine.resolver.TraverseAllTraversableResolver as ValidatorFactory-scoped traversable resolver.
-14.05.2025 23:16:05.357 [main] DEBUG  o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000234: Using org.hibernate.validator.internal.util.ExecutableParameterNameProvider as ValidatorFactory-scoped parameter name provider.
+14.05.2025 23:16:05.357 [main] DEBUG  o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000234: Using org.hibernate.validator.internal.util.ExecutableParameterNameProvider as ValidatorFactory-scoped parameter userName provider.
 14.05.2025 23:16:05.357 [main] DEBUG  o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000234: Using org.hibernate.validator.internal.engine.DefaultClockProvider as ValidatorFactory-scoped clock provider.
 14.05.2025 23:16:05.358 [main] DEBUG  o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000234: Using org.hibernate.validator.internal.engine.scripting.DefaultScriptEvaluatorFactory as ValidatorFactory-scoped script evaluator factory.
 14.05.2025 23:16:05.450 [main] INFO   server.Server - Сервер запущен на порту 5505
@@ -118,10 +118,10 @@
 14.05.2025 23:16:44.480 [main] DEBUG  o.h.v.i.x.c.ValidationXmlParser - No META-INF/validation.xml found. Using annotation based configuration only.
 14.05.2025 23:16:44.489 [main] DEBUG  o.h.v.i.e.r.TraversableResolvers - Cannot find jakarta.persistence.Persistence on classpath. Assuming non JPA 2 environment. All properties will per default be traversable.
 14.05.2025 23:16:44.540 [main] DEBUG  o.h.v.m.ResourceBundleMessageInterpolator - Loaded expression factory via original TCCL
-14.05.2025 23:16:44.748 [main] DEBUG  o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000252: Using org.hibernate.validator.internal.engine.DefaultPropertyNodeNameProvider as property node name provider.
+14.05.2025 23:16:44.748 [main] DEBUG  o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000252: Using org.hibernate.validator.internal.engine.DefaultPropertyNodeNameProvider as property node userName provider.
 14.05.2025 23:16:44.758 [main] DEBUG  o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000234: Using org.hibernate.validator.messageinterpolation.ResourceBundleMessageInterpolator as ValidatorFactory-scoped message interpolator.
 14.05.2025 23:16:44.758 [main] DEBUG  o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000234: Using org.hibernate.validator.internal.engine.resolver.TraverseAllTraversableResolver as ValidatorFactory-scoped traversable resolver.
-14.05.2025 23:16:44.758 [main] DEBUG  o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000234: Using org.hibernate.validator.internal.util.ExecutableParameterNameProvider as ValidatorFactory-scoped parameter name provider.
+14.05.2025 23:16:44.758 [main] DEBUG  o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000234: Using org.hibernate.validator.internal.util.ExecutableParameterNameProvider as ValidatorFactory-scoped parameter userName provider.
 14.05.2025 23:16:44.758 [main] DEBUG  o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000234: Using org.hibernate.validator.internal.engine.DefaultClockProvider as ValidatorFactory-scoped clock provider.
 14.05.2025 23:16:44.759 [main] DEBUG  o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000234: Using org.hibernate.validator.internal.engine.scripting.DefaultScriptEvaluatorFactory as ValidatorFactory-scoped script evaluator factory.
 14.05.2025 23:16:44.816 [main] INFO   server.Server - Сервер запущен на порту 5505
@@ -133,10 +133,10 @@
 14.05.2025 23:17:59.005 [main] DEBUG  o.h.v.i.x.c.ValidationXmlParser - No META-INF/validation.xml found. Using annotation based configuration only.
 14.05.2025 23:17:59.012 [main] DEBUG  o.h.v.i.e.r.TraversableResolvers - Cannot find jakarta.persistence.Persistence on classpath. Assuming non JPA 2 environment. All properties will per default be traversable.
 14.05.2025 23:17:59.052 [main] DEBUG  o.h.v.m.ResourceBundleMessageInterpolator - Loaded expression factory via original TCCL
-14.05.2025 23:17:59.214 [main] DEBUG  o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000252: Using org.hibernate.validator.internal.engine.DefaultPropertyNodeNameProvider as property node name provider.
+14.05.2025 23:17:59.214 [main] DEBUG  o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000252: Using org.hibernate.validator.internal.engine.DefaultPropertyNodeNameProvider as property node userName provider.
 14.05.2025 23:17:59.221 [main] DEBUG  o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000234: Using org.hibernate.validator.messageinterpolation.ResourceBundleMessageInterpolator as ValidatorFactory-scoped message interpolator.
 14.05.2025 23:17:59.221 [main] DEBUG  o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000234: Using org.hibernate.validator.internal.engine.resolver.TraverseAllTraversableResolver as ValidatorFactory-scoped traversable resolver.
-14.05.2025 23:17:59.222 [main] DEBUG  o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000234: Using org.hibernate.validator.internal.util.ExecutableParameterNameProvider as ValidatorFactory-scoped parameter name provider.
+14.05.2025 23:17:59.222 [main] DEBUG  o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000234: Using org.hibernate.validator.internal.util.ExecutableParameterNameProvider as ValidatorFactory-scoped parameter userName provider.
 14.05.2025 23:17:59.222 [main] DEBUG  o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000234: Using org.hibernate.validator.internal.engine.DefaultClockProvider as ValidatorFactory-scoped clock provider.
 14.05.2025 23:17:59.222 [main] DEBUG  o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000234: Using org.hibernate.validator.internal.engine.scripting.DefaultScriptEvaluatorFactory as ValidatorFactory-scoped script evaluator factory.
 14.05.2025 23:17:59.261 [main] INFO   server.Server - Сервер запущен на порту 5505
@@ -150,10 +150,10 @@
 14.05.2025 23:18:40.366 [main] DEBUG  o.h.v.i.x.c.ValidationXmlParser - No META-INF/validation.xml found. Using annotation based configuration only.
 14.05.2025 23:18:40.372 [main] DEBUG  o.h.v.i.e.r.TraversableResolvers - Cannot find jakarta.persistence.Persistence on classpath. Assuming non JPA 2 environment. All properties will per default be traversable.
 14.05.2025 23:18:40.411 [main] DEBUG  o.h.v.m.ResourceBundleMessageInterpolator - Loaded expression factory via original TCCL
-14.05.2025 23:18:40.572 [main] DEBUG  o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000252: Using org.hibernate.validator.internal.engine.DefaultPropertyNodeNameProvider as property node name provider.
+14.05.2025 23:18:40.572 [main] DEBUG  o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000252: Using org.hibernate.validator.internal.engine.DefaultPropertyNodeNameProvider as property node userName provider.
 14.05.2025 23:18:40.582 [main] DEBUG  o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000234: Using org.hibernate.validator.messageinterpolation.ResourceBundleMessageInterpolator as ValidatorFactory-scoped message interpolator.
 14.05.2025 23:18:40.582 [main] DEBUG  o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000234: Using org.hibernate.validator.internal.engine.resolver.TraverseAllTraversableResolver as ValidatorFactory-scoped traversable resolver.
-14.05.2025 23:18:40.582 [main] DEBUG  o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000234: Using org.hibernate.validator.internal.util.ExecutableParameterNameProvider as ValidatorFactory-scoped parameter name provider.
+14.05.2025 23:18:40.582 [main] DEBUG  o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000234: Using org.hibernate.validator.internal.util.ExecutableParameterNameProvider as ValidatorFactory-scoped parameter userName provider.
 14.05.2025 23:18:40.582 [main] DEBUG  o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000234: Using org.hibernate.validator.internal.engine.DefaultClockProvider as ValidatorFactory-scoped clock provider.
 14.05.2025 23:18:40.582 [main] DEBUG  o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000234: Using org.hibernate.validator.internal.engine.scripting.DefaultScriptEvaluatorFactory as ValidatorFactory-scoped script evaluator factory.
 14.05.2025 23:18:40.619 [main] INFO   server.Server - Сервер запущен на порту 5505
@@ -167,10 +167,10 @@
 14.05.2025 23:20:18.833 [main] DEBUG  o.h.v.i.x.c.ValidationXmlParser - No META-INF/validation.xml found. Using annotation based configuration only.
 14.05.2025 23:20:18.856 [main] DEBUG  o.h.v.i.e.r.TraversableResolvers - Cannot find jakarta.persistence.Persistence on classpath. Assuming non JPA 2 environment. All properties will per default be traversable.
 14.05.2025 23:20:19.013 [main] DEBUG  o.h.v.m.ResourceBundleMessageInterpolator - Loaded expression factory via original TCCL
-14.05.2025 23:20:19.888 [main] DEBUG  o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000252: Using org.hibernate.validator.internal.engine.DefaultPropertyNodeNameProvider as property node name provider.
+14.05.2025 23:20:19.888 [main] DEBUG  o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000252: Using org.hibernate.validator.internal.engine.DefaultPropertyNodeNameProvider as property node userName provider.
 14.05.2025 23:20:19.937 [main] DEBUG  o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000234: Using org.hibernate.validator.messageinterpolation.ResourceBundleMessageInterpolator as ValidatorFactory-scoped message interpolator.
 14.05.2025 23:20:19.938 [main] DEBUG  o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000234: Using org.hibernate.validator.internal.engine.resolver.TraverseAllTraversableResolver as ValidatorFactory-scoped traversable resolver.
-14.05.2025 23:20:19.939 [main] DEBUG  o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000234: Using org.hibernate.validator.internal.util.ExecutableParameterNameProvider as ValidatorFactory-scoped parameter name provider.
+14.05.2025 23:20:19.939 [main] DEBUG  o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000234: Using org.hibernate.validator.internal.util.ExecutableParameterNameProvider as ValidatorFactory-scoped parameter userName provider.
 14.05.2025 23:20:19.939 [main] DEBUG  o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000234: Using org.hibernate.validator.internal.engine.DefaultClockProvider as ValidatorFactory-scoped clock provider.
 14.05.2025 23:20:19.940 [main] DEBUG  o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000234: Using org.hibernate.validator.internal.engine.scripting.DefaultScriptEvaluatorFactory as ValidatorFactory-scoped script evaluator factory.
 14.05.2025 23:20:20.096 [main] INFO   server.Server - Сервер запущен на порту 5505
@@ -183,10 +183,10 @@
 14.05.2025 23:24:14.588 [main] DEBUG  o.h.v.i.x.c.ValidationXmlParser - No META-INF/validation.xml found. Using annotation based configuration only.
 14.05.2025 23:24:14.598 [main] DEBUG  o.h.v.i.e.r.TraversableResolvers - Cannot find jakarta.persistence.Persistence on classpath. Assuming non JPA 2 environment. All properties will per default be traversable.
 14.05.2025 23:24:14.676 [main] DEBUG  o.h.v.m.ResourceBundleMessageInterpolator - Loaded expression factory via original TCCL
-14.05.2025 23:24:14.885 [main] DEBUG  o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000252: Using org.hibernate.validator.internal.engine.DefaultPropertyNodeNameProvider as property node name provider.
+14.05.2025 23:24:14.885 [main] DEBUG  o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000252: Using org.hibernate.validator.internal.engine.DefaultPropertyNodeNameProvider as property node userName provider.
 14.05.2025 23:24:14.898 [main] DEBUG  o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000234: Using org.hibernate.validator.messageinterpolation.ResourceBundleMessageInterpolator as ValidatorFactory-scoped message interpolator.
 14.05.2025 23:24:14.899 [main] DEBUG  o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000234: Using org.hibernate.validator.internal.engine.resolver.TraverseAllTraversableResolver as ValidatorFactory-scoped traversable resolver.
-14.05.2025 23:24:14.900 [main] DEBUG  o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000234: Using org.hibernate.validator.internal.util.ExecutableParameterNameProvider as ValidatorFactory-scoped parameter name provider.
+14.05.2025 23:24:14.900 [main] DEBUG  o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000234: Using org.hibernate.validator.internal.util.ExecutableParameterNameProvider as ValidatorFactory-scoped parameter userName provider.
 14.05.2025 23:24:14.900 [main] DEBUG  o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000234: Using org.hibernate.validator.internal.engine.DefaultClockProvider as ValidatorFactory-scoped clock provider.
 14.05.2025 23:24:14.901 [main] DEBUG  o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000234: Using org.hibernate.validator.internal.engine.scripting.DefaultScriptEvaluatorFactory as ValidatorFactory-scoped script evaluator factory.
 14.05.2025 23:24:14.957 [main] INFO   server.Server - Сервер запущен на порту 5505
@@ -200,10 +200,10 @@
 14.05.2025 23:27:15.326 [main] DEBUG  o.h.v.i.x.c.ValidationXmlParser - No META-INF/validation.xml found. Using annotation based configuration only.
 14.05.2025 23:27:15.331 [main] DEBUG  o.h.v.i.e.r.TraversableResolvers - Cannot find jakarta.persistence.Persistence on classpath. Assuming non JPA 2 environment. All properties will per default be traversable.
 14.05.2025 23:27:15.372 [main] DEBUG  o.h.v.m.ResourceBundleMessageInterpolator - Loaded expression factory via original TCCL
-14.05.2025 23:27:15.527 [main] DEBUG  o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000252: Using org.hibernate.validator.internal.engine.DefaultPropertyNodeNameProvider as property node name provider.
+14.05.2025 23:27:15.527 [main] DEBUG  o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000252: Using org.hibernate.validator.internal.engine.DefaultPropertyNodeNameProvider as property node userName provider.
 14.05.2025 23:27:15.538 [main] DEBUG  o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000234: Using org.hibernate.validator.messageinterpolation.ResourceBundleMessageInterpolator as ValidatorFactory-scoped message interpolator.
 14.05.2025 23:27:15.539 [main] DEBUG  o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000234: Using org.hibernate.validator.internal.engine.resolver.TraverseAllTraversableResolver as ValidatorFactory-scoped traversable resolver.
-14.05.2025 23:27:15.539 [main] DEBUG  o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000234: Using org.hibernate.validator.internal.util.ExecutableParameterNameProvider as ValidatorFactory-scoped parameter name provider.
+14.05.2025 23:27:15.539 [main] DEBUG  o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000234: Using org.hibernate.validator.internal.util.ExecutableParameterNameProvider as ValidatorFactory-scoped parameter userName provider.
 14.05.2025 23:27:15.540 [main] DEBUG  o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000234: Using org.hibernate.validator.internal.engine.DefaultClockProvider as ValidatorFactory-scoped clock provider.
 14.05.2025 23:27:15.540 [main] DEBUG  o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000234: Using org.hibernate.validator.internal.engine.scripting.DefaultScriptEvaluatorFactory as ValidatorFactory-scoped script evaluator factory.
 14.05.2025 23:27:15.576 [main] INFO   server.Server - Сервер запущен на порту 5505
@@ -215,10 +215,10 @@
 14.05.2025 23:43:40.076 [main] DEBUG  o.h.v.i.x.c.ValidationXmlParser - No META-INF/validation.xml found. Using annotation based configuration only.
 14.05.2025 23:43:40.081 [main] DEBUG  o.h.v.i.e.r.TraversableResolvers - Cannot find jakarta.persistence.Persistence on classpath. Assuming non JPA 2 environment. All properties will per default be traversable.
 14.05.2025 23:43:40.118 [main] DEBUG  o.h.v.m.ResourceBundleMessageInterpolator - Loaded expression factory via original TCCL
-14.05.2025 23:43:40.311 [main] DEBUG  o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000252: Using org.hibernate.validator.internal.engine.DefaultPropertyNodeNameProvider as property node name provider.
+14.05.2025 23:43:40.311 [main] DEBUG  o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000252: Using org.hibernate.validator.internal.engine.DefaultPropertyNodeNameProvider as property node userName provider.
 14.05.2025 23:43:40.318 [main] DEBUG  o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000234: Using org.hibernate.validator.messageinterpolation.ResourceBundleMessageInterpolator as ValidatorFactory-scoped message interpolator.
 14.05.2025 23:43:40.318 [main] DEBUG  o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000234: Using org.hibernate.validator.internal.engine.resolver.TraverseAllTraversableResolver as ValidatorFactory-scoped traversable resolver.
-14.05.2025 23:43:40.319 [main] DEBUG  o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000234: Using org.hibernate.validator.internal.util.ExecutableParameterNameProvider as ValidatorFactory-scoped parameter name provider.
+14.05.2025 23:43:40.319 [main] DEBUG  o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000234: Using org.hibernate.validator.internal.util.ExecutableParameterNameProvider as ValidatorFactory-scoped parameter userName provider.
 14.05.2025 23:43:40.319 [main] DEBUG  o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000234: Using org.hibernate.validator.internal.engine.DefaultClockProvider as ValidatorFactory-scoped clock provider.
 14.05.2025 23:43:40.319 [main] DEBUG  o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000234: Using org.hibernate.validator.internal.engine.scripting.DefaultScriptEvaluatorFactory as ValidatorFactory-scoped script evaluator factory.
 14.05.2025 23:43:40.361 [main] INFO   server.Server - Сервер запущен на порту 5505

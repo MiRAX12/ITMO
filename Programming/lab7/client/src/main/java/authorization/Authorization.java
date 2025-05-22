@@ -1,4 +1,4 @@
-package utility;
+package authorization;
 
 import Network.User;
 

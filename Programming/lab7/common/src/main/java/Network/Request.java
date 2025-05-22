@@ -74,6 +74,10 @@ public class Request implements Serializable {
         return user;
     }
 
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     public boolean userRegisterRequired() {
         return registerRequired;
     }

@@ -144,25 +144,25 @@ public class Server {
             var user = request.getUser();
             var password = request.getUser().getPassword();
             if (!request.userRegisterRequired()) {
-                if (Database.checkUserExistence(user.getName())) {
+                if (Database.checkUserExistence(user.getUserName())) {
                     if (password != null) return authenticate(user);
                     response = new Response("Введите пароль");
 
                 } else {
                     response = new Response("Wrong", false);
-                    logger.info("Пользователя " + user.getName() + " не существует");
+                    logger.info("Пользователя " + user.getUserName() + " не существует");
                 }
                 return response;
 
             } else {
-                if (Database.checkUserExistence(user.getName())) {
+                if (Database.checkUserExistence(user.getUserName())) {
                     response = new Response("Такой логин уже занят", false);
 
                 } else {
                     Database.addUser(user);
-                    response = new Response("Пользователь " + user.getName() +
+                    response = new Response("Пользователь " + user.getUserName() +
                             " успешно зарегистрирован", true);
-                    logger.info("Пользователь " + user.getName() + " успешно зарегистрирован");
+                    logger.info("Пользователь " + user.getUserName() + " успешно зарегистрирован");
                 }
                 return response;
             }
@@ -171,12 +171,12 @@ public class Server {
         private Response authenticate(User user) {
             Response response;
             if (Database.checkUserPassword(user)) {
-                response = new Response("Приветствую, " + user.getName() + "\n", true);
-                logger.info("Пользователь " + user.getName() + " аутентифицирован");
+                response = new Response("Приветствую, " + user.getUserName() + "\n", true);
+                logger.info("Пользователь " + user.getUserName() + " аутентифицирован");
 
             } else {
                 response = new Response("Пароль введён неверно", false);
-                logger.info("Пользователь " + user.getName() + " неверно ввёл пароль");
+                logger.info("Пользователь " + user.getUserName() + " неверно ввёл пароль");
             }
             return response;
         }

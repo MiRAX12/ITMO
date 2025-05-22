@@ -2,6 +2,8 @@ package utility;
 
 
 import Network.*;
+import authorization.Authorization;
+import authorization.LogIn;
 import constructors.WorkerBuilder;
 import model.*;
 import exceptions.ExitWritten;

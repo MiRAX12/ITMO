@@ -7,8 +7,6 @@ import model.Worker;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.sql.*;
-import java.time.LocalDate;
-import java.time.temporal.ChronoField;
 import java.util.Properties;
 
 public class Database {
@@ -30,7 +28,7 @@ public class Database {
     }
 
     public static void addUser(User user) {
-        var username = user.getName();
+        var username = user.getUserName();
         var hashedPassword = user.getPassword();
         var salt = PasswordHasher.generateSalt();
         String query = "INSERT INTO users (username, hashedpassword, salt) VALUES (?, ?, ?)";
@@ -67,7 +65,7 @@ public class Database {
             p.setFloat(10, worker.getPerson().getLocation().getX());
             p.setFloat(11, worker.getPerson().getLocation().getY());
             p.setLong(12, worker.getPerson().getLocation().getZ());
-            p.setString(13, user.getName());
+            p.setString(13, user.getUserName());
             p.executeUpdate();
             return true;
 
@@ -93,7 +91,7 @@ public class Database {
     }
 
     public static boolean checkUserPassword(User user) {
-        var username = user.getName();
+        var username = user.getUserName();
         String query = "SELECT hashedpassword, salt FROM users WHERE username = ?";
         try (PreparedStatement p = connection.prepareStatement(query)) {
             p.setString(1, username);
