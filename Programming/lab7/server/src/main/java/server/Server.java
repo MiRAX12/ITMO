@@ -56,7 +56,6 @@ public class Server {
         });
         consoleThread.setDaemon(true);
         consoleThread.start();
-
         while (true) {
             try {
                 Socket clientSocket = serverSocket.accept();
