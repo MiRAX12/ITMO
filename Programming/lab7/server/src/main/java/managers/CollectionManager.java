@@ -2,13 +2,8 @@ package managers;
 
 import Network.User;
 import database.Database;
-import database.WorkerService;
 import model.Worker;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
-import java.sql.SQLException;
-import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 

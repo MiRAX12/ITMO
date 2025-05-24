@@ -81,11 +81,6 @@ public class Handler implements Runnable {
                     System.exit(0);
                     break;
                 case "insert":
-//                    if (arg.isEmpty()) {
-//                        client.sendToServer(new Request(user, command));
-//                        client.receiveFromServer();
-//                        break;
-//                    }
                     Worker worker = WorkerBuilder.build();
                     request = new RequestBuilder().setUser(user).setCommand(command).setWorker(worker).build();
                     client.sendToServer(request);
@@ -106,18 +101,5 @@ public class Handler implements Runnable {
             System.out.println(e.getMessage());
         }
     }
-
-//    private void printResponse(Response response) {
-//        System.out.println(response.getMessage());
-//        if (response.getWorkers() != null) {
-//            System.out.println(response.getWorkers());
-//        }
-//    }
-
-    public Scanner getScanner() {
-        return scanner;
-    }
-
-
 }
 
