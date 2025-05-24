@@ -26,8 +26,6 @@ public class Database {
             Properties info = new Properties();
             info.load(new FileInputStream("db.cfg"));
             connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/studs", info);
-            System.out.println(connection);
-
 
         } catch (SQLException e) {
             e.printStackTrace();

@@ -1,8 +1,13 @@
 package commands;
 
+import database.Database;
 import managers.CollectionManager;
 import Network.Request;
 import Network.Response;
+import model.Worker;
+
+import java.time.ZonedDateTime;
+import java.util.Map;
 
 /**
  * Command to clear the entire collection.
@@ -34,8 +39,16 @@ public class Clear extends Command {
         if (CollectionManager.getInstance().getCollection().isEmpty()) {
             return new Response("Коллекция пуста!");
         }
-        CollectionManager.getInstance().getCollection().clear();
-        return new Response("Коллекция успешно очищена!");
+        Map<Long, Worker> collection = CollectionManager.getInstance().getCollection();
+        int collectionSize = collection.size();
+
+        collection.entrySet().removeIf(entry ->
+                Database.deleteById(entry.getKey(), request.getUser())
+        );
+
+        int difference = collectionSize - collection.size();
+        if (difference == 0) return new Response("Не найдено таких записей, владельцем каких вы являетесь");
+        return new Response("Все ваши записи успешно очищены! Удалено %d записей".formatted(difference));
     }
 
     /**

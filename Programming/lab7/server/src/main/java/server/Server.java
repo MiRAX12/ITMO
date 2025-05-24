@@ -154,7 +154,6 @@ public class Server {
                     if (username != null && !username.isEmpty()) {
                         boolean isUserExists = Database.checkUserExistence(username);
                         if (password != null && !password.isEmpty()) {
-                            System.out.println(password);
                             if (Database.checkUserPassword(user)) {
                                 return new Response("ACCEPT");
                             } else {
