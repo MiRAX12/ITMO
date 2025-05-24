@@ -177,62 +177,11 @@ public class Server {
                     return new Response("ACCEPT");
                 }
             }
-//                Da
-//                User user = this.userService.getUserByUsername(this.request.getUser().getUsername());
-//                String password = this.request.getUser().getPassword();
-//                String salt = user.getSalt();
-//                String hashedPassword = Hash.hash(password, salt);
-//                if (user.getPassword().equals(hashedPassword)) {
-//                    return new Response("ACCEPT");
-//                } else {
-//                    return new Response("WRONG");
-//                }
             return new Response("WRONG");
         }
     }
 }
 
-//            Response response;
-//            var user = request.getUser();
-//            var password = request.getUser().getPassword();
-//            if (!request.userRegisterRequired()) {
-//                if (Database.checkUserExistence(user.getUsername())) {
-//                    if (password != null) return authenticate(user);
-//                    response = new Response("Введите пароль");
-//
-//                } else {
-//                    response = new Response("Wrong", false);
-//                    logger.info("Пользователя " + user.getUsername() + " не существует");
-//                }
-//                return response;
-//
-//            } else {
-//                if (Database.checkUserExistence(user.getUsername())) {
-//                    response = new Response("Такой логин уже занят", false);
-//
-//                } else {
-//                    Database.addUser(user);
-//                    response = new Response("Пользователь " + user.getUsername() +
-//                            " успешно зарегистрирован", true);
-//                    logger.info("Пользователь " + user.getUsername() + " успешно зарегистрирован");
-//                }
-//                return response;
-//            }
-//        }
-
-//        private Response authenticate(User user) {
-//            Response response;
-//            if (Database.checkUserPassword(user)) {
-//                response = new Response("Приветствую, " + user.getUserName() + "\n", true);
-//                logger.info("Пользователь " + user.getUserName() + " аутентифицирован");
-//
-//            } else {
-//                response = new Response("Пароль введён неверно", false);
-//                logger.info("Пользователь " + user.getUserName() + " неверно ввёл пароль");
-//            }
-//            return response;
-//        }
-//    }
 
 
 

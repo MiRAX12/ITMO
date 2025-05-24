@@ -25,8 +25,7 @@ public class Database {
             Class.forName("org.postgresql.Driver");
             Properties info = new Properties();
             info.load(new FileInputStream("db.cfg"));
-            connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/studs", info);
-
+            connection = DriverManager.getConnection("jdbc:postgresql://pg:5432/studs", info);
         } catch (SQLException e) {
             e.printStackTrace();
         } catch (IOException | ClassNotFoundException e) {
@@ -82,20 +81,6 @@ public class Database {
         }
         return false;
     }
-
-//    public static int getUserId(User user) {
-//        String query = "SELECT * FROM users WHERE username = ?";
-//        try (PreparedStatement p = connection.prepareStatement(query)) {
-//            p.setString(1, user.getUsername());
-//            ResultSet res = p.executeQuery();
-//            if (res.next()) {
-//                return res.getInt("id");
-//            }
-//        } catch (SQLException e) {
-//            System.out.println(e.getMessage());
-//        }
-//        return -1;
-//    }
 
     public static boolean addWorker(Worker worker, User user) throws SQLException {
         connection.setAutoCommit(false);
