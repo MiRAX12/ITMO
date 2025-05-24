@@ -37,7 +37,7 @@ public class Worker implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
 
-    public Worker(){
+    public Worker() {
     }
 
     /**
@@ -140,8 +140,7 @@ public class Worker implements Serializable {
      * A Builder's pattern
      */
     public static class Builder {
-//        private Long id = IdGenerator.getInstance().generateId();
-        private Long id = 1L;
+        private Long id = null;
         private String name = null;
         private Coordinates coordinates = null;
         private LocalDate creationDate = LocalDate.now();
@@ -149,11 +148,15 @@ public class Worker implements Serializable {
         private LocalDateTime startDate = null;
         private ZonedDateTime endDate = null;
         private Status status = null;
-        private Person person;
+        private Person person = null;
+
+        public Builder id(Long id) {
+            this.id = id;
+            return this;
+        }
 
         /**
          * @param name - Worker's name
-         *
          * @return - builder's object of written value
          */
         public Builder name(String name) {
@@ -163,7 +166,6 @@ public class Worker implements Serializable {
 
         /**
          * @param coordinates instance of coordinates
-         *
          * @return - builder's object of written value
          */
         public Builder coordinates(Coordinates coordinates) {
@@ -171,9 +173,13 @@ public class Worker implements Serializable {
             return this;
         }
 
+        public Builder creationDate(LocalDate creationDate) {
+            this.creationDate = creationDate;
+            return this;
+        }
+
         /**
          * @param salary - Worker's salary
-         *
          * @return - builder's object of written value
          */
         public Builder salary(float salary) {
@@ -183,7 +189,6 @@ public class Worker implements Serializable {
 
         /**
          * @param startDate - startDate of Worker
-         *
          * @return - builder's object of written value
          */
         public Builder startDate(LocalDateTime startDate) {
@@ -193,7 +198,6 @@ public class Worker implements Serializable {
 
         /**
          * @param endDate - endDate of Worker
-         *
          * @return - builder's object of written value
          */
         public Builder endDate(ZonedDateTime endDate) {
@@ -203,7 +207,6 @@ public class Worker implements Serializable {
 
         /**
          * @param status - status of worker
-         *
          * @return - builder's object of written value
          */
         public Builder status(Status status) {
@@ -213,7 +216,6 @@ public class Worker implements Serializable {
 
         /**
          * @param person - person instance
-         *
          * @return - builder's object of written value
          */
         public Builder person(Person person) {

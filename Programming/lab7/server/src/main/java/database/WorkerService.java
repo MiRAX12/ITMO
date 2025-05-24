@@ -1,106 +1,23 @@
 package database;
 
-import Network.PasswordHasher;
 import Network.User;
-import Network.UserBuilder;
-import exceptions.NotTheOwnerException;
 import model.*;
 
-import java.io.FileInputStream;
-import java.io.IOException;
 import java.sql.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.Properties;
-import java.util.concurrent.ConcurrentHashMap;
 
-public class Database {
+public class WorkerService {
     private static Connection connection;
 
-    public static void establishConnection() {
-        try {
-            Class.forName("org.postgresql.Driver");
-            Properties info = new Properties();
-            info.load(new FileInputStream("db.cfg"));
-            connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/studs", info);
-            System.out.println(connection);
-
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (IOException | ClassNotFoundException e) {
-            System.out.println(e.getMessage());
-        }
+    public WorkerService(Connection connection) {
+        WorkerService.connection = connection;
     }
-
-    public static void addUser(User user) {
-        var username = user.getUsername();
-        var salt = PasswordHasher.generateSalt();
-        var hashedPassword = PasswordHasher.toSHA1(user.getPassword(), salt);
-        String query = "INSERT INTO users (username, hashedpassword, salt) VALUES (?, ?, ?)";
-        try (PreparedStatement p = connection.prepareStatement(query)) {
-            p.setString(1, username);
-            p.setString(2, hashedPassword);
-            p.setString(3, salt);
-            p.executeUpdate();
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-    }
-
-    public static boolean checkUserExistence(String username) {
-        String query = "SELECT EXISTS(SELECT 1 FROM users WHERE username = ?)";
-        try (PreparedStatement p = connection.prepareStatement(query)) {
-            p.setString(1, username);
-            ResultSet res = p.executeQuery();
-            if (res.next()) {
-                return res.getBoolean(1);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
-        }
-        return false;
-    }
-
-    public static boolean checkUserPassword(User user) {
-        var username = user.getUsername();
-        String query = "SELECT hashedpassword, salt FROM users WHERE username = ?";
-        try (PreparedStatement p = connection.prepareStatement(query)) {
-            p.setString(1, username);
-            ResultSet res = p.executeQuery();
-            if (res.next()) {
-                String storedHashedPassword = res.getString("hashedpassword");
-                String salt = res.getString("salt");
-                var hashedPassword = PasswordHasher.toSHA1(user.getPassword(), salt);
-                return storedHashedPassword.equals(hashedPassword);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
-        }
-        return false;
-    }
-
-//    public static int getUserId(User user) {
-//        String query = "SELECT * FROM users WHERE username = ?";
-//        try (PreparedStatement p = connection.prepareStatement(query)) {
-//            p.setString(1, user.getUsername());
-//            ResultSet res = p.executeQuery();
-//            if (res.next()) {
-//                return res.getInt("id");
-//            }
-//        } catch (SQLException e) {
-//            System.out.println(e.getMessage());
-//        }
-//        return -1;
-//    }
 
     public static boolean addWorker(Worker worker, User user) throws SQLException {
-        connection.setAutoCommit(false);
 
         String query = "INSERT INTO workers (name, coordinate_x, coordinate_y,\n" +
                 "creation_date, salary, start_date, end_date, status, passport_id, location_x,\n" +
@@ -138,19 +55,15 @@ public class Database {
 
         } catch (SQLException e) {
             if (connection != null) {
-                connection.rollback();
+                connection.rollback(); // Откатываем при ошибке
             }
             System.out.println(e.getMessage());
             return false;
-        } finally {
-            if (connection != null) {
-                connection.setAutoCommit(true);
-            }
         }
     }
 
     public static Map<Long, Worker> loadWorkers() {
-        Map<Long, Worker> workerMap = new ConcurrentHashMap<>();
+        Map<Long, Worker> workerMap = new LinkedHashMap<>();
         String query = "SELECT * FROM workers";
 
         try (Statement stat = connection.createStatement();
@@ -219,17 +132,4 @@ public class Database {
         }
         return null;
     }
-
-    public static boolean deleteById(long id, User user) {
-        String query = "DELETE FROM workers WHERE id = ? AND creator_id = (SELECT id FROM users WHERE username = ?)";
-        try (PreparedStatement p = connection.prepareStatement(query)) {
-            p.setLong(1, id);
-            p.setString(2, user.getUsername());
-            int deleted = p.executeUpdate();
-            return deleted != 0;
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
 }
-

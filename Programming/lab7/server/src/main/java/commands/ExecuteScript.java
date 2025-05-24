@@ -15,7 +15,6 @@ import java.util.HashSet;
  * </p>
  *
  * @see Response
- *
  * @since 1.0
  */
 public class ExecuteScript extends Command {
@@ -35,7 +34,7 @@ public class ExecuteScript extends Command {
      * @return a {@link Response} containing result of executing commands from the file
      */
 
-    public Response execute(Request request) {
+    public synchronized Response execute(Request request) {
         return null;
     }
 

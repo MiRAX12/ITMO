@@ -5,6 +5,7 @@ import exceptions.EmptyValueException;
 import exceptions.IncorrectStringValueException;
 import сlient.Client;
 
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 public class Registration extends AuthForm {
@@ -26,19 +27,28 @@ public class Registration extends AuthForm {
         String currentInput = null;
         do {
             try {
-                System.out.println("Введите имя пользователя:\n-> ");
+                System.out.println("Введите имя пользователя или пустое значение, чтобы вернуться в меню:\n-> ");
                 currentInput = scanner.nextLine().trim();
+                User user = new User();
+                user.setUsername(currentInput);
+                user.setStatus("signup");
+                Request request = new RequestBuilder().setUser(user).build();
+                this.client.sendToServer(request);
+                Response response = (Response) this.client.receiveFromServer();
+                if (response != null && response.getMessage().equals("IS EXIST")) {
+                    System.out.println("Имя занято");
+                    continue;
+                } else isPass = true;
                 if (currentInput.isEmpty()) {
                     throw new EmptyValueException();
                 }
-                if (currentInput.matches(".*\\d.*")) {
-                    throw new IncorrectStringValueException();
-                }
-                isPass = true;
-            } catch (IncorrectStringValueException e) {
-                System.out.println(e.getMessage());
+            } catch (NoSuchElementException e) {
+                System.out.println("Программа завершает работу");
+                System.exit(0);
             } catch (EmptyValueException e) {
-                throw new RuntimeException(e);
+                System.out.println("Возврат в меню выбора");
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
             }
         } while (!isPass);
         return currentInput;
@@ -56,18 +66,16 @@ public class Registration extends AuthForm {
                 }
                 isPass = true;
             } catch (EmptyValueException e) {
-                throw new RuntimeException(e);
+                System.out.println("Ввод не может быть пустым");
+            } catch (NoSuchElementException e) {
+                System.out.println("Программа завершает работу");
+                System.exit(0);
             }
-        } while (false == isPass);
+        } while (!isPass);
         return currentInput;
     }
 
     public void signUp(User user) {
-//        try {
-//            this.client.open();
-//        } catch (IOException e) {
-//            throw new RuntimeException(e);
-//        }
         boolean pass = false;
         do {
             try {
@@ -83,11 +91,15 @@ public class Registration extends AuthForm {
                     System.out.println("Аккаунт успешно создан");
                     pass = true;
                     break;
+                } else if (response != null && response.getMessage().equals("IS EXIST")) {
+                    System.out.println("Имя занято");
+                    break;
                 }
+
             } catch (ClassNotFoundException e) {
                 throw new RuntimeException(e);
             }
         }
-        while (pass == false);
+        while (!pass);
     }
 }

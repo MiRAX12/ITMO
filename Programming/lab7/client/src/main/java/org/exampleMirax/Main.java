@@ -16,8 +16,6 @@ import java.io.IOException;
 public class Main {
 
     public static void main(String[] args) throws IOException {
-        User user = new UserBuilder().setUserName(null).setPassword(null).createUser();
-
         Handler handler = new Handler();
         handler.run();
     }

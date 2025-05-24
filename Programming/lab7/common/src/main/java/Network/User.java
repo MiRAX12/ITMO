@@ -5,13 +5,9 @@ import java.io.Serializable;
 public class User implements Serializable {
     private String username;
     private String password;
-
-    public void setSalt(String salt) {
-        this.salt = salt;
-    }
-
     private String salt;
     private String status;
+    private int id;
 
     public User(String userName, String password, String salt) {
         this.username = userName;
@@ -24,6 +20,18 @@ public class User implements Serializable {
     }
 
     public User() {
+    }
+
+    public void setSalt(String salt) {
+        this.salt = salt;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public void setUsername(String userName) {

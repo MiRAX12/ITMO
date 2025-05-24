@@ -1,8 +1,9 @@
 package server;
 
 import Network.*;
-import commands.Save;
+//import commands.Save;
 import database.Database;
+import model.Worker;
 import router.Router;
 import managers.CollectionManager;
 import org.slf4j.Logger;
@@ -13,14 +14,20 @@ import serializators.Serializator;
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 
 public class Server {
     private final int port;
     private ServerSocket serverSocket;
     private final Logger logger;
-    private Deserializator deserializator = new Deserializator();
-    private Serializator serializator = new Serializator();
+    private final Deserializator deserializator = new Deserializator();
+    private final Serializator serializator = new Serializator();
+    private static final ExecutorService forkPool = Executors.newWorkStealingPool();
+    private static final ExecutorService fixedPool = Executors.newCachedThreadPool();
 
     public Server(int port) {
         this.port = port;
@@ -35,17 +42,11 @@ public class Server {
 
     public void run() throws IOException {
         this.init();
-
         Thread consoleThread = new Thread(() -> {
             try (BufferedReader consoleReader = new BufferedReader(new InputStreamReader(System.in))) {
                 String currentInput;
                 while ((currentInput = consoleReader.readLine()) != null) {
-                    if (currentInput.equals("save")) {
-                        Save save = new Save();
-                        save.execute(new RequestBuilder().setCommand("save").build());
-                    } else if (currentInput.equals("exit")) {
-                        Save save = new Save();
-                        save.execute(new RequestBuilder().setCommand("save").build());
+                    if (currentInput.equals("exit")) {
                         System.exit(0);
                     }
                 }
@@ -88,88 +89,111 @@ public class Server {
 
         @Override
         public void run() {
-            Response response;
-            try {
-                while (!clientSocket.isClosed() && input != null && output != null) {
-                    try {
-                        byte[] clientData = new byte[1024 * 1024 * 10];
-                        int bytes = input.read(clientData);
-
-                        Request request = (Request) deserializator.deserialize(clientData);
-                        if (request.getCommand() == null) {
-                            response = handleUser(request);
-                        } else response = Router.getInstance().route(request);
-
-                        byte[] serializedResponse = serializator.serialize(response);
-
-                        if (serializedResponse.length > 0) {
-                            output.write(serializedResponse);
-                            output.flush();
-                            logger.trace("Запрос {} успешно обработан", request.getCommand());
-                        } else {
-                            logger.error("Получен ответ с нулевой длиной");
-                        }
-                    } catch (ClassNotFoundException e) {
-                        logger.error("Несоответствие классов: {}", (Object) e.getStackTrace());
-                    } catch (IOException e) {
-                        logger.info("Клиент {} отключился от сервера", clientSocket.getRemoteSocketAddress());
-                        System.out.println("Клиент " + clientSocket.getRemoteSocketAddress() + " отключился от сервера");
-                        Save save = new Save();
-                        save.execute(new RequestBuilder().setCommand("save").build());
-                        break;
-                    }
-                }
-            } finally {
+            forkPool.execute(() -> {
                 try {
-                    if (input != null) {
-                        input.close();
+                    while (!clientSocket.isClosed() && input != null && output != null) {
+                        try {
+                            byte[] clientData = new byte[1024 * 1024 * 10];
+                            int bytes = input.read(clientData);
+                            Request request = (Request) deserializator.deserialize(clientData);
+                            forkPool.execute(() -> {
+                                Response response;
+                                if (request.getCommand() == null) {
+                                    response = handleUser(request);
+                                } else response = Router.getInstance().route(request);
+
+                                fixedPool.execute(() -> {
+                                    byte[] serializedResponse = serializator.serialize(response);
+                                    if (serializedResponse.length > 0) {
+                                        try {
+                                            synchronized (output) {
+                                                output.write(serializedResponse);
+                                                output.flush();
+                                            }
+                                        } catch (IOException e) {
+                                            System.out.println(e.getMessage());
+                                        }
+                                        logger.trace("Запрос {} успешно обработан", request.getCommand());
+                                    } else {
+                                        logger.error("Получен ответ с нулевой длиной");
+                                    }
+                                });
+                            });
+                        } catch (ClassNotFoundException e) {
+                            logger.error("Несоответствие классов: {}", (Object) e.getStackTrace());
+                        } catch (IOException e) {
+                            logger.info("Клиент {} отключился от сервера", clientSocket.getRemoteSocketAddress());
+                            System.out.println("Клиент " + clientSocket.getRemoteSocketAddress() + " отключился от сервера");
+                            break;
+                        }
                     }
-                    if (output != null) {
-                        output.close();
+                } finally {
+                    try {
+                        if (input != null) {
+                            input.close();
+                        }
+                        if (output != null) {
+                            output.close();
+                        }
+                        if (!clientSocket.isClosed()) {
+                            clientSocket.close();
+                        }
+                    } catch (IOException e) {
+                        logger.error("Ошибка закрытия соединения: " + e.getMessage());
                     }
-                    if (!clientSocket.isClosed()) {
-                        clientSocket.close();
-                    }
-                } catch (IOException e) {
-                    logger.error("Ошибка закрытия соединения: " + e.getMessage());
                 }
-            }
+            });
         }
 
         private Response handleUser(Request request) {
-            User user = request.getUser();
-            String username = user.getUsername();
-            String password = user.getPassword();
-            if (user.getStatus().equals("login")) {
-                System.out.println(username + password);
-                if (username != null && !username.isEmpty()) {
-                    boolean isUserExists = Database.checkUserExistence(username);
-                    if (password != null && !password.isEmpty()) {
-                        System.out.println(password);
-                        if (Database.checkUserPassword(user)) {
-                            return new Response("ACCEPT");
+            if (request.getUser() != null && request.getCommand() == null && request.getWorker() == null) {
+                User user = request.getUser();
+                String username = user.getUsername();
+                String password = user.getPassword();
+                if (user.getStatus().equals("login")) {
+                    if (username != null && !username.isEmpty()) {
+                        boolean isUserExists = Database.checkUserExistence(username);
+                        if (password != null && !password.isEmpty()) {
+                            System.out.println(password);
+                            if (Database.checkUserPassword(user)) {
+                                return new Response("ACCEPT");
+                            } else {
+                                return new Response("WRONG");
+                            }
+                        }
+                        if (isUserExists) {
+                            return new Response("OK");
                         } else {
                             return new Response("WRONG");
                         }
                     }
-                    if (isUserExists) {
-                        return new Response("OK");
-                    } else {
-                        return new Response("WRONG");
+                } else if (user.getStatus().equals("signup")) {
+                    if (Database.checkUserExistence(username)) {
+                        return new Response("IS EXIST");
                     }
+                    User user1 = request.getUser();
+                    String salt = PasswordHasher.generateSalt();
+                    user1.setSalt(salt);
+                    Database.addUser(user1);
+                    System.out.println("Пользователь добавлен в базу данных");
+                    return new Response("ACCEPT");
                 }
-            } else if (user.getStatus().equals("signup")) {
-                User user1 = request.getUser();
-                String salt = PasswordHasher.generateSalt();
-                String password1 = PasswordHasher.toSHA1(user1.getPassword(), salt);
-                user1.setPassword(password1);
-                user1.setSalt(salt);
-                Database.addUser(user1);
-                System.out.println("Пользователь добавлен в базу данных");
-                return new Response("ACCEPT");
             }
+//                Da
+//                User user = this.userService.getUserByUsername(this.request.getUser().getUsername());
+//                String password = this.request.getUser().getPassword();
+//                String salt = user.getSalt();
+//                String hashedPassword = Hash.hash(password, salt);
+//                if (user.getPassword().equals(hashedPassword)) {
+//                    return new Response("ACCEPT");
+//                } else {
+//                    return new Response("WRONG");
+//                }
             return new Response("WRONG");
         }
+    }
+}
+
 //            Response response;
 //            var user = request.getUser();
 //            var password = request.getUser().getPassword();
@@ -212,6 +236,7 @@ public class Server {
 //        }
 //    }
 
-    }
-}
+
+
+
 

@@ -8,6 +8,7 @@ import exceptions.EmptyValueException;
 import exceptions.IncorrectStringValueException;
 import сlient.Client;
 
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 public class LogIn extends AuthForm {
@@ -33,12 +34,10 @@ public class LogIn extends AuthForm {
                 if (currentInput.isEmpty()) {
                     throw new EmptyValueException();
                 }
-                if (currentInput.matches(".*\\d.*")) {
-                    throw new IncorrectStringValueException();
-                }
                 isPass = true;
-            } catch (IncorrectStringValueException e) {
-                System.out.println(e.getMessage());
+            } catch (NoSuchElementException e) {
+                System.out.println("Программа завершает работу");
+                System.exit(0);
             } catch (EmptyValueException e) {
                 System.out.println(e.getMessage());
             }
@@ -59,17 +58,15 @@ public class LogIn extends AuthForm {
                 isPass = true;
             } catch (EmptyValueException e) {
                 System.out.println(e.getMessage());
+            } catch (NoSuchElementException e) {
+                System.out.println("Программа завершает работу");
+                System.exit(0);
             }
         } while (false == isPass);
         return currentInput;
     }
 
     public void logIn(User user) {
-//        try {
-//            this.client.open();
-//        } catch (IOException e) {
-//            throw new RuntimeException(e);
-//        }
         boolean pass = false;
         do {
             try {
@@ -80,17 +77,17 @@ public class LogIn extends AuthForm {
                 this.client.sendToServer(request);
                 Response response = (Response) this.client.receiveFromServer();
                 if (response != null && response.getMessage().equals("OK")) {
-                    System.out.println("111");
                     this.password = this.askPassword();
                     user.setPassword(this.password);
                     request.setUser(user);
                     this.client.sendToServer(request);
                     response = (Response) this.client.receiveFromServer();
                     if (response != null && response.getMessage().equals("ACCEPT")) {
-
-                        System.out.println("Вход успешно выполнен");
                         pass = true;
                         break;
+                    } else {
+                        user.setPassword(null);
+                        System.out.println("Неверный пароль");
                     }
                 } else {
                     System.out.println("Пользователя с таким именем не существует");

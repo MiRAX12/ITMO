@@ -43,7 +43,6 @@ public class Location implements Serializable {
         this.z = z;
     }
 
-
     @Override
     public String toString() {
         return "Location{" +
@@ -63,7 +62,6 @@ public class Location implements Serializable {
 
         /**
          * @param x - x coordinate
-         *
          * @return - builder's object of written value
          */
         public Builder x(Float x) {
@@ -73,7 +71,6 @@ public class Location implements Serializable {
 
         /**
          * @param y - y coordinate
-         *
          * @return - builder's object of written value
          */
         public Builder y(Float y) {
@@ -83,7 +80,6 @@ public class Location implements Serializable {
 
         /**
          * @param z - z coordinate
-         *
          * @return - builder's object of written value
          */
         public Builder z(Long z) {

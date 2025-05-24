@@ -4,39 +4,45 @@ import Network.User;
 import Network.UserBuilder;
 import сlient.Client;
 
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 public class Authorization {
     private final User user = new UserBuilder().createUser();
     private final Client client;
-    private final Scanner scanner;
+    private final Scanner scanner = new Scanner(System.in);
     boolean isAuthorized = false;
 
 
     public Authorization(Scanner scanner, User user, Client client) {
-        this.scanner = scanner;
         this.client = client;
     }
 
-    public void authorize() {
-        while (!isAuthorized) {
-            System.out.println("Введите 1 login или 2 reg");
-            var input = scanner.nextLine().trim();
-            switch (input) {
-                case "1":
-                    LogIn logIn = new LogIn(scanner, client);
-                    logIn.logIn(user);
-                    isAuthorized = true;
-                    break;
-                case "2":
-                    Registration registration = new Registration(scanner, client);
-                    registration.signUp(user);
-                    isAuthorized = true;
-                    break;
-                default:
-                    this.isAuthorized = false;
-                    break;
+    public User authorize() {
+        try {
+            while (!isAuthorized) {
+                System.out.println("Введите 1 login или 2 reg");
+                var input = scanner.nextLine().trim();
+                switch (input) {
+                    case "1":
+                        LogIn logIn = new LogIn(scanner, client);
+                        logIn.logIn(user);
+                        isAuthorized = true;
+                        return user;
+                    case "2":
+                        Registration registration = new Registration(scanner, client);
+                        registration.signUp(user);
+                        isAuthorized = true;
+                        return user;
+                    default:
+                        this.isAuthorized = false;
+                        break;
+                }
             }
+        } catch (NoSuchElementException e) {
+            System.out.println("Программа завершает работу");
+            System.exit(0);
         }
+        return null;
     }
 }

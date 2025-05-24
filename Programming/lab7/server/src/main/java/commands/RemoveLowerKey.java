@@ -1,10 +1,12 @@
 package commands;
 
+import database.Database;
 import model.Worker;
 import managers.CollectionManager;
 import Network.Request;
 import Network.Response;
 
+import java.time.LocalDateTime;
 import java.util.Map;
 
 /**
@@ -36,20 +38,24 @@ public class RemoveLowerKey extends Command {
      * @return a {@link Response} indicating whether the elements were successfully removed or if
      * key need to be written
      */
-    public Response execute(Request request) {
+    public synchronized Response execute(Request request) {
         Response response;
 
         if (CollectionManager.getInstance().getCollection().isEmpty()) {
             return new Response("Коллекция пуста!");
         }
         try {
-            Map<Integer, Worker> collection = CollectionManager.getInstance().getCollection();
+            Map<Long, Worker> collection = CollectionManager.getInstance().getCollection();
             int collectionSize = collection.size();
 
-            collection.entrySet().removeIf(entry -> entry.getKey()
-                    < Integer.parseInt(request.getArg()));
+            collection.entrySet().removeIf(entry -> {
+                boolean remove = entry.getKey() < Integer.parseInt(request.getArg());
+                if (remove) return Database.deleteById(entry.getKey(), request.getUser());
+                return false;
+            });
             int difference = collectionSize - collection.size();
-            response = new Response("Удалено %d элементов".formatted(difference));
+            if (difference == 0) response = new Response("Не найдено таких записей, владельцем каких вы являетесь");
+            else response = new Response("Удалено %d элементов".formatted(difference));
         } catch (Exception e) {
             response = new Response("Чтобы удалить Worker, укажите через пробел ключ в виде числа");
         }

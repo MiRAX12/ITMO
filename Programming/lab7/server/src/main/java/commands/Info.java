@@ -10,7 +10,7 @@ import Network.Response;
  * @since 1.0
  */
 public class Info extends Command {
-    public Info (){
+    public Info() {
         super("info", "Вывести информацию о коллекции" +
                 "(кол-во элементов, тип коллекции, доступные ключи)");
     }
@@ -26,7 +26,7 @@ public class Info extends Command {
      * @return a {@link Response} containing number of elements, type and keys
      */
     @Override
-    public Response execute(Request request) {
+    public synchronized Response execute(Request request) {
         CollectionManager collection = CollectionManager.getInstance();
         return new Response("Информация о коллекции:\n" +
                 "Количество элементов : " + collection.getCollection().size() + "\n" +

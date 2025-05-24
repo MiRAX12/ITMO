@@ -42,13 +42,16 @@ public class Handler implements Runnable {
         } catch (Exception e) {
             System.out.println("Введите любой символ, чтобы повторить попытку или exit, чтобы закрыть клиент");
         }
-        while (user == null) {
+        do {
             try {
-                authorization.authorize();
+                user = authorization.authorize();
+                System.out.println("Приветствую вас, " + user.getUsername() + " вы можете вводить команды\n" +
+                        "Введите help чтобы получить список команд");
             } catch (Exception e) {
-                System.out.println(e.getMessage());
+                System.out.println("Ошибка: " + e.getMessage());
             }
-        }
+
+        } while (scanner.hasNext() && user == null);
         while (scanner.hasNext()) {
             try {
                 parseConsoleInput(scanner);
@@ -69,6 +72,7 @@ public class Handler implements Runnable {
 
     private static void processInput(String command, String arg) throws IOException {
         Request request;
+        Response response;
         try {
 
             switch (command) {
@@ -84,9 +88,9 @@ public class Handler implements Runnable {
 //                    }
                     Worker worker = WorkerBuilder.build();
                     request = new RequestBuilder().setUser(user).setCommand(command).setWorker(worker).build();
-
                     client.sendToServer(request);
-                    client.receiveFromServer();
+                    response = client.receiveFromServer();
+                    System.out.println(response.getMessage());
                     break;
                 case "execute_script":
                     executeScript.execute(new RequestBuilder().setUser(user).setCommand(command).setArg(arg).build());
@@ -94,7 +98,8 @@ public class Handler implements Runnable {
                 default:
                     request = new RequestBuilder().setUser(user).setCommand(command).setArg(arg).build();
                     client.sendToServer(request);
-                    client.receiveFromServer();
+                    response = client.receiveFromServer();
+                    System.out.println(response.getMessage());
                     break;
             }
         } catch (ClassNotFoundException e) {

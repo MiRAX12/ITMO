@@ -1,7 +1,6 @@
 package commands;
 
 import Network.User;
-import io.IdGenerator;
 import managers.CollectionManager;
 import model.Worker;
 import Network.Request;
@@ -35,7 +34,7 @@ public class Insert extends Command {
             User user = request.getUser();
             CollectionManager.getInstance()
                     .addElement(worker, user);
-            response = new Response("Новый Worker с ключом добавлен");
+            response = new Response("Новый Worker добавлен");
         } catch (NullPointerException e) {
             response = new Response(e.getMessage());
         } catch (NumberFormatException e) {

@@ -23,8 +23,7 @@ public class WorkerBuilder {
      * @return instance of {@link Worker}
      * @see ParameterConstructor
      */
-    public static Worker build(){
-
+    public static Worker build() {
         Worker.Builder builder = new Worker.Builder();
         builder.name(ParameterConstructor.readParameter(askName()));
         builder.coordinates(CoordinatesBuilder.buildCoordinates());
@@ -35,6 +34,7 @@ public class WorkerBuilder {
         builder.person(PersonBuilder.build());
         return builder.build();
     }
+
 
     /**
      * Creates {@link BuildingRequest} which contains parameters used to
@@ -83,8 +83,8 @@ public class WorkerBuilder {
     private static BuildingRequest<ZonedDateTime> askZonedDateTime() {
         return new BuildingRequest<>(new ZonedDateTimeParser(),
                 "Введите дату и время окончания в формате" +
-                " 'yyyy-MM-dd HH:mm:ss z' (например, '2023-10-05 14:30:00 UTC')." +
-                " Если параметр отсутствует, оставьте поле пустым: ");
+                        " 'yyyy-MM-dd HH:mm:ss z' (например, '2023-10-05 14:30:00 UTC')." +
+                        " Если параметр отсутствует, оставьте поле пустым: ");
     }
 
     /**
@@ -92,7 +92,7 @@ public class WorkerBuilder {
      *
      * @return {@link Status} status of worker
      */
-    private static Status askStatus(){
+    private static Status askStatus() {
         Status status = null;
         Map<String, Status> statusMap = new HashMap<>();
         statusMap.put("1", Status.FIRED);

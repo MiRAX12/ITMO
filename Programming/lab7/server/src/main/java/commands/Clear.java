@@ -14,8 +14,8 @@ import Network.Response;
  * @see CollectionManager
  * @since 1.0
  */
-public class Clear extends Command{
-    public Clear(){
+public class Clear extends Command {
+    public Clear() {
         super("clear", "Очищает коллекцию");
     }
 
@@ -30,12 +30,12 @@ public class Clear extends Command{
      * @return a {@link Response} indicating whether the collection was cleared or was already empty
      */
     @Override
-    public Response execute(Request request) {
+    public synchronized Response execute(Request request) {
         if (CollectionManager.getInstance().getCollection().isEmpty()) {
             return new Response("Коллекция пуста!");
         }
         CollectionManager.getInstance().getCollection().clear();
-            return new Response("Коллекция успешно очищена!");
+        return new Response("Коллекция успешно очищена!");
     }
 
     /**

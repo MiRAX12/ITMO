@@ -1,11 +1,14 @@
 package commands;
 
+import database.Database;
 import model.Worker;
 import managers.CollectionManager;
 import Network.Request;
 import Network.Response;
 
 import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.Map;
 
@@ -37,21 +40,27 @@ public class RemoveAllByStartDate extends Command {
      * @return a {@link Response} indicating if the elements was successfully removed or
      * message that date need to be written
      */
-    public Response execute(Request request) {
+    public synchronized Response execute(Request request) {
         Response response;
 
         if (CollectionManager.getInstance().getCollection().isEmpty()) {
             return new Response("Коллекция пуста!");
         }
         try {
-            Map<Integer, Worker> collection = CollectionManager.getInstance().getCollection();
+            Map<Long, Worker> collection = CollectionManager.getInstance().getCollection();
             int collectionSize = collection.size();
 
-            collection.entrySet().removeIf(entry -> entry.getValue().
-                    getStartDate().isEqual(LocalDateTime.parse(request.getArg())));
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+            collection.entrySet().removeIf(entry -> {
+                boolean remove = entry.getValue().getStartDate().isEqual(LocalDateTime.parse(request.getArg(), formatter));
+                if (remove) return Database.deleteById(entry.getKey(), request.getUser());
+                return false;
+            });
+
             int difference = collectionSize - collection.size();
-            response = new Response("Удалено %d элементов".formatted(difference));
-        }catch (DateTimeParseException e){
+            if (difference == 0) response = new Response("Не найдено таких записей, владельцем каких вы являетесь");
+            else response = new Response("Удалено %d элементов".formatted(difference));
+        } catch (DateTimeParseException e) {
             response = new Response("Чтобы удалить Worker, укажите через пробел" +
                     " дату и время начала в формате 'yyyy-MM-dd HH:mm:ss'" +
                     " (например, '2023-10-05 14:30:00')");

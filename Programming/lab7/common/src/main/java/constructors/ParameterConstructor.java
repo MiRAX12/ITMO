@@ -18,7 +18,8 @@ import java.util.Scanner;
 public class ParameterConstructor {
     public static Scanner consoleRead = new Scanner(System.in);
 
-    public ParameterConstructor() {}
+    public ParameterConstructor() {
+    }
 
     /**
      * Tries to read parameter from input until it read successfully.
@@ -31,35 +32,35 @@ public class ParameterConstructor {
      */
     public static <T> T readParameter(BuildingRequest<T> buildingRequest) throws
             NoSuchElementException, IllegalStateException, IllegalArgumentException,
-            ExitWritten, DateTimeParseException{
+            ExitWritten, DateTimeParseException {
         T x = null;
         boolean next = true;
         do {
             try {
-            System.out.print(buildingRequest.message());
-            String input = consoleRead.nextLine().trim();
+                System.out.print(buildingRequest.message());
+                String input = consoleRead.nextLine().trim();
 
-            if (input.equals("exit")) {
-                System.out.println(new ExitWritten().getMessage());
-                System.exit(0);
-            }
+                if (input.equals("exit")) {
+                    System.out.println(new ExitWritten().getMessage());
+                    System.exit(0);
+                }
 
-            if (!input.equals("^D")) x = buildingRequest.parser().getResult(input);
-            next = false;
+                if (!input.equals("^D")) x = buildingRequest.parser().getResult(input);
+                next = false;
 
-            if (buildingRequest.validation()!=null) {
-                next = !buildingRequest.validation().test(x);
-            }
+                if (buildingRequest.validation() != null) {
+                    next = !buildingRequest.validation().test(x);
+                }
 
             } catch (DateTimeParseException e) {
                 System.out.println("Ошибка ввода даты. Пожалуйста, введите дату в правильном формате.");
             } catch (IllegalArgumentException e) {
                 System.out.println("Неправильный формат аргумента, повторите ввод");
-//            } catch (NoSuchElementException e) {
-//                System.exit(0);
+            } catch (NoSuchElementException e) {
+                System.exit(0);
 
             }
-        } while(next);
+        } while (next);
         return x;
 
     }

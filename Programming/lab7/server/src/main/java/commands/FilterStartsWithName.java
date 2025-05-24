@@ -38,8 +38,8 @@ public class FilterStartsWithName extends Command {
      * @param request the request containing letters to be a name should start with
      * @return a {@link Response} indicates if elements was found. If yes, enumerating them.
      */
-    public Response execute(Request request) {
-        Map<Integer, Worker> filteredWorkers = CollectionManager.getInstance().getCollection().entrySet().stream()
+    public synchronized Response execute(Request request) {
+        Map<Long, Worker> filteredWorkers = CollectionManager.getInstance().getCollection().entrySet().stream()
                 .filter(entry -> entry.getValue().getName().startsWith(request.getArg()))
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
 

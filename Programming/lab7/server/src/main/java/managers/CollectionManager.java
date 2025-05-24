@@ -2,15 +2,16 @@ package managers;
 
 import Network.User;
 import database.Database;
-import io.IdGenerator;
-import io.XMLWriter;
+import database.WorkerService;
 import model.Worker;
-import io.XMLReader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.sql.SQLException;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
 
 /**
  * Manages the collection of {@link Worker} objects.
@@ -21,13 +22,11 @@ import java.util.Map;
  * </p>
  *
  * @see Worker
- * @see XMLReader
  * @since 1.0
  */
 public class CollectionManager {
     private static final CollectionManager INSTANCE = new CollectionManager();
-    private final Map<Integer, Worker> collection = new LinkedHashMap<>();
-    private static final Logger logger = LoggerFactory.getLogger(CollectionManager.class);
+    private final Map<Long, Worker> collection = new ConcurrentHashMap<>();
 
     /**
      * Private constructor to prevent instantiation.
@@ -52,7 +51,7 @@ public class CollectionManager {
      *
      * @return a {@link Map} of {@link Worker} objects
      */
-    public Map<Integer, Worker> getCollection() {
+    public Map<Long, Worker> getCollection() {
         return collection;
     }
 
@@ -64,47 +63,41 @@ public class CollectionManager {
      * </p>
      */
     public void load() {
-        XMLReader xmlReader = new XMLReader();
         try {
             collection.clear();
-            Map<Integer, Worker> workerMap = xmlReader.readFromFile();
+            Map<Long, Worker> workerMap = Database.loadWorkers();
             if (workerMap != null) {
                 collection.putAll(workerMap);
-                logger.info("Загружено " + collection.size() + " новых элементов");
                 System.out.println("Загружено " + collection.size() + " новых элементов");
                 return;
             }
-//            logger.info("Файл пустой, workers не были добавлены");
-            System.out.println("Файл пустой, workers не были добавлены");
+            System.out.println("В базе данных нет Workers");
         } catch (Exception e) {
-
             if (e.getMessage() == null) {
-//                logger.error("Не удалось загрузить workers");
                 System.out.println("Не удалось загрузить workers");
             } else {
-//                logger.error("Не удалось загрузить workers: " + e.getMessage());
                 System.out.println("Не удалось загрузить workers: " + e.getMessage());
             }
         }
     }
 
     /**
-     * Saves the collection of workers to the configured file.
-     * <p>
-     * Writes the current map of persons to the file using {@link XMLWriter}
-     *
-     * </p>
-     */
-    public void save() throws Exception {
-        XMLWriter xmlWriter = new XMLWriter();
-        xmlWriter.writeToFile();
-    }
-
-    /**
      * Adds elements to the <code>Integer</code>/<code>Worker</code> map
+     * and Database
      */
     public void addElement(Worker worker, User user) {
-        Database.addWorker(worker, user);
+        boolean isAdded = false;
+        while (!isAdded) {
+            try {
+                Database.addWorker(worker, user);
+                isAdded = true;
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+        }
+        Long id = Database.getLastUserInsert(user);
+        worker.setId(id);
+        collection.put(id, worker);
     }
 }
 

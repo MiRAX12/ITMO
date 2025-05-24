@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
  */
 public class Show extends Command {
 
-    public Show (){
+    public Show() {
         super("show", "Вывести содержимое коллекции");
     }
 
@@ -27,9 +27,9 @@ public class Show extends Command {
      */
     @Override
     public Response execute(Request request) {
-        Map<Integer, Worker> collection = CollectionManager.getInstance().getCollection();
+        Map<Long, Worker> collection = CollectionManager.getInstance().getCollection();
 
-        if (collection.isEmpty()){
+        if (collection.isEmpty()) {
             return new Response("Коллекция пуста!");
         }
         String workers = collection.entrySet().stream()
