@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.commands.CommandsWindowController">
+    <children>
+        <!-- Кнопка 1 с TextField -->
+        <Button fx:id="clearButton" layoutX="25.0" layoutY="20.0" mnemonicParsing="false"
+                prefWidth="200.0" prefHeight="30.0" text="Команда 1" onAction="#handleCommand1" />
+
+        <!-- Кнопка 2 с TextField -->
+        <Button fx:id="executeScriptButton" layoutX="25.0" layoutY="60.0" mnemonicParsing="false"
+                prefWidth="200.0" prefHeight="30.0" text="Команда 2" onAction="#handleCommand2" />
+
+        <!-- Кнопка 3 с TextField -->
+        <Button fx:id="deleteBySalary" layoutX="25.0" layoutY="100.0" mnemonicParsing="false"
+                prefWidth="200.0" prefHeight="30.0" text="Команда 3" onAction="#handleCommand3" />
+        <TextField fx:id="salaryField" layoutX="240.0" layoutY="100.0" prefWidth="200.0" prefHeight="30.0" />
+
+        <!-- Кнопка 4 с TextField -->
+        <Button fx:id="deleteGreaterKey" layoutX="25.0" layoutY="140.0" mnemonicParsing="false"
+                prefWidth="200.0" prefHeight="30.0" text="Команда 4" onAction="#handleCommand4" />
+        <TextField fx:id="greaterKeyField" layoutX="240.0" layoutY="140.0" prefWidth="200.0" prefHeight="30.0" />
+
+        <!-- Кнопка 5 с TextField -->
+        <Button fx:id="deleteLowerKey" layoutX="25.0" layoutY="180.0" mnemonicParsing="false"
+                prefWidth="200.0" prefHeight="30.0" text="Команда 5" onAction="#handleCommand5" />
+        <TextField fx:id="lowerKeyField" layoutX="240.0" layoutY="180.0" prefWidth="200.0" prefHeight="30.0" />
+
+        <!-- Кнопка 6 с TextField -->
+        <Button fx:id="command6Button" layoutX="25.0" layoutY="220.0" mnemonicParsing="false"
+                prefWidth="200.0" prefHeight="30.0" text="Команда 6" onAction="#handleCommand6" />
+        <TextField fx:id="command6Field" layoutX="240.0" layoutY="220.0" prefWidth="200.0" prefHeight="30.0" />
+
+        <!-- Кнопка 7 с TextField -->
+        <Button fx:id="command7Button" layoutX="25.0" layoutY="260.0" mnemonicParsing="false"
+                prefWidth="200.0" prefHeight="30.0" text="Команда 7" onAction="#handleCommand7" />
+        <TextField fx:id="command7Field" layoutX="240.0" layoutY="260.0" prefWidth="200.0" prefHeight="30.0" />
+
+        <!-- Кнопки управления -->
+        <Button fx:id="submitButton" layoutX="25.0" layoutY="320.0" mnemonicParsing="false"
+                prefWidth="200.0" prefHeight="30.0" text="Выполнить" onAction="#handleSubmit" />
+        <Button fx:id="cancelButton" layoutX="240.0" layoutY="320.0" mnemonicParsing="false"
+                prefWidth="200.0" prefHeight="30.0" text="Отмена" onAction="#handleCancel" />
+    </children>
+</AnchorPane>
