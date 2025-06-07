@@ -71,9 +71,9 @@ public class Handler implements Runnable {
         processInput(command, arg);
     }
 
-    public static void processInput(String command, String arg) throws IOException {
+    public static Response processInput(String command, String arg) throws IOException {
         Request request;
-        Response response;
+        Response response = null;
         User user = Client.getInstance().getUser();
         try {
             switch (command) {
@@ -86,7 +86,7 @@ public class Handler implements Runnable {
                     request = new RequestBuilder().setUser(user).setCommand(command).setWorker(worker).build();
                     client.sendToServer(request);
                     response = client.receiveFromServer();
-                    if (response != null) System.out.println(response.getMessage());
+                    if (response != null) return response;
                     break;
                 case "execute_script":
                     executeScript.execute(new RequestBuilder().setUser(user).setCommand(command).setArg(arg).build());
@@ -95,12 +95,13 @@ public class Handler implements Runnable {
                     request = new RequestBuilder().setUser(user).setCommand(command).setArg(arg).build();
                     client.sendToServer(request);
                     response = client.receiveFromServer();
-                    if (response != null) System.out.println(response.getMessage());
+                    if (response != null) return response;
                     break;
             }
         } catch (ClassNotFoundException e) {
             System.out.println(e.getMessage());
         }
+        return response;
     }
 
 

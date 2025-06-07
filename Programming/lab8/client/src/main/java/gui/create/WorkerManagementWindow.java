@@ -9,14 +9,14 @@ import model.Worker;
 import java.io.IOException;
 import java.net.URL;
 
-public class CityManagementWindow {
+public class WorkerManagementWindow {
 
     private Stage stage;
     private Scene scene;
 
-    private CityManagementWindowController controller;
+    private WorkerManagementWindowController controller;
 
-    public CityManagementWindow(String actionText) {
+    public WorkerManagementWindow(String actionText) {
         try {
             stage = new Stage();
             stage.setResizable(false);

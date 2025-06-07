@@ -19,7 +19,7 @@ public class LoginWindow {
             FXMLLoader loader = new FXMLLoader(fxmlLocation);
             Parent root = loader.load();
 
-            this.stage.setScene(new Scene(root, 680, 457));
+            this.stage.setScene(new Scene(root, 500, 600));
         } catch (IOException e) {
             e.printStackTrace();
         }

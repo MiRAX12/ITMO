@@ -9,6 +9,7 @@ import java.io.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
+import java.util.Objects;
 
 /**
  * Worker class.
@@ -322,6 +323,18 @@ public class Worker implements Serializable {
      */
     public String getName() {
         return name;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Worker worker = (Worker) o;
+        return Float.compare(salary, worker.salary) == 0 && Objects.equals(id, worker.id) && Objects.equals(name, worker.name) && Objects.equals(coordinates, worker.coordinates) && Objects.equals(creationDate, worker.creationDate) && Objects.equals(startDate, worker.startDate) && Objects.equals(endDate, worker.endDate) && status == worker.status && Objects.equals(person, worker.person);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, coordinates, creationDate, salary, startDate, endDate, status, person);
     }
 }
 

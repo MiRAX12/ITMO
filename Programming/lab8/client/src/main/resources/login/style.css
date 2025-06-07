@@ -22,20 +22,23 @@
     -fx-letter-spacing: 10px;
 }
 
-.globeIcon-style {
-
+.lang-style {
+    -fx-background-color: white;
+    -fx-text-fill: black;
+    -fx-border-color: #d0d0d0;
+    -fx-border-width: 1px;
+    -fx-background-radius: 4px;
 }
 
-
 .signUp-style {
-    -fx-text-fill: #6D775A;
-    -fx-font-size: 8px;
+    -fx-text-fill: #47c6da;
+    -fx-font-size: 16px;
     -fx-font-family: "Arial";
 }
 
 .label-style {
     -fx-text-fill: #194144;
-    -fx-font-size: 8px;
+    -fx-font-size: 16px;
     -fx-font-family: "Arial";
 }
 

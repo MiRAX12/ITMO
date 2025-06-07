@@ -81,50 +81,98 @@ public class Database {
 
     public static boolean addWorker(Worker worker, User user) throws SQLException {
         connection.setAutoCommit(false);
+        if (worker.getId() == null) {
+            String query = "INSERT INTO workers (name, coordinate_x, coordinate_y,\n" +
+                    "creation_date, salary, start_date, end_date, status, passport_id, location_x,\n" +
+                    "location_y, location_z, creator_id)" +
+                    "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? ,?, (SELECT id FROM users WHERE username = ?))";
 
-        String query = "INSERT INTO workers (name, coordinate_x, coordinate_y,\n" +
-                "creation_date, salary, start_date, end_date, status, passport_id, location_x,\n" +
-                "location_y, location_z, creator_id)" +
-                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? ,?, (SELECT id FROM users WHERE username = ?))";
+            try (PreparedStatement p = connection.prepareStatement(query)) {
+                p.setString(1, worker.getName());
+                p.setFloat(2, worker.getCoordinates().getX());
+                p.setLong(3, worker.getCoordinates().getY());
+                p.setString(4, worker.getCreationDate().toString());
+                p.setFloat(5, worker.getSalary());
+                p.setString(6, worker.getStartDate().toString());
+                if (worker.getEndDate() != null) {
+                    p.setString(7, worker.getEndDate().toString());
+                } else p.setNull(7, Types.VARCHAR);
+                p.setString(8, worker.getStatus().toString());
+                if (worker.getPerson() != null) {
+                    if (worker.getPerson().getPassportId() != null) {
+                        p.setString(9, worker.getPerson().getPassportId());
+                    } else p.setNull(9, Types.VARCHAR);
+                    p.setFloat(10, worker.getPerson().getLocation().getX());
+                    p.setFloat(11, worker.getPerson().getLocation().getY());
+                    p.setLong(12, worker.getPerson().getLocation().getZ());
+                } else {
+                    p.setNull(9, Types.VARCHAR);
+                    p.setNull(10, Types.FLOAT);
+                    p.setNull(11, Types.FLOAT);
+                    p.setNull(12, Types.BIGINT);
+                }
+                p.setString(13, user.getUsername());
+                p.executeUpdate();
+                connection.commit();
+                return true;
 
-        try (PreparedStatement p = connection.prepareStatement(query)) {
-            p.setString(1, worker.getName());
-            p.setFloat(2, worker.getCoordinates().getX());
-            p.setLong(3, worker.getCoordinates().getY());
-            p.setString(4, worker.getCreationDate().toString());
-            p.setFloat(5, worker.getSalary());
-            p.setString(6, worker.getStartDate().toString());
-            if (worker.getEndDate() != null) {
-                p.setString(7, worker.getEndDate().toString());
-            } else p.setNull(7, Types.VARCHAR);
-            p.setString(8, worker.getStatus().toString());
-            if (worker.getPerson() != null) {
-                if (worker.getPerson().getPassportId() != null) {
-                    p.setString(9, worker.getPerson().getPassportId());
-                } else p.setNull(9, Types.VARCHAR);
-                p.setFloat(10, worker.getPerson().getLocation().getX());
-                p.setFloat(11, worker.getPerson().getLocation().getY());
-                p.setLong(12, worker.getPerson().getLocation().getZ());
-            } else {
-                p.setNull(9, Types.VARCHAR);
-                p.setNull(10, Types.FLOAT);
-                p.setNull(11, Types.FLOAT);
-                p.setNull(12, Types.BIGINT);
+            } catch (SQLException e) {
+                if (connection != null) {
+                    connection.rollback();
+                }
+                System.out.println(e.getMessage());
+                return false;
+            } finally {
+                if (connection != null) {
+                    connection.setAutoCommit(true);
+                }
             }
-            p.setString(13, user.getUsername());
-            p.executeUpdate();
-            connection.commit();
-            return true;
+        } else {
+            String query = "INSERT INTO workers (id, name, coordinate_x, coordinate_y,\n" +
+                    "creation_date, salary, start_date, end_date, status, passport_id, location_x,\n" +
+                    "location_y, location_z, creator_id)" +
+                    "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? ,?, (SELECT id FROM users WHERE username = ?))";
 
-        } catch (SQLException e) {
-            if (connection != null) {
-                connection.rollback();
-            }
-            System.out.println(e.getMessage());
-            return false;
-        } finally {
-            if (connection != null) {
-                connection.setAutoCommit(true);
+            try (PreparedStatement p = connection.prepareStatement(query)) {
+                p.setLong(1, worker.getId());
+                p.setString(2, worker.getName());
+                p.setFloat(3, worker.getCoordinates().getX());
+                p.setLong(4, worker.getCoordinates().getY());
+                p.setString(5, worker.getCreationDate().toString());
+                p.setFloat(6, worker.getSalary());
+                p.setString(7, worker.getStartDate().toString());
+                if (worker.getEndDate() != null) {
+                    p.setString(8, worker.getEndDate().toString());
+                } else p.setNull(8, Types.VARCHAR);
+                p.setString(9, worker.getStatus().toString());
+                if (worker.getPerson() != null) {
+                    if (worker.getPerson().getPassportId() != null) {
+                        p.setString(10, worker.getPerson().getPassportId());
+                    } else p.setNull(10, Types.VARCHAR);
+                    p.setFloat(11, worker.getPerson().getLocation().getX());
+                    p.setFloat(12, worker.getPerson().getLocation().getY());
+                    p.setLong(13, worker.getPerson().getLocation().getZ());
+                } else {
+                    p.setNull(10, Types.VARCHAR);
+                    p.setNull(11, Types.FLOAT);
+                    p.setNull(12, Types.FLOAT);
+                    p.setNull(13, Types.BIGINT);
+                }
+                p.setString(14, user.getUsername());
+                p.executeUpdate();
+                connection.commit();
+                return true;
+
+            } catch (SQLException e) {
+                if (connection != null) {
+                    connection.rollback();
+                }
+                System.out.println(e.getMessage());
+                return false;
+            } finally {
+                if (connection != null) {
+                    connection.setAutoCommit(true);
+                }
             }
         }
     }

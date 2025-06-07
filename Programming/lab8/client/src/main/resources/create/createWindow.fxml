@@ -7,7 +7,7 @@
 <?import javafx.scene.text.Font?>
 
 <?import javafx.scene.control.ChoiceBox?>
-<AnchorPane prefHeight="456.0" prefWidth="287.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.create.CityManagementWindowController">
+<AnchorPane prefHeight="456.0" prefWidth="287.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.create.WorkerManagementWindowController">
    <children>
       <Label fx:id="actionLabel" layoutX="80.0" layoutY="14.0" prefHeight="30.0" prefWidth="115.0" text="Inserting Worker">
          <font>

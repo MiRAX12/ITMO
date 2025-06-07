@@ -4,17 +4,23 @@ package gui.create;
 import constructors.parsers.LocalDateTimeParser;
 import constructors.parsers.ZonedDateTimeParser;
 import gui.AlertUtility;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 import model.*;
 
 import model.validators.*;
+import network.Response;
 import utility.Handler;
 
+import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -24,7 +30,7 @@ import java.util.Map;
  * Controller class for the Create Window.
  * This class handles user interactions in the Create Window UI.
  */
-public class CityManagementWindowController {
+public class WorkerManagementWindowController {
     @FXML
     private Label actionLabel;
     @FXML
@@ -68,27 +74,34 @@ public class CityManagementWindowController {
     }
 
     public void populateFields(Worker worker) {
-
+        LocalDateTimeParser localDateTimeParser = new LocalDateTimeParser();
+        ZonedDateTimeParser zonedDateTimeParser = new ZonedDateTimeParser();
         if (worker != null) {
             nameField.setText(worker.getName());
 
-            // Convert numeric types to String before setting the text
             coordXField.setText(String.valueOf(worker.getCoordinates().getX()));
             coordYField.setText(String.valueOf(worker.getCoordinates().getY()));
             salaryField.setText(String.valueOf(worker.getSalary()));
-            startDateField.setText(String.valueOf(worker.getStartDate()));
+            DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+            startDateField.setText(worker.getStartDate().format(outputFormatter));
 
-            // Check if metersAboveSeaLevel is not null before converting it to String
+
             if (worker.getEndDate() != null) {
-                locationXField.setText(String.valueOf(worker.getEndDate()));
+                DateTimeFormatter outputFormatter1 = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss z");
+                endDateField.setText(worker.getEndDate().format(outputFormatter1));
             }
 
-            // Populate choice boxes
             statusChoiceBox.setValue(worker.getStatus().toString());
 
-            // Check if governor is not null before getting its name
-            if (worker.getPerson().getPassportId() != null) {
-                locationYField.setText(worker.getPerson().getPassportId());
+            if (worker.getPerson() != null) {
+                if (worker.getPerson().getPassportId() != null){
+                passportIDField.setText(worker.getPerson().getPassportId());
+            }
+            }
+            if (worker.getPerson() != null) {
+                locationXField.setText(String.valueOf(worker.getPerson().getLocation().getX()));
+                locationYField.setText(String.valueOf(worker.getPerson().getLocation().getY()));
+                locationZField.setText(String.valueOf(worker.getPerson().getLocation().getZ()));
             }
         }
     }
@@ -104,39 +117,67 @@ public class CityManagementWindowController {
      */
     @FXML
     protected void onSaveButtonClick() {
+        Response response = null;
         if (validationState.values().stream().allMatch(valid -> valid) &&
                 statusChoiceBox.getValue() != null) {
             LocalDateTimeParser localDateTimeParser = new LocalDateTimeParser();
             ZonedDateTimeParser zonedDateTimeParser = new ZonedDateTimeParser();
-            LocalDate creationDate = LocalDate.now();
+            LocalDate creationDate;
+            if (actionText.split(" ")[0].equals("Editing")) {
+                long id = selectedWorker.getId();
+                creationDate = selectedWorker.getCreationDate();
+            } else {
+                creationDate = LocalDate.now();
 
-            String name = nameField.getText();
+            }
+            String name = nameField.getText().trim();
             Coordinates coordinates = new Coordinates();
-            coordinates.setX(Float.valueOf(coordXField.getText()));
-            coordinates.setY(Long.valueOf(coordXField.getText()));
-            Float salary = Float.valueOf(salaryField.getText());
-            LocalDateTime startDate = localDateTimeParser.getResult((startDateField.getText()));
+            coordinates.setX(Float.valueOf(coordXField.getText().trim()));
+            coordinates.setY(Long.valueOf(coordYField.getText().trim()));
+            Float salary = Float.valueOf(salaryField.getText().trim());
+            LocalDateTime startDate = localDateTimeParser.getResult((startDateField.getText().trim()));
             ZonedDateTime endDate = null;
-            if (!endDateField.getText().trim().isEmpty()) endDate = zonedDateTimeParser.getResult((endDateField.getText()));
+            if (!endDateField.getText().trim().isEmpty()) endDate = zonedDateTimeParser.getResult((endDateField.getText().trim()));
             Status status = statusChoiceBox.getValue() != null ? Status.valueOf(statusChoiceBox.getValue()) : null;
             Person person;
             Location location;
             if (!locationXField.getText().trim().isEmpty()&&!locationYField.getText().trim().isEmpty()
                     &&!locationZField.getText().trim().isEmpty()) {
-                Float x = Float.valueOf(locationXField.getText());
-                Float y = Float.valueOf(locationYField.getText());
-                Long z = Long.valueOf(locationZField.getText());
+                Float x = Float.valueOf(locationXField.getText().trim());
+                Float y = Float.valueOf(locationYField.getText().trim());
+                Long z = Long.valueOf(locationZField.getText().trim());
                 location = new Location.Builder().x(x).y(y).z(z).build();
                 person = new Person();
                 person.setLocation(location);
-                person.setPassportId(passportIDField.getText());
+                person.setPassportId(passportIDField.getText().trim());
             }
             else
                 person = null;
             Worker worker = new Worker.Builder().name(name).coordinates(coordinates).salary(salary).creationDate(creationDate).
                     startDate(startDate).endDate(endDate).status(status).person(person).build();
-            Handler.executeInsert(worker);
+            try {
+                if (actionText.split(" ")[0].equals("Editing")) {
+                    response = Handler.processInput("remove_by_id", selectedWorker.getId().toString());
+                } else {
+                    Handler.executeInsert(worker);
+                }
+            } catch (IOException e) {
+                AlertUtility.errorAlert("Can't load commands from server. Please wait until the server will come back");
+            }
 
+            Response finalResponse = response;
+            Platform.runLater(() -> {
+                if (finalResponse != null && (finalResponse.getMessage().contains("you don't have permission") || finalResponse.getMessage().contains("Element added"))) {
+                    AlertUtility.infoAlert(finalResponse.getMessage());
+                } else if (finalResponse != null && finalResponse.getMessage().contains("Elements removed")) {
+                        Handler.executeInsert(worker);
+                } else if (finalResponse != null) {
+                    AlertUtility.infoAlert(finalResponse.getMessage());
+                } else {
+                    AlertUtility.errorAlert("Server not responding");
+                }
+                ((Stage) nameField.getScene().getWindow()).close();
+            });
         } else {
             AlertUtility.errorAlert("Please correct all errors and fill the enums before proceeding.");
         }
@@ -157,7 +198,7 @@ public class CityManagementWindowController {
 
         NameValidator nameValidator = new NameValidator();
         nameField.textProperty().addListener((observable, oldValue, newValue) -> {
-            boolean valid = nameValidator.validate(newValue);
+            boolean valid = nameValidator.validate(newValue.trim());
             validationState.put("name", valid);
             updateValidationState(nameField, valid, "Name is not valid. " + nameValidator.getDescr());
         });
@@ -165,7 +206,7 @@ public class CityManagementWindowController {
         CoordinateXValidator coordinateXValidator = new CoordinateXValidator();
         coordXField.textProperty().addListener((observable, oldValue, newValue) -> {
             try {
-                boolean valid = newValue.matches("-?\\d+(\\.\\d+)?") && coordinateXValidator.validate(Float.valueOf(newValue));
+                boolean valid = newValue.matches("-?\\d+(\\.\\d+)?") && coordinateXValidator.validate(Float.valueOf(newValue.trim()));
                 validationState.put("coordX", valid);
                 updateValidationState(coordXField, valid, "CoordX is not valid. " + coordinateXValidator.getDescr());
             } catch (NumberFormatException e) {
@@ -176,7 +217,7 @@ public class CityManagementWindowController {
         CoordinateYValidator coordinateYValidator = new CoordinateYValidator();
         coordYField.textProperty().addListener((observable, oldValue, newValue) -> {
             try {
-                boolean valid = newValue.matches("\\d+") && coordinateYValidator.validate(Long.valueOf(newValue));
+                boolean valid = newValue.matches("\\d+") && coordinateYValidator.validate(Long.valueOf(newValue.trim()));
                 validationState.put("coordY", valid);
                 updateValidationState(coordYField, valid, "CoordY is not valid. " + coordinateYValidator.getDescr());
             } catch (NumberFormatException e) {
@@ -187,7 +228,7 @@ public class CityManagementWindowController {
         SalaryValidator salaryValidator = new SalaryValidator();
         salaryField.textProperty().addListener((observable, oldValue, newValue) -> {
             try {
-                boolean valid = newValue.matches("-?\\d+(\\.\\d+)?") && salaryValidator.validate(Float.valueOf(newValue));
+                boolean valid = newValue.matches("-?\\d+(\\.\\d+)?") && salaryValidator.validate(Float.valueOf(newValue.trim()));
                 validationState.put("salary", valid);
                 updateValidationState(salaryField, valid, "Salary is not valid. " + salaryValidator.getDescr());
             } catch (NumberFormatException e) {
@@ -198,7 +239,7 @@ public class CityManagementWindowController {
         StartDateValidator startDateValidator = new StartDateValidator();
         startDateField.textProperty().addListener((observable, oldValue, newValue) -> {
             try{
-                boolean valid = startDateValidator.validate(localDateTimeParser.getResult(newValue));
+                boolean valid = startDateValidator.validate(localDateTimeParser.getResult(newValue.trim()));
                 validationState.put("startDate", valid);
                 updateValidationState(startDateField, valid, "StartDate is not valid. " + startDateValidator.getDescr());
             }catch (DateTimeParseException e) {
@@ -210,7 +251,7 @@ public class CityManagementWindowController {
         endDateField.textProperty().addListener((observable, oldValue, newValue) -> {
             try{
                 if (!newValue.trim().isEmpty()) {
-                    zonedDateTimeParser.getResult(newValue);
+                    zonedDateTimeParser.getResult(newValue.trim());
                     validationState.put("endDate", true);
                     updateValidationState(endDateField, true, "");
                 }
@@ -259,7 +300,7 @@ public class CityManagementWindowController {
                     updateValidationState(locationZField, false, "Locations must be all empty or all filled");
                 }
                 if (!newValue.trim().isEmpty()) {
-                    boolean valid = newValue.matches("-?\\d+(\\.\\d+)?") && locationXValidator.validate(Float.valueOf(newValue));
+                    boolean valid = newValue.matches("-?\\d+(\\.\\d+)?") && locationXValidator.validate(Float.valueOf(newValue.trim()));
                     validationState.put("locationX", valid);
                     updateValidationState(locationXField, valid, "LocationX is not valid. " + locationXValidator.getDescr());
                 }
@@ -279,7 +320,7 @@ public class CityManagementWindowController {
                     validationState.put("locationZ", false);
                     updateValidationState(locationZField, false, "Locations must be all empty or all filled");
                 } if (!newValue.trim().isEmpty()) {
-                    boolean valid = newValue.matches("-?\\d+(\\.\\d+)?") && locationYValidator.validate(Float.valueOf(newValue));
+                    boolean valid = newValue.matches("-?\\d+(\\.\\d+)?") && locationYValidator.validate(Float.valueOf(newValue.trim()));
                     validationState.put("locationY", valid);
                     updateValidationState(locationYField, valid, "LocationY is not valid. " + locationYValidator.getDescr());
                 }
@@ -300,7 +341,7 @@ public class CityManagementWindowController {
                     updateValidationState(locationYField, false, "Locations must be all empty or all filled");
                 }
                 if (!newValue.trim().isEmpty()) {
-                    boolean valid = newValue.matches("\\d+") && locationZValidator.validate(Long.valueOf(newValue));
+                    boolean valid = newValue.matches("\\d+") && locationZValidator.validate(Long.valueOf(newValue.trim()));
                     validationState.put("locationZ", valid);
                     updateValidationState(locationZField, valid, "LocationZ is not valid. " + locationZValidator.getDescr());
                 }

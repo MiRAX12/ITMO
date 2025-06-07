@@ -3,6 +3,7 @@ package model;
 import jakarta.validation.constraints.NotNull;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 /**
  * Location class.
@@ -50,6 +51,18 @@ public class Location implements Serializable {
                 ", y=" + y +
                 ", z=" + z +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Location location = (Location) o;
+        return Objects.equals(x, location.x) && Objects.equals(y, location.y) && Objects.equals(z, location.z);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(x, y, z);
     }
 
     /**

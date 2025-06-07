@@ -1,7 +1,7 @@
 .bold-text {
     -fx-text-fill: #333333;
     -fx-font-size: 20px;
-    -fx-font-family: "YouSheBiaoTiHei";
+    -fx-font-family: "Impact";
 }
 
 .borderPane-style {
@@ -17,11 +17,20 @@
     -fx-background-color: white;
     -fx-border-color: #797979;
     -fx-border-radius: 4;
-    -fx-font-family: "YouSheBiaoTiHei";
+    -fx-font-family: "Impact";
+}
+
+.exitButton{
+    -fx-font-size: 14px;
+    -fx-text-fill: #333333;
+    -fx-background-color: #bd0c0c;
+    -fx-border-color: #797979;
+    -fx-border-radius: 4;
+    -fx-font-family: "Impact";
 }
 
 .collections-text {
-    -fx-font-family: "YouSheBiaoTiHei";
+    -fx-font-family: "Impact";
     -fx-text-fill: #333333;
     -fx-font-size: 16px;
 }

@@ -4,6 +4,7 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 /**
  * Person class.
@@ -96,5 +97,17 @@ public class Person implements Serializable {
      */
     public Location getLocation() {
         return location;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Person person = (Person) o;
+        return Objects.equals(passportId, person.passportId) && Objects.equals(location, person.location);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(passportId, location);
     }
 }

@@ -3,45 +3,92 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="400.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.commands.CommandsWindowController">
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.text.TextFlow?>
+<AnchorPane prefHeight="400.0" prefWidth="200.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.commands.CommandsWindowController">
     <children>
-        <!-- Кнопка 1 с TextField -->
-        <Button fx:id="clearButton" layoutX="25.0" layoutY="20.0" mnemonicParsing="false"
-                prefWidth="200.0" prefHeight="30.0" text="Команда 1" onAction="#handleCommand1" />
+        <Label fx:id="actionLabel" layoutX="80.0" layoutY="14.0" prefHeight="30.0" prefWidth="115.0" text="Commands">
+            <font>
+                <Font size="20.0" />
+            </font>
+        </Label>
+        <Label fx:id="actionLabel1" layoutX="95.0" layoutY="120.0" prefHeight="30.0" prefWidth="115.0" text="Delete">
+            <font>
+                <Font size="20.0" />
+            </font>
+        </Label>
+        <!-- Кнопка 1 -->
+        <Button fx:id="clearButton" layoutX="25.0" layoutY="50.0" mnemonicParsing="false"
+                prefWidth="200.0" prefHeight="30.0" text="Clear" onAction="#onClearButtonClick" />
 
         <!-- Кнопка 2 с TextField -->
-        <Button fx:id="executeScriptButton" layoutX="25.0" layoutY="60.0" mnemonicParsing="false"
-                prefWidth="200.0" prefHeight="30.0" text="Команда 2" onAction="#handleCommand2" />
+        <Button fx:id="executeScriptButton" layoutX="25.0" layoutY="90.0" mnemonicParsing="false"
+                prefWidth="200.0" prefHeight="30.0" text="ExecuteScript" onAction="#onExecuteScriptButtonClick" />
+        <TextField fx:id="executeScriptField" layoutX="240.0" layoutY="90.0" prefWidth="200.0" prefHeight="30.0" />
+
 
         <!-- Кнопка 3 с TextField -->
-        <Button fx:id="deleteBySalary" layoutX="25.0" layoutY="100.0" mnemonicParsing="false"
-                prefWidth="200.0" prefHeight="30.0" text="Команда 3" onAction="#handleCommand3" />
-        <TextField fx:id="salaryField" layoutX="240.0" layoutY="100.0" prefWidth="200.0" prefHeight="30.0" />
+        <Button fx:id="deleteBySalary" layoutX="25.0" layoutY="150.0" mnemonicParsing="false"
+                prefWidth="200.0" prefHeight="30.0" text="DeleteBySalary" onAction="#onDeleteSalaryClick" />
+        <TextField fx:id="salaryField" layoutX="240.0" layoutY="150.0" prefWidth="200.0" prefHeight="30.0" />
 
         <!-- Кнопка 4 с TextField -->
-        <Button fx:id="deleteGreaterKey" layoutX="25.0" layoutY="140.0" mnemonicParsing="false"
-                prefWidth="200.0" prefHeight="30.0" text="Команда 4" onAction="#handleCommand4" />
-        <TextField fx:id="greaterKeyField" layoutX="240.0" layoutY="140.0" prefWidth="200.0" prefHeight="30.0" />
+        <Button fx:id="deleteGreaterKey" layoutX="25.0" layoutY="190.0" mnemonicParsing="false"
+                prefWidth="200.0" prefHeight="30.0" text="DeleteGreaterKey" onAction="#onDeleteGreaterKeyClick" />
+        <TextField fx:id="greaterKeyField" layoutX="240.0" layoutY="190.0" prefWidth="200.0" prefHeight="30.0" />
 
         <!-- Кнопка 5 с TextField -->
-        <Button fx:id="deleteLowerKey" layoutX="25.0" layoutY="180.0" mnemonicParsing="false"
-                prefWidth="200.0" prefHeight="30.0" text="Команда 5" onAction="#handleCommand5" />
-        <TextField fx:id="lowerKeyField" layoutX="240.0" layoutY="180.0" prefWidth="200.0" prefHeight="30.0" />
+        <Button fx:id="deleteLowerKey" layoutX="25.0" layoutY="230.0" mnemonicParsing="false"
+                prefWidth="200.0" prefHeight="30.0" text="DeleteLowerKey" onAction="#onDeleteLowerKeyClick" />
+        <TextField fx:id="lowerKeyField" layoutX="240.0" layoutY="230.0" prefWidth="200.0" prefHeight="30.0" />
 
         <!-- Кнопка 6 с TextField -->
-        <Button fx:id="command6Button" layoutX="25.0" layoutY="220.0" mnemonicParsing="false"
-                prefWidth="200.0" prefHeight="30.0" text="Команда 6" onAction="#handleCommand6" />
-        <TextField fx:id="command6Field" layoutX="240.0" layoutY="220.0" prefWidth="200.0" prefHeight="30.0" />
+        <Button fx:id="deleteByStartDate" layoutX="25.0" layoutY="270.0" mnemonicParsing="false"
+                prefWidth="200.0" prefHeight="30.0" text="DeleteByStartDate" onAction="#onDeleteStartDateClick" />
+        <TextField fx:id="startDateField" layoutX="240.0" layoutY="270.0" prefWidth="200.0" prefHeight="30.0" />
 
         <!-- Кнопка 7 с TextField -->
-        <Button fx:id="command7Button" layoutX="25.0" layoutY="260.0" mnemonicParsing="false"
-                prefWidth="200.0" prefHeight="30.0" text="Команда 7" onAction="#handleCommand7" />
-        <TextField fx:id="command7Field" layoutX="240.0" layoutY="260.0" prefWidth="200.0" prefHeight="30.0" />
+        <Button fx:id="deleteByEndDate" layoutX="25.0" layoutY="310.0" mnemonicParsing="false"
+                prefWidth="200.0" prefHeight="30.0" text="DeleteByEndDate" onAction="#onDeleteEndDateClick" />
+        <TextField fx:id="endDateField" layoutX="240.0" layoutY="310.0" prefWidth="200.0" prefHeight="30.0" />
+
+            <VBox fx:id="helpPanel" layoutX="450.0" layoutY="20.0" spacing="10" styleClass="help-panel" style="-fx-background-color: #f0f0f0; -fx-padding: 10;">
+                <TextFlow>
+                    <Text text="Clear" style="-fx-fill: #555; -fx-font-size: 10pt; -fx-font-weight: bold;"/>
+                    <Text text=" - clear all your workers" style="-fx-fill: #555; -fx-font-size: 10pt;"/>
+                </TextFlow>
+                <TextFlow>
+                    <Text text="Execute script" style="-fx-fill: #555; -fx-font-size: 10pt; -fx-font-weight: bold;"/>
+                    <Text text=" - execute script from file" style="-fx-fill: #555; -fx-font-size: 10pt;"/>
+                </TextFlow>
+                <TextFlow>
+                    <Text text="Delete by salary" style="-fx-fill: #555; -fx-font-size: 10pt; -fx-font-weight: bold;"/>
+                    <Text text=" - delete your workers, whose salary is higher" style="-fx-fill: #555; -fx-font-size: 10pt;"/>
+                </TextFlow>
+                <TextFlow>
+                    <Text text="Delete greater key" style="-fx-fill: #555; -fx-font-size: 10pt; -fx-font-weight: bold;"/>
+                    <Text text=" - delete your workers, whose key is greater" style="-fx-fill: #555; -fx-font-size: 10pt;"/>
+                </TextFlow>
+                <TextFlow>
+                    <Text text="Delete lower key" style="-fx-fill: #555; -fx-font-size: 10pt; -fx-font-weight: bold;"/>
+                    <Text text=" - delete your workers, whose salary is lower" style="-fx-fill: #555; -fx-font-size: 10pt;"/>
+                </TextFlow>
+                <TextFlow>
+                    <Text text="Delete by start date" style="-fx-fill: #555; -fx-font-size: 10pt; -fx-font-weight: bold;"/>
+                    <Text text=" - delete your workers, who has the same start date" style="-fx-fill: #555; -fx-font-size: 10pt;"/>
+                </TextFlow>
+                <TextFlow>
+                    <Text text="Delete by end date" style="-fx-fill: #555; -fx-font-size: 10pt; -fx-font-weight: bold;"/>
+                    <Text text=" - delete your workers, who has the same end date" style="-fx-fill: #555; -fx-font-size: 10pt;"/>
+                </TextFlow>
+        </VBox>
 
         <!-- Кнопки управления -->
-        <Button fx:id="submitButton" layoutX="25.0" layoutY="320.0" mnemonicParsing="false"
-                prefWidth="200.0" prefHeight="30.0" text="Выполнить" onAction="#handleSubmit" />
-        <Button fx:id="cancelButton" layoutX="240.0" layoutY="320.0" mnemonicParsing="false"
-                prefWidth="200.0" prefHeight="30.0" text="Отмена" onAction="#handleCancel" />
+        <Button fx:id="exitButton" layoutX="25.0" layoutY="380.0" mnemonicParsing="false"
+                prefWidth="200.0" prefHeight="30.0" text="Exit" onAction="#onBackButtonClick" />
+        <Button fx:id="helpButton" layoutX="240.0" layoutY="380.0" mnemonicParsing="false"
+                prefWidth="200.0" prefHeight="30.0" text="Help" onAction="#onHelpButtonClick" />
+
     </children>
 </AnchorPane>

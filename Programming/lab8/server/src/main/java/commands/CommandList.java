@@ -34,7 +34,8 @@ public final class CommandList {
             new RemoveLowerKey(),
             new RemoveAllByEndDate(),
             new RemoveAllByStartDate(),
-            new FilterStartsWithName()
+            new FilterStartsWithName(),
+            new RemoveById()
     );
 
     /**

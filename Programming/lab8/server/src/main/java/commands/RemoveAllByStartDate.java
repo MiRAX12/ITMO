@@ -57,8 +57,8 @@ public class RemoveAllByStartDate extends Command {
             });
 
             int difference = collectionSize - collection.size();
-            if (difference == 0) response = new Response("Не найдено таких записей, владельцем каких вы являетесь");
-            else response = new Response("Удалено %d элементов".formatted(difference));
+            if (difference == 0) response = new Response("You don't have permission");
+            else response = new Response("Elements removed: %d".formatted(difference));
         } catch (DateTimeParseException e) {
             response = new Response("Чтобы удалить Worker, укажите через пробел" +
                     " дату и время начала в формате 'yyyy-MM-dd HH:mm:ss'" +

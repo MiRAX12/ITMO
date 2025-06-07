@@ -34,7 +34,7 @@ public class Insert extends Command {
             User user = request.getUser();
             CollectionManager.getInstance()
                     .addElement(worker, user);
-            response = new Response("Новый Worker добавлен");
+            response = new Response("Element added");
         } catch (NullPointerException e) {
             response = new Response(e.getMessage());
         } catch (NumberFormatException e) {

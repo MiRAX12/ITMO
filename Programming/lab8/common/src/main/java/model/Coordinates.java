@@ -6,6 +6,7 @@ import jakarta.validation.constraints.DecimalMax;
 import jakarta.validation.constraints.NotNull;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 /**
  * Coordinates class.
@@ -52,6 +53,18 @@ public class Coordinates implements Serializable {
                 "x=" + x +
                 ", y=" + y +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Coordinates that = (Coordinates) o;
+        return Float.compare(x, that.x) == 0 && Objects.equals(y, that.y);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(x, y);
     }
 
     /**

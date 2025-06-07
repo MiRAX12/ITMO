@@ -5,12 +5,11 @@ import authorization.Registration;
 import gui.AlertUtility;
 import gui.UTF8Control;
 import gui.collections.CollectionsWindow;
-import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 import network.User;
-import utility.Handler;
 import сlient.Client;
 
 
@@ -42,15 +41,15 @@ public class LoginWindowController {
     private Label welcomeLabel;
 
     @FXML
-    private Label detailsLabel;
+    private Button language;
 
     @FXML
     private Label accountLabel;
     private final List<Locale> supportedLocales = Arrays.asList(
             new Locale("en", "NZ"),
             new Locale("ru"),
-            new Locale("hr"),
-            new Locale("cs")
+            new Locale("pt"),
+            new Locale("pl")
     );
     private int currentLocaleIndex = 0;
 
@@ -67,9 +66,9 @@ public class LoginWindowController {
      * Update LoginWindow UI
      */
     private void updateUI() {
+        language.setText(currentBundle.getString("language"));
         accountLabel.setText(currentBundle.getString("accountLabel"));
         welcomeLabel.setText(currentBundle.getString("welcomeLabel"));
-        detailsLabel.setText(currentBundle.getString("detailsLabel"));
         signInButton.setText(currentBundle.getString("signInButton"));
         signUpLabel.setText(currentBundle.getString("signUpLabel"));
         usernameLabel.setText(currentBundle.getString("usernameLabel"));
@@ -82,28 +81,6 @@ public class LoginWindowController {
         currentBundle = ResourceBundle.getBundle("MessagesBundle", supportedLocales.get(currentLocaleIndex), new UTF8Control());
         updateUI();
     }
-
-    @FXML
-    protected void onDeleteButtonClick() {
-        try {
-            String username = usernameField.getText().trim();
-            String password = passwordField.getText().trim();
-            User user = new User(username, password);
-
-            Registration registration = new Registration(new Scanner(System.in), Client.getInstance());
-            registration.signUp(user);
-
-            if (registration.getStatus() == "Success") {
-                AlertUtility.infoAlert("User successfully registered");
-            } else if (registration.getStatus() == "IsExist") {
-                AlertUtility.errorAlert("User already exists");
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-    }
-
 
     @FXML
     protected void onSignInButtonClick() {
@@ -119,6 +96,7 @@ public class LoginWindowController {
                 stage.close();
 
                 CollectionsWindow collectionsWindow = new CollectionsWindow(currentLocaleIndex);
+
                 collectionsWindow.show();
             } else if (logIn.getStatus().equals("NotExist")) {
                 AlertUtility.errorAlert("There is no user with this name");
@@ -133,7 +111,13 @@ public class LoginWindowController {
     @FXML
     protected void onSignUpLabelClick() {
         try {
+            if (usernameField.getText().trim().equals("")) {
+                AlertUtility.errorAlert("Username can't be empty");
+            }
             String username = usernameField.getText().trim();
+            if (passwordField.getText().trim().equals("")) {
+                AlertUtility.errorAlert("Password can't be empty");
+            }
             String password = passwordField.getText().trim();
             User user = new User(username, password);
 
