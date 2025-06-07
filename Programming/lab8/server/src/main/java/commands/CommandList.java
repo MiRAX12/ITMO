@@ -35,7 +35,8 @@ public final class CommandList {
             new RemoveAllByEndDate(),
             new RemoveAllByStartDate(),
             new FilterStartsWithName(),
-            new RemoveById()
+            new RemoveById(),
+            new GetWorkerCreatorMap()
     );
 
     /**

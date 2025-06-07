@@ -10,6 +10,7 @@ import java.sql.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.ConcurrentHashMap;
@@ -175,6 +176,25 @@ public class Database {
                 }
             }
         }
+    }
+
+    public static Map<Long, String> getWorkerCreatorMap() {
+        Map<Long, String> workerCreatorMap = new HashMap<>();
+        try {
+            String query = "SELECT username, workers.id as id FROM workers " +
+                    "JOIN users ON workers.creator_id = users.id ";
+            PreparedStatement statement = connection.prepareStatement(query);
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                long workerId = resultSet.getLong("id");
+                String username = resultSet.getString("username");
+                workerCreatorMap.put(workerId, username);
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return workerCreatorMap;
     }
 
     public static Map<Long, Worker> loadWorkers() {

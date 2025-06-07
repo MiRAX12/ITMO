@@ -15,11 +15,16 @@ import java.util.Map;
 public class Response implements Serializable {
     private String message;
     private Map<Long, Worker> workers;
+    private Map<Long, String> workerCreatorMap;
     private boolean userAuthentication;
 
     public Response(String message, Map<Long, Worker> workers) {
         this.message = message;
         this.workers = workers;
+    }
+
+    public Response(Map<Long, String> workerCreatorMap){
+        this.workerCreatorMap = workerCreatorMap;
     }
 
     public Response(String message, boolean userAuthentication) {
@@ -53,6 +58,10 @@ public class Response implements Serializable {
 
     public boolean isUserAuthenticated() {
         return userAuthentication;
+    }
+
+    public Map<Long, String> getWorkerCreatorMap() {
+        return workerCreatorMap;
     }
 
     @Override

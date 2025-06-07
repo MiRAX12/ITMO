@@ -19,6 +19,7 @@ import javafx.collections.ObservableList;
 import javafx.collections.ObservableMap;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -107,6 +108,10 @@ public class CollectionsWindowController {
 
     private String currentUsername;
 
+    private Map<Long, String> workerCreatorMap;
+    private Map<String, Color> clientColorMap = new HashMap<>();
+
+
     private Worker selectedWorker;
 
     public CollectionsWindowController(ResourceBundle bundle, List<Locale> supportedLocales) {
@@ -184,6 +189,25 @@ public class CollectionsWindowController {
                 new SimpleStringProperty(cellData.getValue().getPerson() != null
                 ? cellData.getValue().getPerson().getLocation().getX().toString() : ""));
 
+        loadWorkerCreatorMap();
+        table.setRowFactory(tv -> new TableRow<Worker>() {
+            @Override
+            public void updateItem(Worker worker, boolean empty) {
+                super.updateItem(worker, empty);
+                if (worker == null) {
+                    setStyle("");
+                } else {
+                    Color color = clientColorMap.get(workerCreatorMap.get(worker.getId()));
+
+                    String rgb = String.format("#%02X%02X%02X",
+                            (int)(color.getRed() * 255),
+                            (int)(color.getGreen() * 255),
+                            (int)(color.getBlue() * 255));
+                    setStyle("-fx-border-color: " + rgb + ";");
+                }
+            }
+        });
+
         filterByText.textProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null && !newValue.isEmpty()) {
                 String selectedValue = comboBox.getSelectionModel().getSelectedItem();
@@ -200,6 +224,25 @@ public class CollectionsWindowController {
 
         collection.addListener((MapChangeListener<Long, Worker>) change ->
                 setCollection(collection));
+    }
+
+    private void loadWorkerCreatorMap() {
+        client = Client.getInstance();
+        try {
+            workerCreatorMap = Handler.processInput("get_worker_creator_map", null).getWorkerCreatorMap();
+            for (String clientName : new HashSet<>(workerCreatorMap.values())) {
+                if (clientName.equals(Client.getInstance().getUser().getUsername())) {
+                    clientColorMap.put(clientName, Color.GREEN);
+                } else {
+                    if (!clientColorMap.containsKey(clientName)) {
+                        Color randomColor = Color.color(Math.random(), Math.random(), Math.random());
+                        clientColorMap.put(clientName, randomColor);
+                    }
+                }
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     /**
