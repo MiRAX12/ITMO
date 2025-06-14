@@ -556,7 +556,6 @@ public class CollectionsWindowController {
     public void setCurrentBundle(ResourceBundle currentBundle) {
         this.currentBundle = currentBundle;
     }
-
     public void setSupportedLocales(List<Locale> supportedLocales) {
         this.supportedLocales = supportedLocales;
     }
