@@ -49,8 +49,10 @@ public class VisualizationWindowController {
     @FXML
     public void initialize() {
         canvas.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-            zoomFactor = 1D;
-            redraw();
+            if (event.getClickCount() == 2) {
+                zoomFactor = 1D;
+                redraw();
+            }
             workerClicked(event.getX(), event.getY());
         });
         canvas.addEventHandler(MouseEvent.MOUSE_DRAGGED, event -> drag(canvas));
@@ -170,7 +172,6 @@ public class VisualizationWindowController {
                 gc.setStroke(color.deriveColor(0, 1, 1, opacityMap.get(worker).get()));
                 gc.setLineWidth(2);
                 gc.strokeOval(canvasX - size / 2, canvasY - size / 2, size, size);
-
 
                 Image workerIcon = getWorkerIcon();
                 int iconSize = (int) Math.round(size - 4);

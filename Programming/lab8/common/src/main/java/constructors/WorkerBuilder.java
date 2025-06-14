@@ -6,6 +6,7 @@ import model.Worker;
 
 import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
+import java.time.format.DateTimeParseException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -29,7 +30,11 @@ public class WorkerBuilder {
         builder.coordinates(CoordinatesBuilder.buildCoordinates());
         builder.salary(ParameterConstructor.readParameter(askSalary()));
         builder.startDate(ParameterConstructor.readParameter(askLocalDateTime()));
-        builder.endDate(ParameterConstructor.readParameter(askZonedDateTime()));
+        try {
+            builder.endDate(ParameterConstructor.readParameter(askZonedDateTime()));
+        } catch (DateTimeParseException e) {
+
+        }
         builder.status(askStatus());
         builder.person(PersonBuilder.build());
         return builder.build();

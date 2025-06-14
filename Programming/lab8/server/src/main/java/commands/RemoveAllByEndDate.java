@@ -50,8 +50,10 @@ public class RemoveAllByEndDate extends Command {
 
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss z");
             collection.entrySet().removeIf(entry -> {
-                boolean remove = entry.getValue().getEndDate().isEqual(ZonedDateTime.parse(request.getArg(), formatter));
-                if (remove) return Database.deleteById(entry.getKey(), request.getUser());
+                if (entry.getValue().getEndDate() != null) {
+                    boolean remove = entry.getValue().getEndDate().isEqual(ZonedDateTime.parse(request.getArg(), formatter));
+                    if (remove) return Database.deleteById(entry.getKey(), request.getUser());
+                }
                 return false;
             });
             int difference = collectionSize - collection.size();

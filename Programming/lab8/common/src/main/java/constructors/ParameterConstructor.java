@@ -45,7 +45,8 @@ public class ParameterConstructor {
                     System.exit(0);
                 }
 
-                if (!input.equals("^D")) x = buildingRequest.parser().getResult(input);
+                if (!input.equals("^D")){
+                    x = buildingRequest.parser().getResult(input);}
                 next = false;
 
                 if (buildingRequest.validation() != null) {
@@ -54,6 +55,7 @@ public class ParameterConstructor {
 
             } catch (DateTimeParseException e) {
                 System.out.println("Ошибка ввода даты. Пожалуйста, введите дату в правильном формате.");
+                return null;
             } catch (IllegalArgumentException e) {
                 System.out.println("Неправильный формат аргумента, повторите ввод");
             } catch (NoSuchElementException e) {

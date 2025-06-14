@@ -160,10 +160,11 @@ public class CollectionsWindowController {
                                         new KeyValue(translateYProperty(), 0, Interpolator.EASE_OUT),
                                         new KeyValue(opacityProperty(), 1, Interpolator.EASE_OUT)
                                 ));
+
                         timeline.setOnFinished(event -> playAnimation = false);
                         timeline.play();
-
                     }
+
                 }
             };
             return row;
@@ -205,6 +206,11 @@ public class CollectionsWindowController {
                 new SimpleStringProperty(cellData.getValue().getPerson() != null
                 ? cellData.getValue().getPerson().getLocation().getX().toString() : ""));
 
+        table.getSelectionModel().selectedItemProperty().addListener(((observableValue, worker, t1) ->{
+        if (t1 != null) {
+            playAnimation = false;
+        }}));
+
         filterByText.textProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null && !newValue.isEmpty()) {
                 String selectedValue = comboBox.getSelectionModel().getSelectedItem();
@@ -218,7 +224,6 @@ public class CollectionsWindowController {
         Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(4), event -> {
             loadCollection();
             loadWorkerCreatorMap();
-
         }));
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.play();
@@ -231,19 +236,26 @@ public class CollectionsWindowController {
 
     private void loadWorkerCreatorMap() {
         client = Client.getInstance();
+        boolean flag = false;
+        while (!flag ){
         try {
             workerCreatorMap = Handler.processInput("get_worker_creator_map", null).getWorkerCreatorMap();
-            for (String clientName : new HashSet<>(workerCreatorMap.values())) {
-                if (client.getUser() != null && clientName.equals(Client.getInstance().getUser().getUsername())) {
-                    clientColorMap.put(clientName, Color.rgb(1,255,1));
-                } else if (!clientColorMap.containsKey(clientName)) {
-                    Color randomColor = Color.color(Math.random(), 0, Math.random());
-                    clientColorMap.put(clientName, randomColor);
-                }
+            if (workerCreatorMap != null) {
+                for (String clientName : new HashSet<>(workerCreatorMap.values())) {
+                    if (client.getUser() != null && clientName.equals(Client.getInstance().getUser().getUsername())) {
+                        clientColorMap.put(clientName, Color.rgb(1, 255, 1));
+                    } else if (!clientColorMap.containsKey(clientName)) {
+                        Color randomColor = Color.color(Math.random(), 0, Math.random());
+                        clientColorMap.put(clientName, randomColor);
+                    }
+                    flag = true;
 
+                }
             }
+
         } catch (IOException e) {
             throw new RuntimeException(e);
+        }
         }
     }
 
@@ -253,10 +265,8 @@ public class CollectionsWindowController {
     private void loadCollection() {
         workerMap = Handler.getMap();
         if (workerMap != null) {
-            if (!workerMap.equals(collection)) {
                 collection.clear();
                 collection.putAll(workerMap);
-            }
         }
     }
 
@@ -324,7 +334,6 @@ public class CollectionsWindowController {
         commandsButton.setText(currentBundle.getString("commandsButton"));
         createButton.setText(currentBundle.getString("createButton"));
         filterWorkers(" ", " ");
-
     }
 
     @FXML
@@ -335,7 +344,7 @@ public class CollectionsWindowController {
 
     @FXML
     protected void onEditButtonClick() {
-        Worker selectedWorker = table.getSelectionModel().getSelectedItem();
+        selectedWorker = table.getSelectionModel().getSelectedItem();
         if (selectedWorker != null) {
             WorkerManagementWindow workerManagementWindow = new WorkerManagementWindow("Editing Worker");
             workerManagementWindow.show();
@@ -347,7 +356,7 @@ public class CollectionsWindowController {
 
     @FXML
     protected void onDeleteButtonClick() {
-        Worker selectedWorker = table.getSelectionModel().getSelectedItem();
+        selectedWorker = table.getSelectionModel().getSelectedItem();
         if (selectedWorker != null) {
             try {
                 Response response = Handler.processInput("remove_by_id", selectedWorker.getId().toString());
@@ -357,6 +366,7 @@ public class CollectionsWindowController {
                 } else if (response.getMessage().contains("don't have permission")) {
                     AlertUtility.errorAlert("У вас нет прав на удаление");
                 }
+
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -418,7 +428,7 @@ public class CollectionsWindowController {
     }
 
     private void filterWorkers(String property, String value) {
-        if (property != null) {
+        if (property != null && Handler.getMap().values().stream() != null) {
             Stream<Worker> workerStream = Handler.getMap().values().stream();
             switch (property) {
                 case "id":
@@ -462,15 +472,53 @@ public class CollectionsWindowController {
                     workerStream = workerStream.filter(worker -> worker.getSalary() == salary);
                     break;
                 case "startDate":
-                    LocalDateTimeParser localDateTimeParser = new LocalDateTimeParser();
-                    LocalDateTime startDate = localDateTimeParser.getResult(value);
-                    workerStream = workerStream.filter(worker -> worker.getStartDate().equals(startDate));
-                    break;
+                    DateTimeFormatter formatter1;
+                    switch (currentBundle.getLocale().toString()) {
+                        case "en_NZ":
+                            formatter1 = DateTimeFormatter.ofPattern("MMMM d, yyyy HH:mm:ss", currentBundle.getLocale());
+                            break;
+                        case "pl":
+                            formatter1 = DateTimeFormatter.ofPattern("yyyy MMMM d HH:mm:ss", currentBundle.getLocale());
+                            break;
+                        case "ru":
+                            formatter1 = DateTimeFormatter.ofPattern("d MMMM yyyy 'г.' HH:mm:ss", currentBundle.getLocale());
+                            break;
+                        case "pt":
+                            formatter1 = DateTimeFormatter.ofPattern("d. MMMM yyyy HH:mm:ss", currentBundle.getLocale());
+                            break;
+                        default:
+                            formatter1 = DateTimeFormatter.ofPattern("MMMM d, yyyy HH:mm:ss", Locale.US);
+                            break;
+                    }
+                    LocalDateTime startDate = LocalDateTime.parse(value, formatter1);
+                    workerStream = workerStream.filter(worker -> {
+                        LocalDateTime workerStartDate = LocalDateTime.parse(value, formatter1);
+                        return workerStartDate.equals(startDate);
+                    });
                 case "endDate":
-                    ZonedDateTimeParser zonedDateTimeParser = new ZonedDateTimeParser();
-                    ZonedDateTime endDate = zonedDateTimeParser.getResult(value);
-                    workerStream = workerStream.filter(worker -> worker.getEndDate().equals(endDate));
-                    break;
+                    DateTimeFormatter formatter2;
+                    switch (currentBundle.getLocale().toString()) {
+                        case "en_NZ":
+                            formatter2 = DateTimeFormatter.ofPattern("MMMM d, yyyy HH:mm:ss", currentBundle.getLocale());
+                            break;
+                        case "pl":
+                            formatter2 = DateTimeFormatter.ofPattern("yyyy MMMM d HH:mm:ss", currentBundle.getLocale());
+                            break;
+                        case "ru":
+                            formatter2 = DateTimeFormatter.ofPattern("d MMMM yyyy 'г.' HH:mm:ss", currentBundle.getLocale());
+                            break;
+                        case "pt":
+                            formatter2 = DateTimeFormatter.ofPattern("d. MMMM yyyy HH:mm:ss", currentBundle.getLocale());
+                            break;
+                        default:
+                            formatter2 = DateTimeFormatter.ofPattern("MMMM d, yyyy HH:mm:ss", Locale.US);
+                            break;
+                    }
+                    ZonedDateTime endDate = ZonedDateTime.parse(value, formatter2);
+                    workerStream = workerStream.filter(worker -> {
+                        LocalDate workerCreationDate = LocalDate.parse(value, formatter2);
+                        return workerCreationDate.equals(endDate);
+                    });
                 case "name":
                     workerStream = workerStream.filter(worker -> worker.getName().equals(value));
                     break;
