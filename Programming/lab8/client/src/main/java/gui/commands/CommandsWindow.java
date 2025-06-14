@@ -18,6 +18,7 @@ public class CommandsWindow {
     public CommandsWindow(String actionText, String actionText1) {
         try {
             stage = new Stage();
+            stage.setTitle("Commands");
             URL fxmlLocation = getClass().getResource("/commands/commandsWindow.fxml");
             FXMLLoader loader = new FXMLLoader(fxmlLocation);
             Parent root = loader.load();

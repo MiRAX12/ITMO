@@ -30,6 +30,7 @@ public class CollectionsWindow {
         this.localeIndex = localeIndex;
         try {
             stage = new Stage();
+            stage.setTitle("Collection");
             URL fxmlLocation = getClass().getResource("/collections/collectionsWindow.fxml");
             currentBundle = ResourceBundle.getBundle("MessagesBundle", supportedLocales.get(localeIndex), new UTF8Control());
             FXMLLoader loader = new FXMLLoader(fxmlLocation, currentBundle);

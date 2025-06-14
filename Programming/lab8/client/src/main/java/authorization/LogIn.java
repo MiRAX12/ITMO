@@ -68,8 +68,8 @@ public class LogIn extends AuthForm {
 
     public void logIn(User user) {
         boolean pass = false;
-//        do {
-            try {
+        try {
+            if (!client.getStatus().equals("Unavailable")) {
                 if (user.getUsername() == null) {
                     this.username = this.askUsername();
                     user.setUsername(this.username);
@@ -100,11 +100,11 @@ public class LogIn extends AuthForm {
                     System.out.println("Пользователя с таким именем не существует");
                     status = "NotExist";
                 }
-            } catch (ClassNotFoundException e) {
-                System.out.println(e.getMessage());
             }
-//        }
-//        while (pass == false);
+        } catch (ClassNotFoundException e) {
+            System.out.println(e.getMessage());
+        }
+
     }
 
     public String getStatus(){

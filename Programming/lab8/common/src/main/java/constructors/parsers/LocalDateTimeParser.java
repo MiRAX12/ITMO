@@ -1,8 +1,11 @@
 package constructors.parsers;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 /**
  * Class to parse string from input to LocalDateTime value
@@ -31,6 +34,29 @@ public class LocalDateTimeParser extends AbstractParser<LocalDateTime> {
     @Override
     public String toString() {
         return "LocalDateTimeParser";
+    }
+
+    public String formatter(String text, ResourceBundle currentBundle) {
+        DateTimeFormatter formatter;
+        LocalDateTime date = LocalDateTime.parse(text);
+        switch (currentBundle.getLocale().toString()) {
+            case "en_NZ":
+                formatter = DateTimeFormatter.ofPattern("MMMM d, yyyy HH:mm:ss", currentBundle.getLocale());
+                break;
+            case "pl":
+                formatter = DateTimeFormatter.ofPattern("yyyy MMMM d HH:mm:ss", currentBundle.getLocale());
+                break;
+            case "ru":
+                formatter = DateTimeFormatter.ofPattern("d MMMM yyyy 'г.' HH:mm:ss", currentBundle.getLocale());
+                break;
+            case "pt":
+                formatter = DateTimeFormatter.ofPattern("d. MMMM yyyy HH:mm:ss", currentBundle.getLocale());
+                break;
+            default:
+                formatter = DateTimeFormatter.ofPattern("MMMM d, yyyy HH:mm:ss", Locale.US);
+                break;
+        }
+        return date.format(formatter);
     }
 }
 

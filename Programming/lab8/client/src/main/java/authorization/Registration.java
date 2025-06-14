@@ -79,8 +79,6 @@ public class Registration extends AuthForm {
             try {
                 if (user.getUsername() == null) this.username = this.askUsername();
                 if (user.getPassword() == null) this.password = this.askPassword();
-//                user.setUsername(this.username);
-//                user.setPassword(this.password);
                 user.setStatus("signup");
                 Request request = new RequestBuilder().setUser(user).build();
                 this.client.sendToServer(request);
@@ -97,7 +95,6 @@ public class Registration extends AuthForm {
             } catch (ClassNotFoundException e) {
                 throw new RuntimeException(e);
             }
-
     }
 
     public String getStatus(){

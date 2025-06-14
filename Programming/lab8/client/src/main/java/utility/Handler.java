@@ -20,6 +20,7 @@ public class Handler implements Runnable {
     private static final Client client = Client.getInstance();
     private Authorization authorization = new Authorization(scanner, user, client);
     private static ExecuteScript executeScript = new ExecuteScript();
+    private String clientStatus;
 
 
     public Handler() {
@@ -72,43 +73,47 @@ public class Handler implements Runnable {
     }
 
     public static Response processInput(String command, String arg) throws IOException {
-        Request request;
-        Response response = null;
-        User user = Client.getInstance().getUser();
-        try {
-            switch (command) {
-                case "exit":
-                    System.out.println(new ExitWritten().getMessage());
-                    System.exit(0);
-                    break;
-                case "insert":
-                    Worker worker = WorkerBuilder.build();
-                    request = new RequestBuilder().setUser(user).setCommand(command).setWorker(worker).build();
-                    client.sendToServer(request);
-                    response = client.receiveFromServer();
-                    if (response != null) return response;
-                    break;
-                case "execute_script":
-                    executeScript.execute(new RequestBuilder().setUser(user).setCommand(command).setArg(arg).build());
-                    break;
-                default:
-                    request = new RequestBuilder().setUser(user).setCommand(command).setArg(arg).build();
-                    client.sendToServer(request);
-                    response = client.receiveFromServer();
-                    if (response != null) return response;
-                    break;
+            Response response;
+            Request request;
+            User user = Client.getInstance().getUser();
+            try {
+                switch (command) {
+                    case "exit":
+                        System.out.println(new ExitWritten().getMessage());
+                        System.exit(0);
+                        break;
+                    case "insert":
+                        Worker worker = WorkerBuilder.build();
+                        request = new RequestBuilder().setUser(user).setCommand(command).setWorker(worker).build();
+                        client.sendToServer(request);
+                        response = client.receiveFromServer();
+                        if (response != null) return response;
+                        break;
+                    case "execute_script":
+                        executeScript.execute(new RequestBuilder().setUser(user).setCommand(command).setArg(arg).build());
+                        break;
+                    default:
+                        request = new RequestBuilder().setUser(user).setCommand(command).setArg(arg).build();
+                        client.sendToServer(request);
+                        response = client.receiveFromServer();
+                        if (response != null) return response;
+                        break;
+                }
+            } catch (ClassNotFoundException e) {
+                System.out.println(e.getMessage());
             }
-        } catch (ClassNotFoundException e) {
-            System.out.println(e.getMessage());
-        }
-        return response;
+            return new Response(client.getStatus());
     }
 
-
-    public static void executeInsert(Worker worker){
+    public static Response executeInsert(Worker worker){
         User user = Client.getInstance().getUser();
         Request request = new RequestBuilder().setUser(user).setCommand("insert").setWorker(worker).build();
         client.sendToServer(request);
+        try {
+            return client.receiveFromServer();
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public static Map<Long, Worker> getMap() {

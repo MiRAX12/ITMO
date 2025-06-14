@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import java.net.URL?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.Region?>
+<BorderPane prefHeight="500.0" prefWidth="400.0" styleClass="main-pane" xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.loginAndRegister.SignUpWindowController">
+    <stylesheets>
+        <URL value="@style.css" />
+    </stylesheets>
+
+    <padding>
+        <Insets top="20" right="20" bottom="20" left="20"/>
+    </padding>
+
+    <center>
+    <VBox alignment="CENTER" spacing="10">
+        <Label fx:id="welcomeLabel" text="Welcome" alignment="CENTER">
+            <font>
+                <Font name="Impact" size="26.0" />
+            </font>
+        </Label>
+        <padding>
+            <Insets right="60" bottom="40" left="60"/>
+        </padding>
+
+        <!-- Login Form -->
+        <Label fx:id="usernameLabel" styleClass="label-style" text="Username" textAlignment="CENTER">
+            <font>
+                <Font size="20.0" />
+            </font>
+        </Label>
+
+        <TextField fx:id="usernameField" prefWidth="180.0" styleClass="light-gray-field">
+            <font>
+                <Font size="14.0" />
+            </font>
+        </TextField>
+
+        <Label fx:id="passwordLabel" styleClass="label-style" text="Password">
+            <font>
+                <Font size="20.0" />
+            </font>
+        </Label>
+
+        <PasswordField fx:id="passwordField" prefWidth="180.0" styleClass="light-gray-field">
+            <font>
+                <Font size="14.0" />
+            </font>
+        </PasswordField>
+
+        <!-- Sign In Button -->
+        <Region prefHeight="15"/>
+        <Button fx:id="signInButton" onAction="#onSignUpLabelClick" prefHeight="40.0" prefWidth="235.0" styleClass="button-style" text="Sign in" textFill="WHITE">
+            <font>
+                <Font size="20.0" />
+            </font>
+        </Button>
+        <Region prefHeight="5"/>
+        <!-- Sign Up Section -->
+    </VBox>
+</center>
+
+<top>
+    <Button fx:id="language" prefHeight="50.0" prefWidth="50.0" text="EN" onMouseClicked="#onGeoIconClick" styleClass="lang-style">
+        <font>
+            <Font size="16.0" />
+        </font>
+    </Button>
+</top>
+
+    <bottom>
+        <Button fx:id="toLoginButton" prefHeight="30" prefWidth="80" onMouseClicked="#onBackButtonClick" styleClass="back-style">
+            <font>
+                <Font size="14"/>
+            </font>
+        </Button>
+    </bottom>
+
+</BorderPane>
+

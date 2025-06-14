@@ -1,12 +1,14 @@
 package gui.collections;
 
+import constructors.parsers.LocalDateParser;
 import constructors.parsers.LocalDateTimeParser;
 import constructors.parsers.ZonedDateTimeParser;
 import gui.AlertUtility;
 import gui.UTF8Control;
 import gui.commands.CommandsWindow;
 import gui.create.WorkerManagementWindow;
-import gui.login.LoginWindow;
+import gui.loginAndRegister.LoginWindow;
+import gui.visualization.VisualizationWindow;
 import javafx.animation.Interpolator;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
@@ -20,7 +22,6 @@ import javafx.collections.ObservableMap;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -35,19 +36,20 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class CollectionsWindowController {
     @FXML
-    private Button clearButton;
+    private Button visualizeButton;
     @FXML
-    private Button executeScriptButton;
+    private Button editButton;
     @FXML
     private Button exitButton;
     @FXML
-    private ToolBar commandsToolBar;
+    private Button deleteButton;
     @FXML
     private Button commandsButton;
     @FXML
@@ -56,17 +58,18 @@ public class CollectionsWindowController {
     private Label filterByLabel;
     @FXML
     private Label workerCountLabel;
-    @FXML
-    private Label workersLabel;
+
     private ResourceBundle currentBundle;
     private Stage stage;
+    private boolean playAnimation = true;
 
     private String scriptPath;
     private Client client = Client.getInstance();
     private List<Locale> supportedLocales;
 
     private static int currentLocaleIndex = 0;
-    private final ObservableMap<Long, Worker> collection = FXCollections.observableHashMap();
+    private static final ObservableMap<Long, Worker> collection = FXCollections.observableHashMap();
+    private Map<Long, Worker> workerMap;
     @FXML
     private TableView<Worker> table;
     @FXML
@@ -121,35 +124,45 @@ public class CollectionsWindowController {
 
     @FXML
     public void initialize() {
-        // handle locales
+        loadWorkerCreatorMap();
         updateUI();
         loadCollection();
         setCollection(collection);
 
-        // init graphics stuff
         comboBox.getItems().clear();
         comboBox.getItems().addAll("id", "name", "coordinateX", "coordinateY", "salary",
                 "startDate", "endDate", "status", "passportId", "locationX", "locationY", "locationZ");
-        Font.loadFont(getClass().getResourceAsStream("/fonts/ZCOOLXiaoWei-Regular.ttf"), 12);
-        Font.loadFont(getClass().getResourceAsStream("/fonts/YouSheBiaoTiHei Regular.ttf"), 14);
-        commandsToolBar.setVisible(false);
 
         table.setRowFactory(tv -> {
             TableRow<Worker> row = new TableRow<>() {
                 @Override
-                protected void updateItem(Worker item, boolean empty) {
-                    super.updateItem(item, empty);
-                    if (getIndex() >= 0 && getIndex() < table.getItems().size()) {
-                        setTranslateY(550); // Начальное положение (ниже)
-                        setOpacity(0);     // Начальная прозрачность
+                protected void updateItem(Worker worker, boolean empty) {
+                    super.updateItem(worker, empty);
+                    if (worker == null) {
+                        setStyle("");
+                    } else {
+                        double opacity = 0.5;
+                        Color color = clientColorMap.get(workerCreatorMap.get(worker.getId()));
+                        String rgba = String.format("#%02X%02X%02X%02X",
+                                (int) (color.getRed() * 255),
+                                (int) (color.getGreen() * 255),
+                                (int) (color.getBlue() * 255),
+                                (int) (opacity * 255));
+                                setStyle("-fx-background-color: " + rgba + ";");
+                    }
 
-                        // Анимация появления
+                    if (playAnimation && getIndex() >= 0 && getIndex() < table.getItems().size()) {
+                        setTranslateY(350);
+                        setOpacity(0);
+
                         Timeline timeline = new Timeline(
-                                new KeyFrame(Duration.millis(500 + getIndex() * 100),
+                                new KeyFrame(Duration.millis(1000 + getIndex() * 100),
                                         new KeyValue(translateYProperty(), 0, Interpolator.EASE_OUT),
                                         new KeyValue(opacityProperty(), 1, Interpolator.EASE_OUT)
                                 ));
+                        timeline.setOnFinished(event -> playAnimation = false);
                         timeline.play();
+
                     }
                 }
             };
@@ -165,15 +178,18 @@ public class CollectionsWindowController {
                 new SimpleFloatProperty(cellData.getValue().getCoordinates().getX()).asObject());
         coordYColumn.setCellValueFactory(cellData ->
                 new SimpleLongProperty(cellData.getValue().getCoordinates().getY()).asObject());
+        LocalDateParser localDateParser = new LocalDateParser();
         creationDate.setCellValueFactory(cellData ->
-                new SimpleStringProperty(cellData.getValue().getCreationDate().toString()));
+                new SimpleStringProperty(localDateParser.formatter(cellData.getValue().getCreationDate().toString(), currentBundle)));
         salaryColumn.setCellValueFactory(cellData ->
                 new SimpleFloatProperty(cellData.getValue().getSalary()).asObject());
+        LocalDateTimeParser localDateTimeParser = new LocalDateTimeParser();
         startDateColumn.setCellValueFactory(cellData ->
-                new SimpleStringProperty(cellData.getValue().getStartDate().toString()));
+                new SimpleStringProperty(localDateTimeParser.formatter(cellData.getValue().getStartDate().toString(), currentBundle)));
+        ZonedDateTimeParser zonedDateTimeParser = new ZonedDateTimeParser();
         endDateColumn.setCellValueFactory(cellData ->
                 new SimpleStringProperty(cellData.getValue().getEndDate() != null
-                ? cellData.getValue().getEndDate().toString() : ""));
+                ? zonedDateTimeParser.formatter(cellData.getValue().getEndDate().toString(), currentBundle) : ""));
         statusColumn.setCellValueFactory(cellData ->
                 new SimpleStringProperty(cellData.getValue().getStatus().toString()));
         passportIdColumn.setCellValueFactory(cellData ->
@@ -189,25 +205,6 @@ public class CollectionsWindowController {
                 new SimpleStringProperty(cellData.getValue().getPerson() != null
                 ? cellData.getValue().getPerson().getLocation().getX().toString() : ""));
 
-        loadWorkerCreatorMap();
-        table.setRowFactory(tv -> new TableRow<Worker>() {
-            @Override
-            public void updateItem(Worker worker, boolean empty) {
-                super.updateItem(worker, empty);
-                if (worker == null) {
-                    setStyle("");
-                } else {
-                    Color color = clientColorMap.get(workerCreatorMap.get(worker.getId()));
-
-                    String rgb = String.format("#%02X%02X%02X",
-                            (int)(color.getRed() * 255),
-                            (int)(color.getGreen() * 255),
-                            (int)(color.getBlue() * 255));
-                    setStyle("-fx-border-color: " + rgb + ";");
-                }
-            }
-        });
-
         filterByText.textProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null && !newValue.isEmpty()) {
                 String selectedValue = comboBox.getSelectionModel().getSelectedItem();
@@ -218,12 +215,18 @@ public class CollectionsWindowController {
             }
         });
 
-        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(2), event -> loadCollection()));
+        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(4), event -> {
+            loadCollection();
+            loadWorkerCreatorMap();
+
+        }));
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.play();
 
-        collection.addListener((MapChangeListener<Long, Worker>) change ->
-                setCollection(collection));
+        collection.addListener((MapChangeListener<Long, Worker>) change -> {
+                    setCollection(collection);
+                    playAnimation = true;
+        });
     }
 
     private void loadWorkerCreatorMap() {
@@ -231,14 +234,13 @@ public class CollectionsWindowController {
         try {
             workerCreatorMap = Handler.processInput("get_worker_creator_map", null).getWorkerCreatorMap();
             for (String clientName : new HashSet<>(workerCreatorMap.values())) {
-                if (clientName.equals(Client.getInstance().getUser().getUsername())) {
-                    clientColorMap.put(clientName, Color.GREEN);
-                } else {
-                    if (!clientColorMap.containsKey(clientName)) {
-                        Color randomColor = Color.color(Math.random(), Math.random(), Math.random());
-                        clientColorMap.put(clientName, randomColor);
-                    }
+                if (client.getUser() != null && clientName.equals(Client.getInstance().getUser().getUsername())) {
+                    clientColorMap.put(clientName, Color.rgb(1,255,1));
+                } else if (!clientColorMap.containsKey(clientName)) {
+                    Color randomColor = Color.color(Math.random(), 0, Math.random());
+                    clientColorMap.put(clientName, randomColor);
                 }
+
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -249,11 +251,11 @@ public class CollectionsWindowController {
      * Load collection from server
      */
     private void loadCollection() {
-        Map<Long, Worker> newData = Handler.getMap();
-        if (newData != null) {
-            if (!newData.equals(collection)) {
+        workerMap = Handler.getMap();
+        if (workerMap != null) {
+            if (!workerMap.equals(collection)) {
                 collection.clear();
-                collection.putAll(newData);
+                collection.putAll(workerMap);
             }
         }
     }
@@ -269,8 +271,7 @@ public class CollectionsWindowController {
         if (collection != null) {
             Platform.runLater(() -> {
                 table.setItems(FXCollections.observableArrayList(collection.values()));
-                table.refresh();
-                workerCountLabel.setText(Integer.toString(collection.size()));
+                workerCountLabel.setText(collection.size() + " " + currentBundle.getString("workerCountLabel"));
             });
         }
     }
@@ -280,7 +281,10 @@ public class CollectionsWindowController {
      */
     private void updateUI() {
         // TableView
-
+        editButton.setText(currentBundle.getString("editButton"));
+        deleteButton.setText(currentBundle.getString("deleteButton"));
+        visualizeButton.setText(currentBundle.getString("visualizeButton"));
+        workerCountLabel.setText(collection.size() + " " + currentBundle.getString("workerCountLabel"));
         idColumn.setText(currentBundle.getString("id"));
         nameColumn.setText(currentBundle.getString("name"));
         coordXColumn.setText(currentBundle.getString("coordX"));
@@ -298,9 +302,9 @@ public class CollectionsWindowController {
         // buttons & labels
         currentUsername = client.getUser().getUsername();
         usernameText.setText(currentBundle.getString("usernameText") + currentUsername);
-        workersLabel.setText(currentBundle.getString("workerCountLabel"));
         filterByLabel.setText(currentBundle.getString("filterByLabel"));
         language.setText(currentBundle.getString("language"));
+        exitButton.setText(currentBundle.getString("exit"));
         ObservableList<String> localizedItems = FXCollections.observableArrayList(
                 currentBundle.getString("id"),
                 currentBundle.getString("name"),
@@ -319,6 +323,7 @@ public class CollectionsWindowController {
         comboBox.getItems().setAll(localizedItems);
         commandsButton.setText(currentBundle.getString("commandsButton"));
         createButton.setText(currentBundle.getString("createButton"));
+        filterWorkers(" ", " ");
 
     }
 
@@ -344,9 +349,14 @@ public class CollectionsWindowController {
     protected void onDeleteButtonClick() {
         Worker selectedWorker = table.getSelectionModel().getSelectedItem();
         if (selectedWorker != null) {
-            table.getItems().remove(selectedWorker);
             try {
-                Handler.processInput("remove_by_id", selectedWorker.getId().toString());
+                Response response = Handler.processInput("remove_by_id", selectedWorker.getId().toString());
+                if (response.getMessage().contains("Elements removed")){
+                    AlertUtility.infoAlert("Элемент удален");
+                    table.getItems().remove(selectedWorker);
+                } else if (response.getMessage().contains("don't have permission")) {
+                    AlertUtility.errorAlert("У вас нет прав на удаление");
+                }
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -364,6 +374,17 @@ public class CollectionsWindowController {
         currentLocaleIndex = (currentLocaleIndex + 1) % supportedLocales.size();
         currentBundle = ResourceBundle.getBundle("MessagesBundle", supportedLocales.get(currentLocaleIndex), new UTF8Control());
         updateUI();
+    }
+
+    @FXML
+    protected void onVisualizeButtonClick() {
+        VisualizationWindow visualizationWindow = new VisualizationWindow(collection);
+        visualizationWindow.loadCollection(collection, clientColorMap, workerCreatorMap);
+        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(4), event ->
+                visualizationWindow.loadCollection(workerMap, clientColorMap, workerCreatorMap)));
+        timeline.setCycleCount(Timeline.INDEFINITE);
+        timeline.play();
+        visualizationWindow.show();
     }
 
     public static int getCurrentLocaleIndex() {
@@ -413,9 +434,29 @@ public class CollectionsWindowController {
                     workerStream = workerStream.filter(worker -> worker.getCoordinates().getY() == coordinateY);
                     break;
                 case "creationDate":
-                    LocalDate creationDate = LocalDate.parse(value);
-                    workerStream = workerStream.filter(worker -> worker.getCreationDate() == creationDate);
-                    break;
+                    DateTimeFormatter formatter;
+                    switch (currentBundle.getLocale().toString()) {
+                        case "en_NZ":
+                            formatter = DateTimeFormatter.ofPattern("EEEE, MMMM d, yyyy", currentBundle.getLocale());
+                            break;
+                        case "pl":
+                            formatter = DateTimeFormatter.ofPattern("EEEE, yyyy MMMM d", currentBundle.getLocale());
+                            break;
+                        case "ru":
+                            formatter = DateTimeFormatter.ofPattern("EEEE, d MMMM yyyy 'г.'", currentBundle.getLocale());
+                            break;
+                        case "pt":
+                            formatter = DateTimeFormatter.ofPattern("EEEE, d. MMMM yyyy", currentBundle.getLocale());
+                            break;
+                        default:
+                            formatter = DateTimeFormatter.ofPattern("EEEE, MMMM d, yyyy", Locale.US);
+                            break;
+                    }
+                    LocalDate date = LocalDate.parse(value, formatter);
+                    workerStream = workerStream.filter(worker -> {
+                        LocalDate workerCreationDate = LocalDate.parse(value, formatter);
+                        return workerCreationDate.equals(date);
+                    });
                 case "salary":
                     float salary = Float.valueOf(value);
                     workerStream = workerStream.filter(worker -> worker.getSalary() == salary);
@@ -449,7 +490,7 @@ public class CollectionsWindowController {
                     workerStream = workerStream.filter(worker -> worker.getPerson().getLocation().getY().equals(locationY));
                     break;
                 case "locationZ":
-                    Float locationZ = Float.valueOf(value);
+                    Long locationZ = Long.valueOf(value);
                     workerStream = workerStream.filter(worker -> worker.getPerson().getLocation().getZ().equals(locationZ));
                     break;
                 default:
@@ -457,6 +498,11 @@ public class CollectionsWindowController {
             }
             table.setItems(FXCollections.observableArrayList(workerStream.collect(Collectors.toList())));
         }
+    }
+
+    public static ObservableMap<Long, Worker> getCollection() {
+        return collection;
+
     }
 
     public void setCurrentBundle(ResourceBundle currentBundle) {

@@ -5,7 +5,7 @@
 }
 
 .borderPane-style {
-    -fx-background-color: #F2FDF2;
+    -fx-background-color: #cfe6ea;
     -fx-border-width: 1px;
     -fx-border-color: rgba(40, 49, 66, 100);
     -fx-border-radius: 0px;
@@ -13,19 +13,33 @@
 
 .button {
     -fx-font-size: 14px;
-    -fx-text-fill: #333333;
-    -fx-background-color: white;
-    -fx-border-color: #797979;
-    -fx-border-radius: 4;
+    -fx-text-fill: #dddada;
+    -fx-background-color: #1c1b1b;
+    -fx-border-color: #000000;
+    -fx-border-radius: 50px 50px;
+    -fx-background-radius: 50px 50px;
     -fx-font-family: "Impact";
+    -fx-border-width: 1px;
+}
+
+.lang-style {
+    -fx-background-color: white;
+    -fx-text-fill: black;
+    -fx-border-color: #d0d0d0;
+    -fx-border-width: 1px;
+    -fx-background-radius: 1px;
+    -fx-border-radius: 1px;
+    -fx-background-insets: 1px;
+    -fx-font-size: 14px;
 }
 
 .exitButton{
     -fx-font-size: 14px;
     -fx-text-fill: #333333;
     -fx-background-color: #bd0c0c;
-    -fx-border-color: #797979;
-    -fx-border-radius: 4;
+    -fx-border-color: #980000;
+    -fx-border-radius: 0%;
+    -fx-background-radius: 0%;
     -fx-font-family: "Impact";
 }
 
@@ -44,6 +58,7 @@
 .table-view .column-header {
     -fx-font-size: 12px;
     -fx-font-weight: bold;
-    -fx-background-color: #E7E8E8;
+    -fx-background-color: #939393;
     -fx-padding: 10 0;
+
 }

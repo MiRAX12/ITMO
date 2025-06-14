@@ -17,7 +17,6 @@ public class GetWorkerCreatorMap extends Command {
 
     public GetWorkerCreatorMap() {
         super("get_worker_creator_map",
-                "удалить из коллекции все элементы," +
-                        " значение поля endDate которого эквивалентно заданному");
+                "получить соответствия рабочих и создателя записи о них");
     }
 }

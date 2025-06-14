@@ -1,6 +1,6 @@
 package org.exampleMirax;//import Commands.Add;
 
-import gui.login.LoginWindow;
+import gui.loginAndRegister.LoginWindow;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import utility.Handler;

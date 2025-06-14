@@ -26,6 +26,7 @@ public class WorkerManagementWindow {
 
             controller = loader.getController();
             controller.setActionText(actionText);
+            stage.setTitle(actionText);
 
             scene = new Scene(root, 300, 500);
             stage.setScene(scene);
@@ -35,7 +36,7 @@ public class WorkerManagementWindow {
     }
 
     public void setWorker(Worker worker) {
-        controller.setEditingCity(worker);
+        controller.setEditingWorker(worker);
     }
 
     public void show() {

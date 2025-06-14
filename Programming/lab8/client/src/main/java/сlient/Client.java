@@ -17,12 +17,13 @@ import java.util.concurrent.ConcurrentHashMap;
 public class Client {
     private static final Client INSTANCE = new Client();
     private final Map<Long, Worker> collection = new ConcurrentHashMap<>();
+    private String status = "NotConnected";
 
     private Client() {
         try {
             init();
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            status = "Unavailable";
         }
     }
 
@@ -59,6 +60,7 @@ public class Client {
                     throw new IOException("Не удалось установить соединение");
                 }
                 recursionCount = 0;
+                status = "Connected";
                 break;
             } catch (Exception e) {
                 closeChannel();
@@ -73,6 +75,7 @@ public class Client {
                     }
                 } else {
                     System.out.println("Превышено максимальное количество попыток подключения");
+                    status = "Unavailable";
                     throw e;
                 }
             }
@@ -83,10 +86,11 @@ public class Client {
         closeChannel();
         try {
             init();
-            recursionCount = 0;
             return true;
         } catch (IOException e) {
             System.out.println("Введите любой символ, чтобы повторить попытку или exit, чтобы закрыть клиент");
+            recursionCount = 0;
+            status = "Unavailable";
             return false;
         }
     }
@@ -175,6 +179,9 @@ public class Client {
         return response;
     }
 
+    public String getStatus() {
+        return status;
+    }
 
     public User getUser() {
         return user;

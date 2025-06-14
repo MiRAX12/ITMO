@@ -4,6 +4,7 @@ package gui.create;
 import constructors.parsers.LocalDateTimeParser;
 import constructors.parsers.ZonedDateTimeParser;
 import gui.AlertUtility;
+import gui.collections.CollectionsWindowController;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -15,8 +16,6 @@ import network.Response;
 import utility.Handler;
 
 import java.io.IOException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
@@ -123,12 +122,12 @@ public class WorkerManagementWindowController {
             LocalDateTimeParser localDateTimeParser = new LocalDateTimeParser();
             ZonedDateTimeParser zonedDateTimeParser = new ZonedDateTimeParser();
             LocalDate creationDate;
+            Long id = null;
             if (actionText.split(" ")[0].equals("Editing")) {
-                long id = selectedWorker.getId();
+                id = selectedWorker.getId();
                 creationDate = selectedWorker.getCreationDate();
             } else {
                 creationDate = LocalDate.now();
-
             }
             String name = nameField.getText().trim();
             Coordinates coordinates = new Coordinates();
@@ -151,15 +150,15 @@ public class WorkerManagementWindowController {
                 person.setLocation(location);
                 person.setPassportId(passportIDField.getText().trim());
             }
-            else
-                person = null;
+            else person = null;
             Worker worker = new Worker.Builder().name(name).coordinates(coordinates).salary(salary).creationDate(creationDate).
                     startDate(startDate).endDate(endDate).status(status).person(person).build();
+            if (id != null) worker.setId(id);
             try {
                 if (actionText.split(" ")[0].equals("Editing")) {
                     response = Handler.processInput("remove_by_id", selectedWorker.getId().toString());
                 } else {
-                    Handler.executeInsert(worker);
+                    response = Handler.executeInsert(worker);
                 }
             } catch (IOException e) {
                 AlertUtility.errorAlert("Can't load commands from server. Please wait until the server will come back");
@@ -167,15 +166,11 @@ public class WorkerManagementWindowController {
 
             Response finalResponse = response;
             Platform.runLater(() -> {
-                if (finalResponse != null && (finalResponse.getMessage().contains("you don't have permission") || finalResponse.getMessage().contains("Element added"))) {
+                if (finalResponse != null && finalResponse.getMessage().contains("you don't have permission")) {
                     AlertUtility.infoAlert(finalResponse.getMessage());
-                } else if (finalResponse != null && finalResponse.getMessage().contains("Elements removed")) {
+                } else if (finalResponse.getMessage().contains("Elements removed")) {
                         Handler.executeInsert(worker);
-                } else if (finalResponse != null) {
-                    AlertUtility.infoAlert(finalResponse.getMessage());
-                } else {
-                    AlertUtility.errorAlert("Server not responding");
-                }
+                } else AlertUtility.infoAlert(finalResponse.getMessage());
                 ((Stage) nameField.getScene().getWindow()).close();
             });
         } else {
@@ -382,7 +377,7 @@ public class WorkerManagementWindowController {
         updateUI();
     }
 
-    public void setEditingCity(Worker worker) {
+    public void setEditingWorker(Worker worker) {
         this.selectedWorker = worker;
         populateFields(selectedWorker);
     }

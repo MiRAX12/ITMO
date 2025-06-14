@@ -16,7 +16,7 @@ public class Coordinates implements Serializable {
     /**
      * X coordinate.
      *
-     * @constraint  Value must be <603.0
+     * @constraint  Value must be <=603.0
      */
     @DecimalMax(value = "603.0", message = "Координата х не может быть больше 603")
     private float x; //Максимальное значение поля: 603
